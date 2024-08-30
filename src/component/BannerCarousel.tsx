@@ -45,7 +45,7 @@ const Banner = (props: BannerProp) => {
         margin: "0 auto",
         height: "400px",
         color: "white",
-        width: "90%",
+        width: "95%",
       }}
     >
       <Button>Shop now</Button>

@@ -12,7 +12,7 @@ import {
   IconSearch,
   IconDoorExit,
 } from "@tabler/icons-react";
-import { Avatar, Input, InputAdornment, Stack, TextField } from "@mui/material";
+import { InputAdornment, Stack, TextField } from "@mui/material";
 
 interface SubSideBarProps {
   name: string;
