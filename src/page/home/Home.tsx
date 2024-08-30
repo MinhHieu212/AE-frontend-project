@@ -4,9 +4,11 @@ import BannerCarousel from "../../component/BannerCarousel";
 
 const Home = () => {
   return (
-    <div className="w-full h-fullbg-white">
+    <div className="w-full h-full bg-white">
       <BannerCarousel />
-      <Link to={"/products"}>Link to Products</Link>
+      <div className="flex items-center justify-center">
+        <Link to={"/products"}>Link to Products</Link>
+      </div>
     </div>
   );
 };
