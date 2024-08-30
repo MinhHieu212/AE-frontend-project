@@ -39,18 +39,21 @@ const SideBarItem = ({
 }: SideBarItemProps) => {
   const location = useLocation();
   const [expand, setExpand] = useState<boolean>(
-    path.includes(location.pathname)
+    path.includes(location.pathname.split("/")[1])
   );
+
+  const isActive = path.includes(location.pathname.split("/")[1]);
+
   return (
     <div className="w-full p-1 mb-1">
       <div
         className="w-full rounded-md cursor-pointer flex justify-between h-[40px] items-center gap-3"
         onClick={() => setExpand((prev) => !prev)}
       >
-        <div>{path.includes(location.pathname) ? iconActive : icon}</div>
+        <div>{isActive ? iconActive : icon}</div>
         <p
           className={`w-[80%] font-medium ${
-            path.includes(location.pathname) ? "text-black" : "text-[#a9adb9]"
+            isActive ? "text-black" : "text-[#a9adb9]"
           }`}
         >
           {name}
@@ -66,28 +69,28 @@ const SideBarItem = ({
         </div>
       </div>
 
-      {expand && (
+      {expand && subItems && (
         <div className="pl-[12%] my-2 w-full cursor-pointer">
-          {subItems &&
-            subItems.map((item, index) => (
+          {subItems.map((item, index) => {
+            const subIsActive = item.path === location.pathname.split("/")[1];
+
+            return (
               <div
                 key={index}
-                className={`p-2  rounded-lg mb-1 w-full h-[40px] flex items-center font-medium ${
-                  item.path !== location.pathname ? "bg-[#eef3ff]" : "bg-white"
+                className={`p-2 rounded-lg mb-1 w-full h-[40px] flex items-center font-medium ${
+                  subIsActive ? "bg-white" : "bg-[#eef3ff]"
                 } px-2`}
               >
                 <p
-                  className={`
-                    ${
-                      item.path === location.pathname
-                        ? "text-[#099cff]"
-                        : "text-[#a9adb9]"
-                    }`}
+                  className={`${
+                    subIsActive ? "text-[#099cff]" : "text-[#a9adb9]"
+                  }`}
                 >
                   {item.name}
                 </p>
               </div>
-            ))}
+            );
+          })}
         </div>
       )}
     </div>
@@ -165,22 +168,22 @@ const sidebar_list = [
   {
     icon: <IconHome size={23} color="#a9adb9" />,
     iconActive: <IconHome size={23} color="#099cff" />,
-    path: ["/manager-products", "/manager-orders", "/manager-customer"],
+    path: ["manager-products", "manager-orders", "manager-customer"],
     name: "Page manager",
     disable: false,
     subItems: [
       {
-        path: "/manager-products",
+        path: "manager-products",
         name: "Product manager",
         disable: false,
       },
       {
-        path: "/manager-orders",
+        path: "manager-orders",
         name: "Order manager",
         disable: true,
       },
       {
-        path: "/manager-customer",
+        path: "manager-customer",
         name: "Customer manager",
         disable: true,
       },
@@ -189,22 +192,22 @@ const sidebar_list = [
   {
     icon: <IconBuildingStore size={23} color="#a9adb9" />,
     iconActive: <IconBuildingStore size={23} color="#099cff" />,
-    path: ["/products", "/orders", "/customer"],
+    path: ["products", "orders", "customer"],
     name: "My shop",
     disable: false,
     subItems: [
       {
-        path: "/products",
+        path: "products",
         name: "Product",
         disable: false,
       },
       {
-        path: "/orders",
+        path: "orders",
         name: "Order",
         disable: true,
       },
       {
-        path: "/customer",
+        path: "customer",
         name: "Customer",
         disable: true,
       },
@@ -215,20 +218,20 @@ const sidebar_list = [
     iconActive: <IconDeviceDesktopAnalytics size={23} color="#099cff" />,
     name: "Business analytics",
     disable: false,
-    path: ["/busines-product", "/busines-order", "/busines-customer"],
+    path: ["busines-product", "busines-order", "busines-customer"],
     subItems: [
       {
-        path: "/busines-product",
+        path: "busines-product",
         name: "Business Product",
         disable: true,
       },
       {
-        path: "/busines-order",
+        path: "busines-order",
         name: "Business Order",
         disable: true,
       },
       {
-        path: "/busines-customer",
+        path: "busines-customer",
         name: "Business Customer",
         disable: true,
       },
@@ -239,7 +242,7 @@ const sidebar_list = [
     iconActive: <IconTags size={23} color="#099cff" />,
     name: "Promotion",
     disable: false,
-    path: ["/promotion"],
+    path: ["promotion"],
     subItems: null,
   },
   {
@@ -247,7 +250,7 @@ const sidebar_list = [
     iconActive: <IconMessage size={23} color="#099cff" />,
     name: "Message",
     disable: false,
-    path: ["/message"],
+    path: ["message"],
     subItems: null,
   },
 ];
