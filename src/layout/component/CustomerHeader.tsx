@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const CustomerHeader = () => {
   const navigate = useNavigate();
   return (
-    <div className="w-full h-[70px] flex items-center justify-end px-5">
+    <div className="w-full h-[60px] flex items-center justify-end px-5">
       <div className="flex justify-center items-center gap-4">
         <IconBellRinging size={23} />
         <Tooltip title="Need help?">

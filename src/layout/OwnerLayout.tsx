@@ -14,7 +14,7 @@ const OwnerLayout = ({ children }: OwnerLayoutProps) => {
       <SideBar />
       <Stack className="w-full">
         <OwnerHeader />
-        <div className="w-[100%] px-5 h-[calc(100dvh-70px)]">{children}</div>
+        <div className="w-[100%] h-[calc(100dvh-70px)]">{children}</div>
       </Stack>
     </div>
   );

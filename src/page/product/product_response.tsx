@@ -1,4 +1,4 @@
-export const product_reponse = {
+export const product_response = {
   status: 200,
   resultCode: null,
   message: "Success",

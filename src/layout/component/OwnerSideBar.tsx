@@ -52,7 +52,7 @@ const SideBarItem = ({
       >
         <div>{isActive ? iconActive : icon}</div>
         <p
-          className={`w-[80%] font-medium ${
+          className={`w-[80%] font-[400] ${
             isActive ? "text-black" : "text-[#a9adb9]"
           }`}
         >
@@ -77,7 +77,7 @@ const SideBarItem = ({
             return (
               <div
                 key={index}
-                className={`p-2 rounded-lg mb-1 w-full h-[40px] flex items-center font-medium ${
+                className={`p-2 rounded-lg mb-1 w-full h-[40px] flex items-center font-[400] ${
                   subIsActive ? "bg-white" : "bg-[#eef3ff]"
                 } px-2`}
               >
