@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { product_response } from "./product_response";
+import { fake_data_products } from "./fake_data_products";
 
 interface CategoryProps {
   id: number;
@@ -31,7 +31,7 @@ const ProductItem: React.FC<ProductItemProps> = (props) => {
     "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=";
 
   return (
-    <div className="w-4/5 bg-slate-100 mx-auto mb-2 p-3 rounded-xl flex items-center justify-start gap-3 border-2 border-solid border-gray-200">
+    <div className="w-full bg-slate-100 mx-auto mb-2 p-3 rounded-xl flex items-center justify-start gap-3 border-2 border-solid border-gray-200">
       <div className="w-[150px] h-[130px] rounded-lg overflow-hidden">
         <img
           src={
@@ -40,7 +40,7 @@ const ProductItem: React.FC<ProductItemProps> = (props) => {
               : fallbackImageURL
           }
           alt={`Product: ${props.name}`}
-          className="h-full w-full object-fill"
+          className="h-full w-full object-cover"
         />
       </div>
       <div className="flex h-full items-start w-full justify-start flex-col p-2">
@@ -68,11 +68,12 @@ const Products: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full max-w-[1430px] mx-auto h-full">
       <div className="flex h-12 items-center justify-between px-5 mt-5">
-        <h2 className="text-xl font-bold">Products</h2>
+        <h2 className="font-bold">Products</h2>
         <Button
           variant="contained"
+          size="large"
           onClick={() => navigate("/products/add-product")}
           className="capitalize"
         >
@@ -81,10 +82,10 @@ const Products: React.FC = () => {
       </div>
       <Stack
         spacing={2}
-        className="h-[calc(100dvh-140px)] overflow-scroll my-2 px-5 mt-10"
+        className="h-[calc(100dvh-160px)] overflow-scroll px-5 mt-5"
       >
-        {product_response.status === 200 ? (
-          product_response.data.map((item) => (
+        {fake_data_products.status === 200 ? (
+          fake_data_products.data.map((item) => (
             <ProductItem key={item.id} {...item} />
           ))
         ) : (

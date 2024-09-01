@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { product_response } from ".././product/product_response";
-import BannerCarousel from "../../component/BannerCarousel";
+import { fake_data_products } from "../Products/fake_data_products";
+import BannerCarousel from "../../components/BannerCarousel";
 import { Box, Divider, Stack } from "@mui/material";
 
 interface CategoryProps {
@@ -42,7 +42,7 @@ const ProductItem = (props: ProductItemProps) => {
         alt={`Product: ${props.name}`}
         className="w-[250px] h-[250px] object-cover rounded-lg"
       />
-      <Divider className="my-5" />
+      <Divider className="my-3" />
       <Stack className="px-3 pb-2">
         <p className="text-lg my-1 font-medium">Name: {props.name}</p>
         <p className="text-sm my-1">
@@ -64,15 +64,15 @@ const ProductItem = (props: ProductItemProps) => {
   );
 };
 
-const Home = () => {
+const Dashboard = () => {
   return (
-    <div className="w-full mih-full bg-white pb-[220px]">
+    <div className="w-full max-w-[1430px] mx-auto mih-full bg-white pb-[220px]">
       <BannerCarousel />
       <div className="w-full my-[20px]">
-        <h2 className="w-[95%] mx-[auto]"> Popular Products </h2>
-        <div className="overflow-x-scroll flex items-center justify-start gap-5 w-[95%] mx-[auto]">
-          {product_response.status === 200 ? (
-            product_response.data.map((item) => (
+        <h2 className="mx-[auto]"> Popular Products </h2>
+        <div className="overflow-x-scroll flex items-center justify-start gap-8 mx-[auto]">
+          {fake_data_products.status === 200 ? (
+            fake_data_products.data.map((item) => (
               <ProductItem key={item.id} {...item} />
             ))
           ) : (
@@ -86,4 +86,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Dashboard;

@@ -1,4 +1,4 @@
-export const product_response = {
+export const fake_data_products = {
   status: 200,
   resultCode: null,
   message: "Success",
@@ -32,7 +32,9 @@ export const product_response = {
     {
       id: 15,
       name: "Laptop Dell XPS 15 ",
-      imageURL: null,
+      imageURL: [
+        "https://images.unsplash.com/photo-1725203574074-a33eae85ba71?q=80&w=2012&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      ],
       description:
         "Laptop Dell XPS 15 9520 mang đến hiệu suất mạnh mẽ, màn hình OLED sống động và một thiết kế đẳng cấp. Do đó, Dell XPS 15 9520 hứa hẹn sẽ là chiếc laptop sẵn sàng xử lý mọi công việc bạn muốn ngay lập tức. ",
       oldPrice: 150000,
@@ -92,7 +94,9 @@ export const product_response = {
     {
       id: 20,
       name: "Laptop Dell XPS 15 ",
-      imageURL: null,
+      imageURL: [
+        "https://images.unsplash.com/photo-1724141973274-f3a90b9aa7d8?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      ],
       description:
         "Laptop Dell XPS 15 9520 mang đến hiệu suất mạnh mẽ, màn hình OLED sống động và một thiết kế đẳng cấp. Do đó, Dell XPS 15 9520 hứa hẹn sẽ là chiếc laptop sẵn sàng xử lý mọi công việc bạn muốn ngay lập tức. ",
       oldPrice: 150000,

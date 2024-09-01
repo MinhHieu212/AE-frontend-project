@@ -1,5 +1,5 @@
 import { IconArrowLeft, IconUpload } from "@tabler/icons-react";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import {
   Box,
@@ -15,7 +15,6 @@ import {
   InputLabel,
   MenuItem,
   OutlinedInput,
-  Paper,
   Select,
   SelectChangeEvent,
   TextField,
@@ -112,18 +111,16 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start w-full h-full p-3">
+    <div className="flex flex-col items-center justify-start w-full max-w-[1430px] h-full p-3 mx-auto ">
       <div className="mr-auto flex items-center justify-center gap-3 px-5">
-        <Button
-          className="rounded-lg h-[50px] border-[2px] border-solid border-gray-400"
+        <Box
+          className="rounded-lg w-[50px] h-[50px] flex items-center justify-center border-[2px] border-solid border-gray-400 px-0"
           onClick={() => navigate("/products")}
         >
-          <IconArrowLeft size={30} color="gray" />
-        </Button>
+          <IconArrowLeft size={25} color="gray" />
+        </Box>
         <div>
-          <p className="text-[gray] font-medium my-1 text-sm">
-            Back to product list
-          </p>
+          <p className="text-[gray] my-1 text-sm">Back to product list</p>
           <p className="font-medium text-xl my-0">Add New Product</p>
         </div>
       </div>
@@ -294,8 +291,8 @@ const AddProduct = () => {
         <div className="w-1/2">
           <div className="w-full rounded-lg mb-3 p-3">
             <p className="font-medium text-lg"> Product images</p>
-            <div className="border-2  border-solid border-gray-200 rounded-lg p-5 h-full flex gap-3">
-              <Box className="w-full h-[325px] flex items-center justify-start gap-5">
+            <div className="border-2 border-solid border-gray-200 rounded-lg p-5 h-full flex gap-3">
+              <Box className="w-full flex items-center justify-start gap-5">
                 <Box
                   component="label"
                   className="h-full cursor-pointer w-1/3 flex flex-col items-center justify-center rounded-lg bg-slate-100"
@@ -337,7 +334,7 @@ const AddProduct = () => {
             <div className="border-2 border-solid border-gray-200 rounded-lg p-5 h-full flex flex-col gap-3">
               <div>
                 <p className="my-0 text-[#cac4c4] text-sm">Item weight</p>
-                <div className="w-full flex items-center justify-between px-5 border-2 h-[42px] border-solid border-gray-400 rounded-md">
+                <div className="w-full flex items-center justify-between px-1 border-2 h-[42px] border-solid border-[#c8c3c3] rounded-md">
                   <InputBase
                     sx={{ ml: 1, flex: 1 }}
                     placeholder="00.00"
@@ -435,11 +432,14 @@ const AddProduct = () => {
                       input: {
                         startAdornment: (
                           <InputAdornment position="start">
-                            <Box className="w-[40px] h-[40px] bg-[#eef3ff] rounded-md flex items-center text-black text-xl justify-center">
+                            <Box className="w-[35px] h-[35px] bg-[#eef3ff] rounded-md flex items-center text-black justify-center">
                               $
                             </Box>
                           </InputAdornment>
                         ),
+                        style: {
+                          padding: "0 4px",
+                        },
                       },
                     }}
                     size="small"
@@ -457,11 +457,14 @@ const AddProduct = () => {
                       input: {
                         startAdornment: (
                           <InputAdornment position="start">
-                            <Box className="w-[40px] h-[40px] bg-[#eef3ff] rounded-md flex items-center text-black text-xl justify-center">
+                            <Box className="w-[35px] h-[35px] bg-[#eef3ff] rounded-md flex items-center text-black justify-center">
                               $
                             </Box>
                           </InputAdornment>
                         ),
+                        style: {
+                          padding: "0 4px",
+                        },
                       },
                     }}
                     size="small"
@@ -480,11 +483,14 @@ const AddProduct = () => {
                     input: {
                       startAdornment: (
                         <InputAdornment position="start">
-                          <Box className="w-[40px] h-[40px] bg-[#eef3ff] rounded-md flex items-center text-black text-xl justify-center">
+                          <Box className="w-[35px] h-[35px] bg-[#eef3ff] rounded-md flex items-center text-black justify-center">
                             $
                           </Box>
                         </InputAdornment>
                       ),
+                      style: {
+                        padding: "0 4px",
+                      },
                     },
                   }}
                   size="small"

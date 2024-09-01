@@ -1,8 +1,8 @@
 import React from "react";
-import SideBar from "./component/OwnerSideBar";
+import SideBar from "./components/OwnerSideBar";
 import { Stack } from "@mui/material";
-import Header from "./component/OwnerHeader";
-import OwnerHeader from "./component/OwnerHeader";
+import Header from "./components/OwnerHeader";
+import OwnerHeader from "./components/OwnerHeader";
 
 interface OwnerLayoutProps {
   children: React.ReactNode;

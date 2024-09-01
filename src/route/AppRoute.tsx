@@ -1,25 +1,25 @@
 import React from "react";
-import Products from "../page/product/Products";
-import AddProduct from "../page/product/AddProduct";
+import Products from "../pages/Products/Products";
+import AddProduct from "../pages/AddProduct/AddProduct";
 import { Route, Routes } from "react-router-dom";
-import OwnerLayout from "../layout/OwnerLayout";
-import Home from "../page/home/Home";
-import CustomerLayout from "../layout/CustomerLayout";
+import OwnerLayout from "../layout/OwnerLayout/OwnerLayout";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import CustomerLayout from "../layout/CustomerLayout/CustomerLayout";
 
 const route_list = [
   {
     path: "/",
     element: (
       <CustomerLayout>
-        <Home />
+        <Dashboard />
       </CustomerLayout>
     ),
   },
   {
-    path: "/home",
+    path: "/dashboard",
     element: (
       <CustomerLayout>
-        <Home />
+        <Dashboard />
       </CustomerLayout>
     ),
   },

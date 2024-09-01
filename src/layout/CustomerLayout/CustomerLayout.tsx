@@ -1,5 +1,5 @@
 import React from "react";
-import CustomerHeader from "./component/CustomerHeader";
+import CustomerHeader from "./components/CustomerHeader";
 
 interface CustomerLayoutProps {
   children: React.ReactNode;
