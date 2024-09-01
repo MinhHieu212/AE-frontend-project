@@ -31,7 +31,7 @@ const ProductItem: React.FC<ProductItemProps> = (props) => {
     "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=";
 
   return (
-    <div className="w-4/5 bg-slate-100 mx-auto mb-3 p-3 rounded-xl flex items-center justify-start gap-3 border-2 border-gray-400">
+    <div className="w-4/5 bg-slate-100 mx-auto mb-3 p-3 rounded-xl flex items-center justify-start gap-3 border-2 border-solid border-gray-200">
       <div className="w-[150px] h-[130px] rounded-lg overflow-hidden">
         <img
           src={

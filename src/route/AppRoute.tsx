@@ -39,6 +39,20 @@ const route_list = [
       </OwnerLayout>
     ),
   },
+  {
+    path: "*",
+    element: (
+      <OwnerLayout>
+        <div className="w-full h-full flex flex-col items-center justify-center">
+          <img
+            src="https://admiral.digital/wp-content/uploads/2023/08/404_page-not-found-1024x576.png"
+            alt=""
+            height={400}
+          />
+        </div>
+      </OwnerLayout>
+    ),
+  },
 ];
 
 const AppRoute = () => {

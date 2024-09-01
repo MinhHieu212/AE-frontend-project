@@ -12,7 +12,7 @@ import {
   IconSearch,
   IconDoorExit,
 } from "@tabler/icons-react";
-import { InputAdornment, Stack, TextField } from "@mui/material";
+import { InputAdornment, Link, Stack, TextField } from "@mui/material";
 
 interface SubSideBarProps {
   name: string;
@@ -24,7 +24,7 @@ interface SideBarItemProps {
   name: string;
   disable: boolean;
   icon: React.ReactNode;
-  path: string[];
+  paths: string[];
   iconActive: React.ReactNode;
   subItems: SubSideBarProps[] | null;
 }
@@ -34,18 +34,26 @@ const SideBarItem = ({
   iconActive,
   name,
   disable,
-  path,
+  paths,
   subItems,
 }: SideBarItemProps) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [expand, setExpand] = useState<boolean>(
-    path.includes(location.pathname.split("/")[1])
+    paths.includes(location.pathname.split("/")[1])
   );
 
-  const isActive = path.includes(location.pathname.split("/")[1]);
+  const isActive = paths.includes(location.pathname.split("/")[1]);
+
+  const handleRouting = (path: string) => {
+    navigate(`/${path}`);
+  };
 
   return (
-    <div className="w-full p-1 mb-1">
+    <div
+      className="w-full p-1 mb-1"
+      onClick={() => (paths.length === 1 ? handleRouting(paths[0]) : {})}
+    >
       <div
         className="w-full rounded-md cursor-pointer flex justify-between h-[40px] items-center gap-3"
         onClick={() => setExpand((prev) => !prev)}
@@ -76,6 +84,7 @@ const SideBarItem = ({
 
             return (
               <div
+                onClick={() => handleRouting(item.path)}
                 key={index}
                 className={`p-2 rounded-lg mb-1 w-full h-[40px] flex items-center font-[400] ${
                   subIsActive ? "bg-white" : "bg-[#eef3ff]"
@@ -101,15 +110,17 @@ const SideBar = () => {
   // const navigate = useNavigate();
   return (
     <div className="w-[400px] h-[100dvh] bg-[#eef3ff] flex flex-col justify-start items-center px-5">
-      <div className="flex justify-between items-center gap-3 mr-[auto]">
-        <img
-          src="https://images.unsplash.com/photo-1719937050792-a6a15d899281?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt="Company avatar"
-          className="w-[45px] h-[45px] rounded-lg"
-        />
+      <Link href="/products" underline="none" className="w-full">
+        <div className="w-full flex items-center gap-3">
+          <img
+            src="https://images.unsplash.com/photo-1703489583404-4ee76c06482b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="Company avatar"
+            className="w-[45px] h-[45px] rounded-md"
+          />
 
-        <h2 className="text-[blue]">Accessed</h2>
-      </div>
+          <h2 className="text-[blue]">Accessed</h2>
+        </div>
+      </Link>
 
       <TextField
         variant="outlined"
@@ -137,7 +148,7 @@ const SideBar = () => {
               icon={item.icon}
               iconActive={item.iconActive}
               name={item.name}
-              path={item.path}
+              paths={item.paths}
               disable={item.disable}
               subItems={item.subItems}
             />
@@ -145,18 +156,18 @@ const SideBar = () => {
       </Stack>
 
       <div className="flex w-full justify-between items-center gap-3 mt-[auto] mb-2">
-        <div className="flex items-center justify-between gap-2 cursor-pointer">
+        <div className="flex items-center justify-between gap-3 cursor-pointer">
           <img
             src="https://images.unsplash.com/photo-1724881470846-fa57b781af51?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Company avatar"
             className="w-[40px] h-[40px] rounded-full"
           />
-          <div className="h-[50px]">
-            <p className="font-semibold h-[25px] my-0">Trần Minh Hiếu</p>
-            <p className="text-[gray] text-sm h-[25px] my-0">lana@treat.com</p>
+          <div className="h-[50px] flex flex-col items-start justify-center">
+            <p className="font-semibold  my-0">Trần Minh Hiếu</p>
+            <p className="text-[gray] text-sm my-0">lana@treat.com</p>
           </div>
         </div>
-        <IconDoorExit color="gray" size={20} className="cursor-pointer" />
+        <IconDoorExit color="gray" size={22} className="cursor-pointer" />
       </div>
     </div>
   );
@@ -168,7 +179,7 @@ const sidebar_list = [
   {
     icon: <IconHome size={23} color="#a9adb9" />,
     iconActive: <IconHome size={23} color="#099cff" />,
-    path: ["manager-products", "manager-orders", "manager-customer"],
+    paths: ["manager-products", "manager-orders", "manager-customer"],
     name: "Page manager",
     disable: false,
     subItems: [
@@ -192,7 +203,7 @@ const sidebar_list = [
   {
     icon: <IconBuildingStore size={23} color="#a9adb9" />,
     iconActive: <IconBuildingStore size={23} color="#099cff" />,
-    path: ["products", "orders", "customer"],
+    paths: ["products", "orders", "customer"],
     name: "My shop",
     disable: false,
     subItems: [
@@ -218,7 +229,7 @@ const sidebar_list = [
     iconActive: <IconDeviceDesktopAnalytics size={23} color="#099cff" />,
     name: "Business analytics",
     disable: false,
-    path: ["busines-product", "busines-order", "busines-customer"],
+    paths: ["busines-product", "busines-order", "busines-customer"],
     subItems: [
       {
         path: "busines-product",
@@ -242,7 +253,7 @@ const sidebar_list = [
     iconActive: <IconTags size={23} color="#099cff" />,
     name: "Promotion",
     disable: false,
-    path: ["promotion"],
+    paths: ["promotion"],
     subItems: null,
   },
   {
@@ -250,7 +261,7 @@ const sidebar_list = [
     iconActive: <IconMessage size={23} color="#099cff" />,
     name: "Message",
     disable: false,
-    path: ["message"],
+    paths: ["message"],
     subItems: null,
   },
 ];
