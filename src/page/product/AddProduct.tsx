@@ -1,5 +1,5 @@
 import { IconArrowLeft, IconUpload } from "@tabler/icons-react";
-import React from "react";
+import React, { useRef, useState } from "react";
 import Button from "@mui/material/Button";
 import {
   Box,
@@ -23,6 +23,15 @@ import {
   TextField,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+const save = (data: any) => {
+  console.log(data);
+};
+
+const myTheme = createTheme({
+  // Set up your custom MUI theme here
+});
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -63,6 +72,22 @@ const MenuProps = {
 const AddProduct = () => {
   const [category1, setCategory1] = React.useState<string[]>([]);
   const [age, setAge] = React.useState<string>("Kg");
+  const [businessDescription, setBusinessDescription] = useState("");
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file && file.type === "text/plain") {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const content = e.target?.result as string;
+
+        setBusinessDescription(content);
+      };
+      reader.readAsText(file);
+    } else {
+      alert("Please upload a valid .txt file.");
+    }
+  };
 
   const handleChange2 = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
@@ -93,106 +118,117 @@ const AddProduct = () => {
           <div className="w-full flex flex-col rounded-lg mb-3 p-3">
             <p className="font-semibold text-lg">Description</p>
             <div className="border-2 border-solid border-gray-200 rounded-lg p-5 h-full flex flex-col gap-3">
-              <p className="my-0 text-[#cac4c4] text-sm">Product name</p>
-              <TextField
-                variant="outlined"
-                fullWidth
-                required
-                size="small"
-                className="pb-4"
-              />
-              <div className="flex items-center justify-between gap-3">
-                <p className="my-0 text-[#cac4c4] text-sm">
-                  Business Description
-                </p>
-                <Button
-                  component="label"
-                  role={undefined}
-                  tabIndex={-1}
-                  startIcon={<IconUpload />}
-                >
-                  Upload .txt files
-                  <VisuallyHiddenInput
-                    type="file"
-                    onChange={(event) => console.log(event.target.files)}
-                    multiple
-                  />
-                </Button>
+              <div>
+                <p className="my-0 text-[#cac4c4] text-sm">Product name</p>
+                <TextField
+                  variant="outlined"
+                  fullWidth
+                  required
+                  size="small"
+                  className="pb-4"
+                />
               </div>
-
-              <TextField
-                variant="outlined"
-                fullWidth
-                multiline
-                rows={8}
-                required
-                size="small"
-              />
+              <div>
+                <div className="flex items-center justify-between gap-3 ">
+                  <p className="my-0 text-[#cac4c4] text-sm">
+                    Business Description
+                  </p>
+                  <Button
+                    component="label"
+                    role={undefined}
+                    tabIndex={-1}
+                    className="capitalize"
+                    startIcon={<IconUpload size={22} className="mb-[1px]" />}
+                  >
+                    Upload .txt files
+                    <VisuallyHiddenInput
+                      type="file"
+                      onChange={handleFileUpload}
+                      accept=".txt"
+                      multiple
+                    />
+                  </Button>
+                </div>
+                <TextField
+                  variant="outlined"
+                  fullWidth
+                  multiline
+                  rows={8}
+                  required
+                  size="small"
+                  value={businessDescription}
+                  onChange={(e) => setBusinessDescription(e.target.value)}
+                />
+              </div>
             </div>
           </div>
           <div className="w-full rounded-lg mb-3 p-3">
             <p className="font-semibold text-lg">Category</p>
             <div className="border-2 border-solid border-gray-200 rounded-lg p-5 h-full flex flex-col gap-3">
-              <p className="my-0 text-[#cac4c4] text-sm">Product Category</p>
-              <FormControl className="w-full">
-                <InputLabel id="demo-multiple-chip-label">Level 1</InputLabel>
-                <Select
-                  labelId="demo-multiple-chip-label"
-                  id="demo-multiple-chip"
-                  value={category1}
-                  onChange={handleChange}
-                  input={
-                    <OutlinedInput id="select-multiple-chip" label="Chip" />
-                  }
-                  className="h-[40px] w-full"
-                  renderValue={(selected) => (
-                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                      {selected.map((value) => (
-                        <span className="text-sm font-medium text-[gray]">
-                          {value}
-                        </span>
-                      ))}
-                    </Box>
-                  )}
-                  MenuProps={MenuProps}
-                >
-                  {names.map((name) => (
-                    <MenuItem key={name} value={name}>
-                      {name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <p className="my-0 text-[#cac4c4] text-sm">Product Category</p>
-              <FormControl className="w-full">
-                <InputLabel id="demo-multiple-chip-label">Level 2</InputLabel>
-                <Select
-                  labelId="demo-multiple-chip-label"
-                  id="demo-multiple-chip"
-                  value={category1}
-                  onChange={handleChange}
-                  input={
-                    <OutlinedInput id="select-multiple-chip" label="Chip" />
-                  }
-                  className="h-[42px] w-full"
-                  renderValue={(selected) => (
-                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                      {selected.map((value) => (
-                        <span className="text-sm font-medium text-[gray]">
-                          {value}
-                        </span>
-                      ))}
-                    </Box>
-                  )}
-                  MenuProps={MenuProps}
-                >
-                  {names.map((name) => (
-                    <MenuItem key={name} value={name}>
-                      {name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+              <div>
+                <p className="my-0 text-[#cac4c4] text-sm">Product Category</p>
+                <FormControl className="w-full">
+                  <InputLabel id="demo-multiple-chip-label">Level 1</InputLabel>
+                  <Select
+                    labelId="demo-multiple-chip-label"
+                    id="demo-multiple-chip"
+                    value={category1}
+                    onChange={handleChange}
+                    input={
+                      <OutlinedInput id="select-multiple-chip" label="Chip" />
+                    }
+                    className="h-[40px] w-full"
+                    renderValue={(selected) => (
+                      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                        {selected.map((value) => (
+                          <span className="text-sm font-medium text-[gray]">
+                            {value}
+                          </span>
+                        ))}
+                      </Box>
+                    )}
+                    MenuProps={MenuProps}
+                  >
+                    {names.map((name) => (
+                      <MenuItem key={name} value={name}>
+                        {name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </div>
+              <div>
+                <p className="my-0 text-[#cac4c4] text-sm">Product Category</p>
+                <FormControl className="w-full">
+                  <InputLabel id="demo-multiple-chip-label">Level 2</InputLabel>
+                  <Select
+                    labelId="demo-multiple-chip-label"
+                    id="demo-multiple-chip"
+                    value={category1}
+                    onChange={handleChange}
+                    input={
+                      <OutlinedInput id="select-multiple-chip" label="Chip" />
+                    }
+                    className="h-[42px] w-full"
+                    renderValue={(selected) => (
+                      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                        {selected.map((value) => (
+                          <span className="text-sm font-medium text-[gray]">
+                            {value}
+                          </span>
+                        ))}
+                      </Box>
+                    )}
+                    MenuProps={MenuProps}
+                  >
+                    {names.map((name) => (
+                      <MenuItem key={name} value={name}>
+                        {name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </div>
             </div>
           </div>
           <div className="w-full rounded-lg mb-3 p-3">
@@ -432,14 +468,22 @@ const AddProduct = () => {
           </div>
 
           <div className="w-full items-center justify-between flex px-4 mt-5">
-            <Button size="medium" className="rounded-md" variant="outlined">
+            <Button
+              size="medium"
+              className="rounded-md capitalize"
+              variant="outlined"
+            >
               Discard
             </Button>
             <div className="flex items-center justify-center gap-5">
-              <Button size="medium" className="rounded-md">
+              <Button size="medium" className="rounded-md capitalize">
                 Clone
               </Button>
-              <Button size="medium" className="rounded-md" variant="contained">
+              <Button
+                size="medium"
+                className="rounded-md capitalize"
+                variant="contained"
+              >
                 Add Product
               </Button>
             </div>

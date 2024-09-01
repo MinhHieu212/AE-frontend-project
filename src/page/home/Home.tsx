@@ -69,7 +69,7 @@ const Home = () => {
     <div className="w-full mih-full bg-white pb-[220px]">
       <BannerCarousel />
       <div className="w-full my-[20px]">
-        <h3 className="w-[95%] mx-[auto]"> Popular Products </h3>
+        <h2 className="w-[95%] mx-[auto]"> Popular Products </h2>
         <div className="overflow-x-scroll flex items-center justify-start gap-5 w-[95%] mx-[auto]">
           {product_response.status === 200 ? (
             product_response.data.map((item) => (
