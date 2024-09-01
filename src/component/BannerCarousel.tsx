@@ -14,23 +14,18 @@ interface BannerCarouselProps {
 const bannerList: BannerProp[] = [
   {
     cover_url:
-      "https://plus.unsplash.com/premium_photo-1665159465178-5ee4067d6001?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.unsplash.com/photo-1723248535160-359e7105ba0e?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     direct_path: "/course-outline",
   },
   {
     cover_url:
-      "https://images.unsplash.com/photo-1724752286363-846076c705a9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://plus.unsplash.com/premium_photo-1667530621211-7924dc31a4a8?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     direct_path: "/outline-generator",
   },
   {
     cover_url:
-      "https://images.unsplash.com/photo-1724752286363-846076c705a9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://plus.unsplash.com/premium_photo-1661924125438-fde21ba396de?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     direct_path: "/ai-buildere",
-  },
-  {
-    cover_url:
-      "https://images.unsplash.com/photo-1724752286363-846076c705a9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    direct_path: "/course-outline",
   },
 ];
 
