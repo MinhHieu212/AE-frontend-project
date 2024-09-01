@@ -36,7 +36,8 @@ const Banner = (props: BannerProp) => {
       style={{
         backgroundImage: `url(${props.cover_url})`,
         backgroundPosition: "center",
-        backgroundSize: "fill",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
         margin: "0 auto",
         height: "400px",
         color: "white",

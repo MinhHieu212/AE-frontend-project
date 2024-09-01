@@ -31,7 +31,7 @@ const ProductItem: React.FC<ProductItemProps> = (props) => {
     "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=";
 
   return (
-    <div className="w-4/5 bg-slate-100 mx-auto mb-3 p-3 rounded-xl flex items-center justify-start gap-3 border-2 border-solid border-gray-200">
+    <div className="w-4/5 bg-slate-100 mx-auto mb-2 p-3 rounded-xl flex items-center justify-start gap-3 border-2 border-solid border-gray-200">
       <div className="w-[150px] h-[130px] rounded-lg overflow-hidden">
         <img
           src={
@@ -69,18 +69,19 @@ const Products: React.FC = () => {
 
   return (
     <div className="w-full h-full">
-      <div className="flex h-12 items-center justify-between px-5">
+      <div className="flex h-12 items-center justify-between px-5 mt-5">
         <h2 className="text-xl font-bold">Products</h2>
         <Button
           variant="contained"
           onClick={() => navigate("/products/add-product")}
+          className="capitalize"
         >
           Add new Product
         </Button>
       </div>
       <Stack
         spacing={2}
-        className="h-[calc(100dvh-140px)] overflow-scroll my-2 px-5"
+        className="h-[calc(100dvh-140px)] overflow-scroll my-2 px-5 mt-10"
       >
         {product_response.status === 200 ? (
           product_response.data.map((item) => (

@@ -4,12 +4,10 @@ import Button from "@mui/material/Button";
 import {
   Box,
   Checkbox,
-  Chip,
   Divider,
   FormControl,
   FormControlLabel,
   FormGroup,
-  IconButton,
   ImageList,
   ImageListItem,
   InputAdornment,
@@ -23,15 +21,12 @@ import {
   TextField,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
 
-const save = (data: any) => {
-  console.log(data);
-};
-
-const myTheme = createTheme({
-  // Set up your custom MUI theme here
-});
+interface ImageFile {
+  file: File;
+  url: string;
+}
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -70,9 +65,25 @@ const MenuProps = {
 };
 
 const AddProduct = () => {
+  const navigate = useNavigate();
   const [category1, setCategory1] = React.useState<string[]>([]);
   const [age, setAge] = React.useState<string>("Kg");
   const [businessDescription, setBusinessDescription] = useState("");
+  const [imageList, setImageList] = useState<ImageFile[]>([]);
+
+  const uploadImageList = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files) {
+      const newImageList: ImageFile[] = Array.from(files).map((file) => ({
+        file,
+        url: URL.createObjectURL(file),
+      }));
+
+      setImageList((prevList) => [...prevList, ...newImageList]);
+
+      console.log("New image list:", newImageList);
+    }
+  };
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -102,21 +113,24 @@ const AddProduct = () => {
 
   return (
     <div className="flex flex-col items-center justify-start w-full h-full p-3">
-      <div className="mr-auto flex items-center justify-center gap-3">
-        <Button className="w-[50px] h-[50px] border-gray-400">
+      <div className="mr-auto flex items-center justify-center gap-3 px-5">
+        <Button
+          className="rounded-lg h-[50px] border-[2px] border-solid border-gray-400"
+          onClick={() => navigate("/products")}
+        >
           <IconArrowLeft size={30} color="gray" />
         </Button>
         <div>
-          <p className="text-[gray] font-medium my-0 text-sm">
+          <p className="text-[gray] font-medium my-1 text-sm">
             Back to product list
           </p>
-          <p className="font-semibold text-xl my-0">Add New Product</p>
+          <p className="font-medium text-xl my-0">Add New Product</p>
         </div>
       </div>
       <div className="w-full flex items-start justify-center p-2 gap-3 h-full my-2 overflow-scroll">
         <div className="w-1/2 flex flex-col items-center justify-start">
           <div className="w-full flex flex-col rounded-lg mb-3 p-3">
-            <p className="font-semibold text-lg">Description</p>
+            <p className="font-medium text-lg">Description</p>
             <div className="border-2 border-solid border-gray-200 rounded-lg p-5 h-full flex flex-col gap-3">
               <div>
                 <p className="my-0 text-[#cac4c4] text-sm">Product name</p>
@@ -163,7 +177,7 @@ const AddProduct = () => {
             </div>
           </div>
           <div className="w-full rounded-lg mb-3 p-3">
-            <p className="font-semibold text-lg">Category</p>
+            <p className="font-medium text-lg">Category</p>
             <div className="border-2 border-solid border-gray-200 rounded-lg p-5 h-full flex flex-col gap-3">
               <div>
                 <p className="my-0 text-[#cac4c4] text-sm">Product Category</p>
@@ -232,7 +246,7 @@ const AddProduct = () => {
             </div>
           </div>
           <div className="w-full rounded-lg mb-3 p-3">
-            <p className="font-semibold text-lg">Inventory</p>
+            <p className="font-medium text-lg">Inventory</p>
             <div className="border-2  border-solid border-gray-200 rounded-lg p-5 h-full flex  gap-3">
               <div className="w-1/2">
                 <p className="my-0 text-[#cac4c4] text-sm">Quantity</p>
@@ -258,7 +272,7 @@ const AddProduct = () => {
             </div>
           </div>
           <div className="w-full rounded-lg mb-3 p-3">
-            <p className="font-semibold text-lg"> Selling Type </p>
+            <p className="font-medium text-lg"> Selling Type </p>
             <div className="border-2  border-solid border-gray-200 rounded-lg p-5 h-full flex gap-3">
               <FormGroup>
                 <FormControlLabel
@@ -279,31 +293,47 @@ const AddProduct = () => {
         </div>
         <div className="w-1/2">
           <div className="w-full rounded-lg mb-3 p-3">
-            <p className="font-semibold text-lg"> Product images</p>{" "}
+            <p className="font-medium text-lg"> Product images</p>
             <div className="border-2  border-solid border-gray-200 rounded-lg p-5 h-full flex gap-3">
-              <Box className="w-full overflow-y-scroll">
-                <ImageList
-                  cols={4}
-                  gap={8}
-                  className="w-full h-[300px]"
-                  variant="quilted"
+              <Box className="w-full h-[325px] flex items-center justify-start gap-5">
+                <Box
+                  component="label"
+                  className="h-full cursor-pointer w-1/3 flex flex-col items-center justify-center rounded-lg bg-slate-100"
                 >
-                  {itemData.map((item) => (
-                    <ImageListItem key={item.img}>
-                      <img
-                        srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                        src={`${item.img}?w=248&fit=crop&auto=format`}
-                        alt={item.title}
-                        loading="lazy"
-                      />
-                    </ImageListItem>
-                  ))}
-                </ImageList>
+                  <p className="font-medium my-1 text-[blue]">Upload images</p>
+                  <p className="my-1">(.png, .jped, .jpg)</p>
+                  <VisuallyHiddenInput
+                    type="file"
+                    onChange={uploadImageList}
+                    accept="image/*"
+                    multiple
+                  />
+                </Box>
+                <Box className="h-[325px] w-2/3 flex items-center justify-start gap-5">
+                  <ImageList
+                    cols={3}
+                    gap={8}
+                    className="w-full h-full rounded-lg"
+                    variant="quilted"
+                  >
+                    {imageList.map((item, index) => (
+                      <ImageListItem key={index}>
+                        <img
+                          srcSet={`${item.url}`}
+                          src={`${item.url}`}
+                          alt={item.file.name}
+                          loading="lazy"
+                          className="w-[400] h-[400] object-cover"
+                        />
+                      </ImageListItem>
+                    ))}
+                  </ImageList>
+                </Box>
               </Box>
             </div>
           </div>
           <div className="w-full rounded-lg mb-3 p-3">
-            <p className="font-semibold text-lg"> Selling Type</p>
+            <p className="font-medium text-lg"> Selling Type</p>
             <div className="border-2 border-solid border-gray-200 rounded-lg p-5 h-full flex flex-col gap-3">
               <div>
                 <p className="my-0 text-[#cac4c4] text-sm">Item weight</p>
@@ -336,7 +366,7 @@ const AddProduct = () => {
                 </div>
               </div>
               <div>
-                <p className="font-semibold"> Package Size</p>
+                <p className="font-medium"> Package Size</p>
                 <div className="flex item-start justify-between gap-5">
                   <div className="flex items-start justify-center flex-col w-1/3">
                     <p className="my-0 text-[#cac4c4] text-sm">Length</p>
@@ -395,7 +425,7 @@ const AddProduct = () => {
           </div>
 
           <div className="w-full rounded-lg mb-3 p-3">
-            <p className="font-semibold text-lg"> Pricing </p>
+            <p className="font-medium text-lg"> Pricing </p>
             <div className="border-2 border-solid border-gray-200 rounded-lg p-5 h-full flex flex-col gap-3">
               <div className="w-full  flex items-center justify-between gap-5">
                 <div className="w-full">
@@ -469,18 +499,22 @@ const AddProduct = () => {
 
           <div className="w-full items-center justify-between flex px-4 mt-5">
             <Button
-              size="medium"
+              size="large"
               className="rounded-md capitalize"
               variant="outlined"
             >
               Discard
             </Button>
             <div className="flex items-center justify-center gap-5">
-              <Button size="medium" className="rounded-md capitalize">
+              <Button
+                size="large"
+                variant="outlined"
+                className="rounded-md capitalize"
+              >
                 Clone
               </Button>
               <Button
-                size="medium"
+                size="large"
                 className="rounded-md capitalize"
                 variant="contained"
               >

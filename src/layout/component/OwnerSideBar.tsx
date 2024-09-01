@@ -110,15 +110,15 @@ const SideBar = () => {
   // const navigate = useNavigate();
   return (
     <div className="w-[400px] h-[100dvh] bg-[#eef3ff] flex flex-col justify-start items-center px-5">
-      <Link href="/products" underline="none" className="w-full">
+      <Link href="/products" underline="none" className="w-full my-2">
         <div className="w-full flex items-center gap-3">
           <img
-            src="https://images.unsplash.com/photo-1703489583404-4ee76c06482b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/NASA_logo.svg/918px-NASA_logo.svg.png"
             alt="Company avatar"
-            className="w-[45px] h-[45px] rounded-md"
+            className="w-[50px] h-[50px] object-cover rounded-md"
           />
 
-          <h2 className="text-[blue]">Accessed</h2>
+          <h2 className="text-[blue]">Nasa Store</h2>
         </div>
       </Link>
 
@@ -126,16 +126,18 @@ const SideBar = () => {
         variant="outlined"
         placeholder="Search..."
         fullWidth
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <IconSearch size={20} />
-            </InputAdornment>
-          ),
-          style: {
-            height: "42px",
-            borderRadius: "8px",
-            border: "lightgray",
+        size="small"
+        slotProps={{
+          input: {
+            startAdornment: (
+              <InputAdornment position="start">
+                <IconSearch size={20} />
+              </InputAdornment>
+            ),
+            style: {
+              borderRadius: "5px",
+              height: "45px",
+            },
           },
         }}
       />
@@ -158,9 +160,9 @@ const SideBar = () => {
       <div className="flex w-full justify-between items-center gap-3 mt-[auto] mb-2">
         <div className="flex items-center justify-between gap-3 cursor-pointer">
           <img
-            src="https://images.unsplash.com/photo-1724881470846-fa57b781af51?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNfzY0jYPDNjRaFdyT7cpvSabL8l69GLcULQ&s"
             alt="Company avatar"
-            className="w-[40px] h-[40px] rounded-full"
+            className="w-[40px] h-[40px] rounded-full object-cover"
           />
           <div className="h-[50px] flex flex-col items-start justify-center">
             <p className="font-semibold  my-0">Trần Minh Hiếu</p>

@@ -40,7 +40,7 @@ const ProductItem = (props: ProductItemProps) => {
             : fallbackImageURL
         }
         alt={`Product: ${props.name}`}
-        className="w-[250px] h-[300px] object-fill rounded-lg"
+        className="w-[250px] h-[250px] object-cover rounded-lg"
       />
       <Divider className="my-5" />
       <Stack className="px-3 pb-2">
