@@ -12,7 +12,7 @@ import {
   IconSearch,
   IconDoorExit,
 } from "@tabler/icons-react";
-import { InputAdornment, Link, Stack, TextField } from "@mui/material";
+import { Divider, InputAdornment, Link, Stack, TextField } from "@mui/material";
 
 interface SubSideBarProps {
   name: string;
@@ -61,7 +61,7 @@ const SideBarItem = ({
         <div>{isActive ? iconActive : icon}</div>
         <p
           className={`w-[80%] font-[400] ${
-            isActive ? "text-black" : "text-[#a9adb9]"
+            isActive ? "text-black" : "text-[#77787b]"
           }`}
         >
           {name}
@@ -70,33 +70,40 @@ const SideBarItem = ({
           {subItems === null ? (
             <></>
           ) : expand ? (
-            <IconChevronUp className="text-[#a9adb9]" size={18} />
+            <IconChevronUp className="text-[#77787b]" size={18} />
           ) : (
-            <IconChevronDown className="text-[#a9adb9]" size={18} />
+            <IconChevronDown className="text-[#77787b]" size={18} />
           )}
         </div>
       </div>
 
       {expand && subItems && (
-        <div className="pl-[12%] my-2 w-full cursor-pointer">
+        <div className="ml-[10px] border-[0] border-l-[3px] border-solid border-blue-200 my-2 w-full cursor-pointer">
           {subItems.map((item, index) => {
             const subIsActive = item.path === location.pathname.split("/")[1];
 
             return (
-              <div
-                onClick={() => handleRouting(item.path)}
-                key={index}
-                className={`p-2 rounded-lg mb-1 w-full h-[40px] flex items-center font-[400] ${
-                  subIsActive ? "bg-white" : "bg-[#eef3ff]"
-                } px-2`}
-              >
-                <p
-                  className={`${
-                    subIsActive ? "text-[#099cff]" : "text-[#a9adb9]"
+              <div className="flex items-center">
+                <Divider
+                  className={`w-[15px] mb-1 ${
+                    subIsActive ? "bg-blue-200" : "invisible"
                   }`}
+                />
+                <div
+                  onClick={() => handleRouting(item.path)}
+                  key={index}
+                  className={`p-2 rounded-lg mb-1 w-full h-[40px] flex items-center font-[400] ${
+                    subIsActive ? "bg-white" : "bg-[#eef3ff]"
+                  } px-2`}
                 >
-                  {item.name}
-                </p>
+                  <p
+                    className={`${
+                      subIsActive ? "text-[#099cff]" : "text-[#77787b]"
+                    } my-0`}
+                  >
+                    {item.name}
+                  </p>
+                </div>
               </div>
             );
           })}
@@ -142,7 +149,7 @@ const SideBar = () => {
         }}
       />
 
-      <Stack className="overflow-scroll w-full my-3">
+      <Stack className="h-[calc(100dvh-140px)] overflow-y-scroll overflow-x-hidden w-full my-3">
         {sidebar_list.length > 0 &&
           sidebar_list.map((item, index) => (
             <SideBarItem
@@ -179,7 +186,7 @@ export default SideBar;
 
 const sidebar_list = [
   {
-    icon: <IconHome size={23} color="#a9adb9" />,
+    icon: <IconHome size={23} color="#77787b" />,
     iconActive: <IconHome size={23} color="#099cff" />,
     paths: ["manager-products", "manager-orders", "manager-customer"],
     name: "Page manager",
@@ -203,7 +210,7 @@ const sidebar_list = [
     ],
   },
   {
-    icon: <IconBuildingStore size={23} color="#a9adb9" />,
+    icon: <IconBuildingStore size={23} color="#77787b" />,
     iconActive: <IconBuildingStore size={23} color="#099cff" />,
     paths: ["products", "orders", "customer"],
     name: "My shop",
@@ -211,7 +218,7 @@ const sidebar_list = [
     subItems: [
       {
         path: "products",
-        name: "Product",
+        name: "Products",
         disable: false,
       },
       {
@@ -227,7 +234,7 @@ const sidebar_list = [
     ],
   },
   {
-    icon: <IconDeviceDesktopAnalytics size={23} color="#a9adb9" />,
+    icon: <IconDeviceDesktopAnalytics size={23} color="#77787b" />,
     iconActive: <IconDeviceDesktopAnalytics size={23} color="#099cff" />,
     name: "Business analytics",
     disable: false,
@@ -251,7 +258,7 @@ const sidebar_list = [
     ],
   },
   {
-    icon: <IconTags size={23} color="#a9adb9" />,
+    icon: <IconTags size={23} color="#77787b" />,
     iconActive: <IconTags size={23} color="#099cff" />,
     name: "Promotion",
     disable: false,
@@ -259,7 +266,7 @@ const sidebar_list = [
     subItems: null,
   },
   {
-    icon: <IconMessage size={23} color="#a9adb9" />,
+    icon: <IconMessage size={23} color="#77787b" />,
     iconActive: <IconMessage size={23} color="#099cff" />,
     name: "Message",
     disable: false,
