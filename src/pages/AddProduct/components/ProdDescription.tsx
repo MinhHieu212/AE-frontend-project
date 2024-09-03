@@ -1,8 +1,8 @@
-import { IconUpload } from "@tabler/icons-react";
 import React, { useState } from "react";
-import Button from "@mui/material/Button";
-import { TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { ProductFormProps } from "../types/ProductFormProps";
+import { IconUpload } from "@tabler/icons-react";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -16,22 +16,24 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-const ProdDescription = () => {
-  const [businessDescription, setBusinessDescription] = useState("");
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+const ProdDescription: React.FC<ProductFormProps> = ({
+  formData,
+  updateField,
+}) => {
+  const handleParseTxtFile = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file && file.type === "text/plain") {
       const reader = new FileReader();
       reader.onload = (e) => {
         const content = e.target?.result as string;
-
-        setBusinessDescription(content);
+        updateField("description", content);
       };
       reader.readAsText(file);
     } else {
       alert("Please upload a valid .txt file.");
     }
   };
+
   return (
     <div className="w-full flex flex-col rounded-lg mb-3 p-3">
       <p className="font-medium text-lg">Description</p>
@@ -44,11 +46,15 @@ const ProdDescription = () => {
             required
             size="small"
             className="pb-4"
+            value={formData.name}
+            onChange={(e) => updateField("name", e.target.value)}
           />
         </div>
         <div>
           <div className="flex items-center justify-between gap-3 ">
-            <p className="my-0 text-[#cac4c4] text-sm">Business Description</p>
+            <p className="my-0 pb-1 text-[#cac4c4] text-sm">
+              Business Description
+            </p>
             <Button
               component="label"
               role={undefined}
@@ -59,7 +65,7 @@ const ProdDescription = () => {
               Upload .txt files
               <VisuallyHiddenInput
                 type="file"
-                onChange={handleFileUpload}
+                onChange={handleParseTxtFile}
                 accept=".txt"
                 multiple
               />
@@ -72,8 +78,8 @@ const ProdDescription = () => {
             rows={8}
             required
             size="small"
-            value={businessDescription}
-            onChange={(e) => setBusinessDescription(e.target.value)}
+            value={formData.description}
+            onChange={(e) => updateField("description", e.target.value)}
           />
         </div>
       </div>

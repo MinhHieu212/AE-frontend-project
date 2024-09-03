@@ -1,106 +1,105 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   FormControl,
-  InputLabel,
   MenuItem,
   OutlinedInput,
   Select,
-  SelectChangeEvent,
 } from "@mui/material";
+import { ProductFormProps } from "../types/ProductFormProps";
+import { fake_data_categorys } from "../../../data/fake_data_category";
 
-const names = [
-  "Oliver Hansen",
-  "Van Henry",
-  "April Tucker",
-  "Ralph Hubbard",
-  "Omar Alexander",
-  "Carlos Abbott",
-  "Miriam Wagner",
-  "Bradley Wilkerson",
-  "Virginia Andrews",
-  "Kelly Snyder",
-];
+const ProdCategory: React.FC<ProductFormProps> = ({
+  formData,
+  updateField,
+}) => {
+  const [subCategory, setSubCategory] = useState<any>([]);
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
-const ProdCategory = () => {
-  const [category1, setCategory1] = React.useState<string[]>([]);
-
-  const handleChange = (event: SelectChangeEvent<typeof category1>) => {
-    const {
-      target: { value },
-    } = event;
-    setCategory1(typeof value === "string" ? value.split(",") : value);
+  const handleChange = (value: string, level: string) => {
+    updateField("category", { ...formData.category, [level]: value });
   };
+
+  useEffect(() => {
+    const selectedCategory = fake_data_categorys.find(
+      (item) => item.name === formData.category.level_1
+    );
+    handleChange("", "level_2");
+    setSubCategory(selectedCategory?.subCategory || []);
+  }, [formData.category.level_1]);
+
   return (
-    <div className="w-full rounded-lg mb-3 p-3">
+    <div className="w-full rounded-lg mb-2 p-3">
       <p className="font-medium text-lg">Category</p>
       <div className="border-2 border-solid border-gray-200 rounded-lg p-5 h-full flex flex-col gap-3">
         <div>
-          <p className="my-0 text-[#cac4c4] text-sm">Product Category</p>
+          <p className="my-0 mb-1 text-[#cac4c4] text-sm">Product Category</p>
           <FormControl className="w-full">
-            <InputLabel id="demo-multiple-chip-label">Level 1</InputLabel>
             <Select
-              labelId="demo-multiple-chip-label"
               id="demo-multiple-chip"
-              value={category1}
-              onChange={handleChange}
-              input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-              className="h-[40px] w-full"
-              renderValue={(selected) => (
+              inputProps={{ "aria-label": "Without label" }}
+              value={formData.category.level_1}
+              onChange={(e) => handleChange(e.target.value, "level_1")}
+              input={<OutlinedInput id="select-multiple-chip" />}
+              className="h-[42px] w-full cursor-pointer"
+              renderValue={() => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  {selected.map((value) => (
-                    <span className="text-sm font-medium text-[gray]">
-                      {value}
-                    </span>
-                  ))}
+                  <span className="text-sm font-medium text-[gray]">
+                    {formData.category.level_1}
+                  </span>
                 </Box>
               )}
-              MenuProps={MenuProps}
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 48 * 4.5 + 8,
+                    width: 250,
+                  },
+                },
+              }}
+              displayEmpty
             >
-              {names.map((name) => (
-                <MenuItem key={name} value={name}>
-                  {name}
+              {fake_data_categorys.map((item) => (
+                <MenuItem key={item.id} value={item.name}>
+                  {item.name}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
         </div>
+
         <div>
-          <p className="my-0 text-[#cac4c4] text-sm">Product Category</p>
+          <p className="my-0 mb-1 text-[#cac4c4] text-sm">
+            Product Sub-category
+          </p>
           <FormControl className="w-full">
-            <InputLabel id="demo-multiple-chip-label">Level 2</InputLabel>
             <Select
-              labelId="demo-multiple-chip-label"
+              disabled={subCategory.length === 0}
               id="demo-multiple-chip"
-              value={category1}
-              onChange={handleChange}
-              input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-              className="h-[42px] w-full"
-              renderValue={(selected) => (
+              inputProps={{ "aria-label": "Without label" }}
+              value={formData.category.level_2}
+              onChange={(e) => handleChange(e.target.value, "level_2")}
+              input={<OutlinedInput id="select-multiple-chip" />}
+              className="h-[42px] w-full cursor-pointer"
+              renderValue={() => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  {selected.map((value) => (
-                    <span className="text-sm font-medium text-[gray]">
-                      {value}
-                    </span>
-                  ))}
+                  <span className="text-sm font-medium text-[gray]">
+                    {formData.category.level_2}
+                  </span>
                 </Box>
               )}
-              MenuProps={MenuProps}
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 48 * 4.5 + 8,
+                    width: 250,
+                  },
+                },
+              }}
+              displayEmpty
             >
-              {names.map((name) => (
-                <MenuItem key={name} value={name}>
-                  {name}
+              {subCategory.map((item: any) => (
+                <MenuItem key={item.id} value={item.name}>
+                  {item.name}
                 </MenuItem>
               ))}
             </Select>
