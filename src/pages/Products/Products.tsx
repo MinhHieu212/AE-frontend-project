@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Stack, Tooltip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { fake_data_products } from "../../data/fake_data_products";
 import { getProductList } from "../../api/ProductApi";
 import { toast } from "../../utils/Toastify";
 
@@ -9,25 +8,19 @@ interface CategoryProps {
   id: number;
   name: string;
   parentID: number | null;
+  createdAt: string | null;
+  updatedAt: string | null;
+  subCategory: CategoryProps[];
   noOfViews: number;
   productsSold: number;
 }
-
-interface ProductItemProps {
-  id: number;
-  name: string;
-  oldPrice: number;
-  price: number;
-  rating: number;
-  brandName: string | null;
-  viewCount: number;
-  imageURL: string[] | null;
-  description: string;
-  quantitySold: number;
-  remainingQuantity: number;
-  categories: CategoryProps[];
+interface Dimensions {
+  weight?: number; // Assuming weight might be optional
+  length?: number; // Assuming dimensions might be optional
+  width?: number; // Assuming dimensions might be optional
+  height?: number; // Assuming dimensions might be optional
 }
-interface ProductProps {
+export interface ProductProps {
   id: number;
   name: string;
   imageURL: string[];
@@ -45,16 +38,9 @@ interface ProductProps {
   sellingTypes: string;
   createdAt: string;
   updatedAt: string | null;
-  categories: string[];
+  categories: CategoryProps[];
   dimensions: Dimensions | null;
   sku: string;
-}
-
-interface Dimensions {
-  weight?: number; // Assuming weight might be optional
-  length?: number; // Assuming dimensions might be optional
-  width?: number; // Assuming dimensions might be optional
-  height?: number; // Assuming dimensions might be optional
 }
 
 const ProductItem: React.FC<ProductProps> = ({ ...props }) => {
@@ -63,7 +49,7 @@ const ProductItem: React.FC<ProductProps> = ({ ...props }) => {
 
   return (
     <div className="w-full mx-auto mb-2 p-3 rounded-xl flex items-center justify-start gap-3 border-2 border-solid border-gray-200 bg-[#f9fcff] ">
-      <div className="w-[150px] h-[130px] rounded-lg overflow-hidden">
+      <div className="w-[180px] h-[150px] rounded-lg overflow-hidden">
         <img
           src={props.primaryImageURL ? props.primaryImageURL : fallbackImageURL}
           alt={`Product: ${props.name}`}
@@ -72,23 +58,23 @@ const ProductItem: React.FC<ProductProps> = ({ ...props }) => {
         />
       </div>
       <div className="flex h-full items-start w-full justify-start flex-col p-2">
-        <p className="text-lg my-1 font-medium">Name: {props.name}</p>
-        <p className="text-sm my-1">
-          {/* {props.categories.map(
-            (item, index) =>
-              `${item.name} ${
-                index !== props.categories.length - 1 ? " & " : ""
-              }`
-          )} */}
-        </p>
+        <p className="text-lg my-1 font-medium">Name: {props.name}</p>{" "}
         <p className="text-lg text-blue-400 my-0 font-medium">
           Sale Price: ${props.salePrice.toFixed(2)} $
         </p>
         <p className="text-sm my-1 font-medium text-[gray]">
           Price: ${props.price.toFixed(2)} $
         </p>
+        <p className="text-sm my-1">
+          {props.categories.map(
+            (item, index) =>
+              `${item.name} ${
+                index !== props.categories.length - 1 ? " & " : ""
+              }`
+          )}
+        </p>
         <p className="text-sm my-1 font-medium text-[gray]">
-          Onhand: {props.sellingTypes}
+          Sell on: {props.sellingTypes}
         </p>
       </div>
     </div>
