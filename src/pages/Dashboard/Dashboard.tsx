@@ -1,7 +1,6 @@
 import React from "react";
 import BannerCarousel from "../../components/BannerCarousel";
 import PopularProducts from "./components/PopularProducts";
-// import EditorWrapper from "../../components/EditorWrapper";
 
 const Dashboard = () => {
   return (

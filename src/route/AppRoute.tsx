@@ -24,6 +24,14 @@ const route_list = [
     ),
   },
   {
+    path: "/accessed-ecommerce",
+    element: (
+      <CustomerLayout>
+        <Dashboard />
+      </CustomerLayout>
+    ),
+  },
+  {
     path: "/products",
     element: (
       <OwnerLayout>
