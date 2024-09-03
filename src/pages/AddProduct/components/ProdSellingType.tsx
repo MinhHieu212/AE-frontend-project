@@ -18,7 +18,7 @@ const ProdSellingType: React.FC<ProductFormProps> = ({
           <FormControlLabel
             control={
               <Checkbox
-                checked={formData.sellingType === "in-store"} // update for the single-choice option
+                checked={formData.sellingType === "in-store"}
                 onChange={handleChange}
                 value="in-store"
               />
@@ -28,7 +28,7 @@ const ProdSellingType: React.FC<ProductFormProps> = ({
           <FormControlLabel
             control={
               <Checkbox
-                checked={formData.sellingType === "online"} // update for the single-choice option
+                checked={formData.sellingType === "online"}
                 onChange={handleChange}
                 value="online"
               />
@@ -38,7 +38,7 @@ const ProdSellingType: React.FC<ProductFormProps> = ({
           <FormControlLabel
             control={
               <Checkbox
-                checked={formData.sellingType === "both"} // update for the single-choice option
+                checked={formData.sellingType === "both"}
                 onChange={handleChange}
                 value="both"
               />

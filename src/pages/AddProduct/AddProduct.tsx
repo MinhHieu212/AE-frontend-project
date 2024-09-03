@@ -9,6 +9,7 @@ import ProdPackages from "./components/ProdPackages";
 import ProdImages from "./components/ProdImages";
 import ProdSellingType from "./components/ProdSellingType";
 import ProdInventory from "./components/ProdInventory";
+import { MantineProvider } from "@mantine/core";
 
 const SubHeader = () => {
   const navigate = useNavigate();
@@ -89,7 +90,9 @@ const AddProduct = () => {
         <SubHeader />
         <div className="w-full flex items-start justify-center p-2 gap-3 h-full">
           <div className="w-1/2 flex flex-col items-center justify-start">
-            <ProdDescription formData={formData} updateField={updateField} />
+            <MantineProvider>
+              <ProdDescription formData={formData} updateField={updateField} />
+            </MantineProvider>
             <ProdCategory formData={formData} updateField={updateField} />
             <ProdInventory formData={formData} updateField={updateField} />
             <ProdSellingType formData={formData} updateField={updateField} />

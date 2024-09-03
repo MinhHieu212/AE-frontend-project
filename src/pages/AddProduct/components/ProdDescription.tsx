@@ -1,8 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { ProductFormProps } from "../types/ProductFormProps";
 import { IconUpload } from "@tabler/icons-react";
+
+import "@mantine/core/styles.css";
+import "@mantine/tiptap/styles.css";
+import { RichTextEditor, Link } from "@mantine/tiptap";
+import { useEditor } from "@tiptap/react";
+import Highlight from "@tiptap/extension-highlight";
+import StarterKit from "@tiptap/starter-kit";
+import Underline from "@tiptap/extension-underline";
+import TextAlign from "@tiptap/extension-text-align";
+import Superscript from "@tiptap/extension-superscript";
+import SubScript from "@tiptap/extension-subscript";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -20,14 +31,42 @@ const ProdDescription: React.FC<ProductFormProps> = ({
   formData,
   updateField,
 }) => {
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      Underline,
+      Link,
+      Superscript,
+      SubScript,
+      Highlight,
+      TextAlign.configure({ types: ["heading", "paragraph"] }),
+    ],
+    content: formData.description,
+    onUpdate: ({ editor: _editor }) => {
+      updateField("description", _editor.getHTML());
+    },
+  });
+
   const handleParseTxtFile = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file && file.type === "text/plain") {
       const reader = new FileReader();
       reader.onload = (e) => {
         const content = e.target?.result as string;
-        updateField("description", content);
+
+        const htmlContent = content
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/\n/g, "<br>")
+          .replace(/ {2,}/g, (match) => "&nbsp;".repeat(match.length));
+
+        console.log("HTML content:", htmlContent);
+
+        updateField("description", htmlContent);
+        editor?.commands.setContent(htmlContent);
       };
+
       reader.readAsText(file);
     } else {
       alert("Please upload a valid .txt file.");
@@ -71,16 +110,64 @@ const ProdDescription: React.FC<ProductFormProps> = ({
               />
             </Button>
           </div>
-          <TextField
-            variant="outlined"
-            fullWidth
-            multiline
-            rows={8}
-            required
-            size="small"
-            value={formData.description}
-            onChange={(e) => updateField("description", e.target.value)}
-          />
+          <RichTextEditor
+            editor={editor}
+            w="100%"
+            styles={{
+              content: {
+                whiteSpace: "pre-wrap",
+                wordBreak: "break-word",
+                overflowWrap: "break-word",
+              },
+            }}
+          >
+            <RichTextEditor.Toolbar sticky stickyOffset={60}>
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.Bold />
+                <RichTextEditor.Italic />
+                <RichTextEditor.Underline />
+                <RichTextEditor.Strikethrough />
+                <RichTextEditor.ClearFormatting />
+                <RichTextEditor.Highlight />
+                <RichTextEditor.Code />
+              </RichTextEditor.ControlsGroup>
+
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.H1 />
+                <RichTextEditor.H2 />
+                <RichTextEditor.H3 />
+                <RichTextEditor.H4 />
+              </RichTextEditor.ControlsGroup>
+
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.Blockquote />
+                <RichTextEditor.Hr />
+                <RichTextEditor.BulletList />
+                <RichTextEditor.OrderedList />
+                <RichTextEditor.Subscript />
+                <RichTextEditor.Superscript />
+              </RichTextEditor.ControlsGroup>
+
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.Link />
+                <RichTextEditor.Unlink />
+              </RichTextEditor.ControlsGroup>
+
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.AlignLeft />
+                <RichTextEditor.AlignCenter />
+                <RichTextEditor.AlignJustify />
+                <RichTextEditor.AlignRight />
+              </RichTextEditor.ControlsGroup>
+
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.Undo />
+                <RichTextEditor.Redo />
+              </RichTextEditor.ControlsGroup>
+            </RichTextEditor.Toolbar>
+
+            <RichTextEditor.Content />
+          </RichTextEditor>
         </div>
       </div>
     </div>
