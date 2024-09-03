@@ -33,6 +33,7 @@ const SubHeader = () => {
 interface ActionButtonsProps {
   submitForm: () => void;
   validateForm: () => boolean;
+  resetFormData: () => void;
   errors: any;
   isValid: boolean;
   setStartValidate: any;
@@ -41,6 +42,7 @@ interface ActionButtonsProps {
 const ActionButtons: React.FC<ActionButtonsProps> = ({
   submitForm,
   validateForm,
+  resetFormData,
   errors,
   isValid = false,
   setStartValidate,
@@ -55,7 +57,12 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
   }
   return (
     <div className="w-full items-center justify-between flex px-4 mt-5">
-      <Button size="large" className="rounded-md capitalize" variant="outlined">
+      <Button
+        size="large"
+        className="rounded-md capitalize"
+        variant="outlined"
+        onClick={() => resetFormData()}
+      >
         Discard
       </Button>
       <div className="flex items-center justify-center gap-5">
@@ -81,14 +88,23 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
 };
 
 const AddProduct = () => {
-  const { formData, updateField, submitForm, validateForm, errors, loading } =
-    useProductForm();
+  const {
+    formData,
+    updateField,
+    submitForm,
+    validateForm,
+    resetFormData,
+    errors,
+    loading,
+  } = useProductForm();
   const [isValid, setIsValid] = useState<boolean>(false);
   const [startValidate, setStartValidate] = useState<boolean>(false);
 
   useEffect(() => {
     setIsValid(validateForm());
   }, [formData]);
+
+  console.log(formData);
 
   return (
     <div className="flex flex-col items-center justify-start w-full max-w-[1430px] h-full p-3 mx-auto">
@@ -148,6 +164,7 @@ const AddProduct = () => {
               errors={errors}
               isValid={isValid}
               setStartValidate={setStartValidate}
+              resetFormData={resetFormData}
             />
           </div>
         </div>

@@ -31,6 +31,22 @@ export const useProductForm = () => {
     }));
   };
 
+  const resetFormData = () =>
+    setFormData({
+      name: "",
+      description: "",
+      sellingType: "In-store selling only",
+      category: {
+        level_1: { name: null, index: null },
+        level_2: { name: null, index: null },
+      },
+      inventory: { quantity: null, sku: "" },
+      packages_weight: null,
+      packages_size: { length: null, width: null, height: null },
+      pricing: { msrp: null, salePrice: null, price: null },
+      images: [],
+    });
+
   const validateForm = () => {
     const newErrors: any = {};
 
@@ -68,7 +84,10 @@ export const useProductForm = () => {
     } else if (formData.images.length > 10) {
       newErrors.images = "You can upload up to 10 images.";
     }
-    if (formData.images.some((image: any) => image.size > 10 * 1024 * 1024)) {
+    if (
+      formData.images.length > 0 &&
+      formData.images.some((image: any) => image.size > 10 * 1024 * 1024)
+    ) {
       newErrors.images = "Each image must be smaller than 10MB.";
     }
 
@@ -185,5 +204,13 @@ export const useProductForm = () => {
     }
   };
 
-  return { formData, updateField, submitForm, validateForm, errors, loading };
+  return {
+    formData,
+    updateField,
+    submitForm,
+    validateForm,
+    resetFormData,
+    errors,
+    loading,
+  };
 };

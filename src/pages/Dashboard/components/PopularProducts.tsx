@@ -13,7 +13,8 @@ const ProductItem = (props: ProductProps) => {
       <img
         src={props.primaryImageURL ? props.primaryImageURL : fallbackImageURL}
         alt={`Product: ${props.name}`}
-        className="w-[250px] h-[250px] object-cover rounded-lg"
+        className="w-[250px] h-[250px] object-cover rounded-lg cursor-pointer"
+        onClick={() => console.log(JSON.stringify(props, null, 2))}
       />
       <Divider className="my-3" />
       <Stack className="px-3 pb-2">
@@ -64,7 +65,7 @@ const PopularProducts = () => {
           productList.map((item) => <ProductItem key={item.id} {...item} />)
         ) : (
           <div className="w-full h-full flex items-center justify-center">
-            <p className="font-bold text-lg"> No Product </p>
+            <p className="font-bold text-lg"> Loading... </p>
           </div>
         )}
       </div>

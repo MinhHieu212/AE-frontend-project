@@ -119,7 +119,7 @@ const Products: React.FC = () => {
           productList.map((item) => <ProductItem key={item.id} {...item} />)
         ) : (
           <div className="w-full h-full flex items-center justify-center">
-            <p className="font-bold text-lg">No Product Data</p>
+            <p className="font-bold text-lg">Loading...</p>
           </div>
         )}
       </Stack>

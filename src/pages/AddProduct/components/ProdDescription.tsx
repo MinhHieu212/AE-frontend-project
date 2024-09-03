@@ -61,6 +61,8 @@ const ProdDescription: React.FC<ProductFormProps> = ({
           .replace(/&/g, "&amp;")
           .replace(/</g, "&lt;")
           .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;")
           .replace(/\n/g, "<br>")
           .replace(/ {2,}/g, (match) => "&nbsp;".repeat(match.length));
 
@@ -129,7 +131,9 @@ const ProdDescription: React.FC<ProductFormProps> = ({
             w="100%"
             styles={{
               content: {
-                minHeight: "72px",
+                minHeight: "82px",
+                maxHeight: "420px",
+                overflow: "scroll",
                 whiteSpace: "pre-wrap",
                 wordBreak: "break-word",
                 overflowWrap: "break-word",

@@ -5,9 +5,11 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { ProductFormProps } from "../types/ProductFormProps";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { ProductFormProps } from "../types/ProductFormProps";
 
 const style = {
   position: "absolute" as "absolute",
@@ -35,11 +37,30 @@ const PopupImages: React.FC<ProductFormProps> = ({
 
   const handleImageClick = (index: number) => {
     setPrimaryIndex(index);
+    updateField("primaryImageURL", formData.images[index].url);
+  };
+
+  const handleDeleteImage = (index: number) => {
+    const newImages = formData.images.filter((_, i) => i !== index);
+    updateField("images", newImages);
+
+    if (index === primaryIndex) {
+      setPrimaryIndex(0);
+      updateField(
+        "primaryImageURL",
+        newImages.length > 0 ? newImages[0].url : ""
+      );
+    } else if (index < primaryIndex) {
+      setPrimaryIndex(primaryIndex - 1);
+    }
   };
 
   return (
     <div>
-      <Button onClick={handleOpen} className="capitalize">
+      <Button onClick={handleOpen}>
+        <span style={{ margin: "0 10px", color: "green" }}>
+          ({formData.images.length}/10)
+        </span>
         View all
       </Button>
       <Modal
@@ -64,7 +85,18 @@ const PopupImages: React.FC<ProductFormProps> = ({
               className="capitalize "
             >
               Product Images
+              <span
+                style={{
+                  margin: 0,
+                  paddingLeft: 5,
+                  color: "blue",
+                  fontSize: "16px",
+                }}
+              >
+                (Select image for Thumbnail)
+              </span>
             </Typography>
+
             <Box className="w-full">
               {formData.images.length > 0 && (
                 <img
@@ -74,6 +106,7 @@ const PopupImages: React.FC<ProductFormProps> = ({
                     width: "100%",
                     height: "350px",
                     objectFit: "contain",
+                    border: "2px solid blue",
                   }}
                 />
               )}
@@ -85,26 +118,42 @@ const PopupImages: React.FC<ProductFormProps> = ({
                   flexDirection: "row",
                   overflowX: "auto",
                 }}
-                cols={formData.images.length - 1}
+                cols={formData.images.length}
               >
-                {formData.images.map((image, index) => (
-                  <ImageListItem key={index}>
-                    <img
-                      src={image.url}
-                      alt={`Image ${index + 1}`}
-                      style={{
-                        width: "100px",
-                        height: "100px",
-                        objectFit: "cover",
-                        marginRight: "8px",
-                        cursor: "pointer",
-                        border:
-                          index === primaryIndex ? "2px solid blue" : "none",
-                      }}
-                      onClick={() => handleImageClick(index)}
-                    />
-                  </ImageListItem>
-                ))}
+                {formData.images.length > 0 &&
+                  formData.images.map((image, index) => (
+                    <ImageListItem key={index}>
+                      <Box sx={{ position: "relative", margin: "0 5px" }}>
+                        <img
+                          src={image.url}
+                          alt={`Image ${index + 1}`}
+                          style={{
+                            width: "100px",
+                            height: "100px",
+                            objectFit: "cover",
+                            cursor: "pointer",
+                            border:
+                              index === primaryIndex
+                                ? "2px solid blue"
+                                : "none",
+                          }}
+                          onClick={() => handleImageClick(index)}
+                        />
+                        <IconButton
+                          size="small"
+                          sx={{
+                            position: "absolute",
+                            top: "2px",
+                            right: "2px",
+                            backgroundColor: "rgba(246, 221, 221, 0.8)",
+                          }}
+                          onClick={() => handleDeleteImage(index)}
+                        >
+                          <DeleteIcon fontSize="small" />
+                        </IconButton>
+                      </Box>
+                    </ImageListItem>
+                  ))}
               </ImageList>
             </Box>
           </Box>
