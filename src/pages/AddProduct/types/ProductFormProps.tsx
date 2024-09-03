@@ -1,6 +1,11 @@
+export interface CategoryDataProps {
+  name: string | null;
+  index: number | null;
+}
+
 export interface Category {
-  level_1: string;
-  level_2: string;
+  level_1: CategoryDataProps;
+  level_2: CategoryDataProps;
 }
 
 export interface Inventory {
@@ -40,4 +45,6 @@ export interface FormData {
 export interface ProductFormProps {
   formData: FormData;
   updateField: (field: string, value: any) => void;
+  errors: any;
+  startValidate: boolean;
 }

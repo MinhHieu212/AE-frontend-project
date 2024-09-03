@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Button, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { ProductFormProps } from "../types/ProductFormProps";
@@ -7,7 +7,7 @@ import { IconUpload } from "@tabler/icons-react";
 import "@mantine/core/styles.css";
 import "@mantine/tiptap/styles.css";
 import { RichTextEditor, Link } from "@mantine/tiptap";
-import { useEditor } from "@tiptap/react";
+import { BubbleMenu, useEditor } from "@tiptap/react";
 import Highlight from "@tiptap/extension-highlight";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
@@ -30,7 +30,10 @@ const VisuallyHiddenInput = styled("input")({
 const ProdDescription: React.FC<ProductFormProps> = ({
   formData,
   updateField,
+  errors,
+  startValidate,
 }) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -62,9 +65,11 @@ const ProdDescription: React.FC<ProductFormProps> = ({
           .replace(/ {2,}/g, (match) => "&nbsp;".repeat(match.length));
 
         console.log("HTML content:", htmlContent);
-
         updateField("description", htmlContent);
         editor?.commands.setContent(htmlContent);
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
       };
 
       reader.readAsText(file);
@@ -75,36 +80,45 @@ const ProdDescription: React.FC<ProductFormProps> = ({
 
   return (
     <div className="w-full flex flex-col rounded-lg mb-3 p-3">
-      <p className="font-medium text-lg">Description</p>
+      <p className="font-medium text-lg">
+        Description <span className="text-red-600"> *</span>
+      </p>
       <div className="border-2 border-solid border-gray-200 rounded-lg p-5 h-full flex flex-col gap-3">
         <div>
-          <p className="my-0 text-[#cac4c4] text-sm">Product name</p>
+          <p className="my-0 mb-1 text-[#aca4a4] text-sm">
+            Product name <span className="text-red-600"> *</span>
+          </p>
           <TextField
             variant="outlined"
             fullWidth
             required
             size="small"
-            className="pb-4"
             value={formData.name}
             onChange={(e) => updateField("name", e.target.value)}
           />
+          {startValidate && errors.name && (
+            <p className="my-2 text-[#f12727] text-sm">
+              {startValidate && errors.name}
+            </p>
+          )}
         </div>
         <div>
           <div className="flex items-center justify-between gap-3 ">
-            <p className="my-0 pb-1 text-[#cac4c4] text-sm">
-              Business Description
+            <p className="my-0 pb-1 text-[#aca4a4] text-sm">
+              Business Description <span className="text-red-600"> *</span>
             </p>
             <Button
               component="label"
               role={undefined}
               tabIndex={-1}
               className="capitalize"
-              startIcon={<IconUpload size={22} className="mb-[1px]" />}
+              startIcon={<IconUpload size={20} className="mb-[1px]" />}
             >
               Upload .txt files
               <VisuallyHiddenInput
+                ref={fileInputRef}
                 type="file"
-                onChange={handleParseTxtFile}
+                onInput={handleParseTxtFile}
                 accept=".txt"
                 multiple
               />
@@ -115,13 +129,14 @@ const ProdDescription: React.FC<ProductFormProps> = ({
             w="100%"
             styles={{
               content: {
+                minHeight: "72px",
                 whiteSpace: "pre-wrap",
                 wordBreak: "break-word",
                 overflowWrap: "break-word",
               },
             }}
           >
-            <RichTextEditor.Toolbar sticky stickyOffset={60}>
+            <RichTextEditor.Toolbar>
               <RichTextEditor.ControlsGroup>
                 <RichTextEditor.Bold />
                 <RichTextEditor.Italic />
@@ -165,9 +180,23 @@ const ProdDescription: React.FC<ProductFormProps> = ({
                 <RichTextEditor.Redo />
               </RichTextEditor.ControlsGroup>
             </RichTextEditor.Toolbar>
-
+            {editor && (
+              <BubbleMenu editor={editor}>
+                <RichTextEditor.ControlsGroup>
+                  <RichTextEditor.Bold />
+                  <RichTextEditor.Italic />
+                  <RichTextEditor.Underline />
+                  <RichTextEditor.Link />
+                </RichTextEditor.ControlsGroup>
+              </BubbleMenu>
+            )}
             <RichTextEditor.Content />
           </RichTextEditor>
+          {startValidate && errors.description && (
+            <p className="my-2 text-[#f12727] text-sm">
+              {startValidate && errors.description}
+            </p>
+          )}
         </div>
       </div>
     </div>

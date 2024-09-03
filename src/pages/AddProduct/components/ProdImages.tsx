@@ -3,6 +3,7 @@ import { styled } from "@mui/material/styles";
 import { Box, Button, ImageList, ImageListItem, Modal } from "@mui/material";
 import { ProductFormProps } from "../types/ProductFormProps";
 import PopupImages from "./PopupImages";
+import { error } from "console";
 
 interface ImageFile {
   file: File;
@@ -21,7 +22,12 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-const ProdImages: React.FC<ProductFormProps> = ({ formData, updateField }) => {
+const ProdImages: React.FC<ProductFormProps> = ({
+  formData,
+  updateField,
+  errors,
+  startValidate,
+}) => {
   const [imageList, setImageList] = useState<ImageFile[]>([]);
 
   const uploadImageList = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,15 +61,24 @@ const ProdImages: React.FC<ProductFormProps> = ({ formData, updateField }) => {
   return (
     <div className="w-full rounded-lg mb-2 p-3">
       <div className="flex items-center justify-between">
-        <p className="font-medium text-lg"> Product images </p>
-        <PopupImages formData={formData} updateField={updateField} />
+        <p className="font-medium text-lg">
+          Product images <span className="text-red-600"> *</span>
+        </p>
+        <PopupImages
+          formData={formData}
+          updateField={updateField}
+          errors={errors}
+          startValidate={startValidate}
+        />
       </div>
       <div className="border-2 h-[325px] border-solid border-gray-200 rounded-lg p-5 flex gap-3">
         <Box className="w-full flex items-center justify-start gap-5">
           {imageList.length < 10 && (
             <Box
               component="label"
-              className="h-full cursor-pointer w-1/3 flex flex-col items-center justify-center rounded-lg bg-slate-100"
+              className={`h-full cursor-pointer ${
+                imageList.length === 0 ? "w-full" : "w-1/3"
+              } flex flex-col items-center justify-center rounded-lg bg-slate-100`}
             >
               <p className="font-medium my-1 text-[blue]"> Upload images </p>
               <p className="my-1">(.png, .jped, .jpg)</p>
@@ -77,7 +92,11 @@ const ProdImages: React.FC<ProductFormProps> = ({ formData, updateField }) => {
           )}
           <Box
             className={`${
-              imageList.length < 10 ? "w-2/3" : "w-full"
+              imageList.length === 0
+                ? "hidden"
+                : imageList.length < 10
+                ? "w-2/3"
+                : "w-full"
             } overflow-y-scroll h-full flex items-center justify-start gap-5`}
           >
             <ImageList
@@ -102,6 +121,11 @@ const ProdImages: React.FC<ProductFormProps> = ({ formData, updateField }) => {
           </Box>
         </Box>
       </div>
+      {startValidate && errors.images && (
+        <p className="my-2 text-[#f12727] text-sm">
+          {startValidate && errors.images}
+        </p>
+      )}
     </div>
   );
 };

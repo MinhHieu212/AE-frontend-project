@@ -12,6 +12,8 @@ import {
 const ProdPackages: React.FC<ProductFormProps> = ({
   formData,
   updateField,
+  errors,
+  startValidate,
 }) => {
   // State for unit (Kg/Pound)
   const [unit, setUnit] = useState(formData.packages_weight ? "Kg" : "Pound");
@@ -43,7 +45,7 @@ const ProdPackages: React.FC<ProductFormProps> = ({
       <p className="font-medium text-lg"> Shiping and Delivery </p>
       <div className="border-2 border-solid border-gray-200 rounded-lg p-5 h-full flex flex-col gap-3">
         <div>
-          <p className="my-0 pb-1 text-[#cac4c4] text-sm">Item weight</p>
+          <p className="my-0 pb-1 text-[#aca4a4] text-sm">Item weight</p>
           <div className="w-full flex items-center justify-between px-1 border-2 h-[42px] border-solid border-[#c8c3c3] rounded-md">
             <InputBase
               sx={{ ml: 1, flex: 1 }}
@@ -70,6 +72,11 @@ const ProdPackages: React.FC<ProductFormProps> = ({
               <MenuItem value="Pound">Pb</MenuItem>
             </Select>
           </div>
+          {startValidate && errors.packages_weight && (
+            <p className="my-0 text-[#f12727] text-sm">
+              {startValidate && errors.packages_weight}
+            </p>
+          )}
         </div>
         <div>
           <p className="font-medium"> Package Size</p>
@@ -79,7 +86,7 @@ const ProdPackages: React.FC<ProductFormProps> = ({
                 key={dim}
                 className="flex items-start justify-center flex-col w-1/3"
               >
-                <p className="my-0 pb-1 text-[#cac4c4] text-sm">
+                <p className="my-0 pb-1 text-[#aca4a4] text-sm">
                   {dim.charAt(0).toUpperCase() + dim.slice(1)}
                 </p>
                 <TextField
@@ -98,11 +105,16 @@ const ProdPackages: React.FC<ProductFormProps> = ({
                     formData.packages_size[
                       dim as keyof typeof formData.packages_size
                     ] || ""
-                  } // Bind to formData
+                  }
                   onChange={handleSizeChange(
                     dim as "length" | "width" | "height"
-                  )} // Handle dimension change
+                  )}
                 />
+                {errors[`packages_weight.${dim}`] && (
+                  <p className="my-0 text-[#f12727] text-sm">
+                    {errors[`packages_weight.${dim}`]}
+                  </p>
+                )}
               </div>
             ))}
           </div>

@@ -21,7 +21,12 @@ const style = {
   p: 4,
 };
 
-const PopupImages: React.FC<ProductFormProps> = ({ formData, updateField }) => {
+const PopupImages: React.FC<ProductFormProps> = ({
+  formData,
+  updateField,
+  errors,
+  startValidate,
+}) => {
   const [open, setOpen] = React.useState(false);
   const [primaryIndex, setPrimaryIndex] = React.useState(0);
 
@@ -34,7 +39,9 @@ const PopupImages: React.FC<ProductFormProps> = ({ formData, updateField }) => {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
+      <Button onClick={handleOpen} className="capitalize">
+        View all
+      </Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -50,12 +57,15 @@ const PopupImages: React.FC<ProductFormProps> = ({ formData, updateField }) => {
       >
         <Fade in={open}>
           <Box sx={style}>
-            <Typography id="transition-modal-title" variant="h6" component="h2">
+            <Typography
+              id="transition-modal-title"
+              variant="h6"
+              component="h2"
+              className="capitalize "
+            >
               Product Images
             </Typography>
-            <Box
-              sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}
-            >
+            <Box className="w-full">
               {formData.images.length > 0 && (
                 <img
                   src={formData.images[primaryIndex].url}
@@ -67,6 +77,8 @@ const PopupImages: React.FC<ProductFormProps> = ({ formData, updateField }) => {
                   }}
                 />
               )}
+            </Box>
+            <Box className="w-full">
               <ImageList
                 sx={{
                   display: "flex",
