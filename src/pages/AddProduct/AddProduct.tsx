@@ -12,6 +12,7 @@ import ProdInventory from "./components/ProdInventory";
 import { MantineProvider } from "@mantine/core";
 import { useProductForm } from "./hooks/useProductForm";
 import { toast } from "../../utils/Toastify";
+import ConfirmDialogButton from "./components/PopupConfirm";
 
 interface SubHeaderProps {
   unSave: boolean;
@@ -28,12 +29,7 @@ const SubHeader: React.FC<SubHeaderProps> = ({ unSave }) => {
 
   return (
     <div className="flex items-center justify-start gap-3 px-5">
-      <Box
-        className="rounded-lg w-[50px] h-[50px] flex items-center justify-center border-[2px] border-solid border-gray-400 px-0"
-        onClick={() => handleClickBack()}
-      >
-        <IconArrowLeft size={25} color="gray" />
-      </Box>
+      <ConfirmDialogButton />
       <div>
         <p className="text-[gray] my-1 text-sm">Back to product list</p>
         <p className="font-medium text-xl my-0">Add New Product</p>

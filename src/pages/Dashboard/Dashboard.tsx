@@ -1,6 +1,7 @@
 import React from "react";
 import BannerCarousel from "../../components/BannerCarousel";
 import PopularProducts from "./components/PopularProducts";
+import ConfirmDialogDemo from "../AddProduct/components/PopupConfirm";
 
 const Dashboard = () => {
   return (

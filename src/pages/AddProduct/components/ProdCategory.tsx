@@ -89,7 +89,7 @@ const ProdCategory: React.FC<ProductFormProps> = ({
               className="h-[42px] w-full cursor-pointer"
               renderValue={() => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  <span className="text-sm font-medium text-[gray]">
+                  <span className="text-sm font-medium">
                     {formData.category.level_1.name}
                   </span>
                 </Box>
@@ -133,7 +133,7 @@ const ProdCategory: React.FC<ProductFormProps> = ({
               className="h-[42px] w-full cursor-pointer"
               renderValue={() => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  <span className="text-sm font-medium text-[gray]">
+                  <span className="text-sm font-medium">
                     {formData.category.level_2.name}
                   </span>
                 </Box>

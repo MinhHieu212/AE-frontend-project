@@ -63,7 +63,7 @@ const ProductItem: React.FC<ProductProps> = ({ ...props }) => {
           Sale Price: $ {props.salePrice.toFixed(2)}
         </p>
         <p className="text-sm my-1 font-medium text-[gray]">
-          Price: ${props.price.toFixed(2)} $
+          Price: ${props.price.toFixed(2)}
         </p>
         <p className="text-sm my-1">
           {props.categories.map(
@@ -81,7 +81,7 @@ const ProductItem: React.FC<ProductProps> = ({ ...props }) => {
   );
 };
 
-const MAX_ITEM_PER_PAGE = 10;
+const MAX_ITEM_PER_PAGE = 8;
 
 const Products: React.FC = () => {
   const navigate = useNavigate();
