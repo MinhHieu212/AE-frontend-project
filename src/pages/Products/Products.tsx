@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Stack, Tooltip } from "@mui/material";
+import { Button, Pagination, Stack, Tooltip, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { getProductList } from "../../api/ProductApi";
 import { toast } from "../../utils/Toastify";
@@ -81,9 +81,19 @@ const ProductItem: React.FC<ProductProps> = ({ ...props }) => {
   );
 };
 
+const MAX_ITEM_PER_PAGE = 10;
+
 const Products: React.FC = () => {
   const navigate = useNavigate();
   const [productList, setProductList] = useState<ProductProps[]>([]);
+  const [page, setPage] = useState<number>(1);
+
+  const handleChangePage = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    setPage(value);
+  };
 
   useEffect(() => {
     const callApi = async () => {
@@ -116,12 +126,25 @@ const Products: React.FC = () => {
         className="h-[calc(100dvh-160px)] overflow-y-scroll px-5 mt-5"
       >
         {productList.length > 0 ? (
-          productList.map((item) => <ProductItem key={item.id} {...item} />)
+          productList
+            .slice((page - 1) * MAX_ITEM_PER_PAGE, page * MAX_ITEM_PER_PAGE)
+            .map((item) => <ProductItem key={item.id} {...item} />)
         ) : (
           <div className="w-full h-full flex items-center justify-center">
             <p className="font-bold text-lg">Loading...</p>
           </div>
         )}
+        <Stack
+          spacing={2}
+          className="flex items-center justify-center w-full mt-auto mb-2"
+        >
+          <Pagination
+            count={Math.ceil(productList.length / MAX_ITEM_PER_PAGE)}
+            page={page}
+            size="large"
+            onChange={handleChangePage}
+          />
+        </Stack>
       </Stack>
     </div>
   );

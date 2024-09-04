@@ -11,7 +11,9 @@ export const createProduct = async (body) => {
 
 export const getProductList = async (body) => {
   try {
-    const response = await api_json_body.get("/api/v2/products");
+    const response = await api_json_body.get(
+      "/api/v2/products?orderByCreatedAt=DESC"
+    );
     return response.data;
   } catch (error) {
     throw error;

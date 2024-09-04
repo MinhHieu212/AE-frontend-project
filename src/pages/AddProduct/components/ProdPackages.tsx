@@ -54,6 +54,12 @@ const ProdPackages: React.FC<ProductFormProps> = ({
               className="h-[42px]"
               value={formData.packages_weight || ""} // Bind to formData
               onChange={handleWeightChange} // Handle weight change
+              onKeyDown={(e) => {
+                if (e.key === "-" || e.key === ",") {
+                  e.preventDefault();
+                  return;
+                }
+              }}
             />
             <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
             <Select

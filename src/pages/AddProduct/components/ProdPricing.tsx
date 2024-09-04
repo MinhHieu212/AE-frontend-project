@@ -46,6 +46,12 @@ const ProdPricing: React.FC<ProductFormProps> = ({
                     },
                   },
                 }}
+                onKeyDown={(e) => {
+                  if (e.key === "-" || e.key === ",") {
+                    e.preventDefault();
+                    return;
+                  }
+                }}
                 type="number"
                 size="small"
                 variant="outlined"
@@ -84,6 +90,12 @@ const ProdPricing: React.FC<ProductFormProps> = ({
                   padding: "0 4px",
                 },
               },
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "-" || e.key === ",") {
+                e.preventDefault();
+                return;
+              }
             }}
             type="number"
             size="small"

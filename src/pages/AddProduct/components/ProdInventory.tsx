@@ -27,6 +27,12 @@ const ProdInventory: React.FC<ProductFormProps> = ({
               className="pb-4"
               type="number"
               value={formData.inventory.quantity}
+              onKeyDown={(e) => {
+                if (e.key === "-" || e.key === "." || e.key === ",") {
+                  e.preventDefault();
+                  return;
+                }
+              }}
               onChange={(e) =>
                 updateField("inventory", {
                   ...formData.inventory,
