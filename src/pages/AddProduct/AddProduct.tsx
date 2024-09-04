@@ -11,14 +11,26 @@ import ProdSellingType from "./components/ProdSellingType";
 import ProdInventory from "./components/ProdInventory";
 import { MantineProvider } from "@mantine/core";
 import { useProductForm } from "./hooks/useProductForm";
+import { toast } from "../../utils/Toastify";
 
-const SubHeader = () => {
+interface SubHeaderProps {
+  unSave: boolean;
+}
+const SubHeader: React.FC<SubHeaderProps> = ({ unSave }) => {
   const navigate = useNavigate();
+  const handleClickBack = () => {
+    if (unSave) {
+      toast.info("Unsave data");
+    } else {
+      navigate("/products");
+    }
+  };
+
   return (
     <div className="flex items-center justify-start gap-3 px-5">
       <Box
         className="rounded-lg w-[50px] h-[50px] flex items-center justify-center border-[2px] border-solid border-gray-400 px-0"
-        onClick={() => navigate("/products")}
+        onClick={() => handleClickBack()}
       >
         <IconArrowLeft size={25} color="gray" />
       </Box>
@@ -57,6 +69,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
       console.log(JSON.stringify(errors, null, 2));
     }
   }
+
   return (
     <div className="w-full items-center justify-between flex px-4 mt-5">
       <Button
@@ -77,7 +90,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
         </Button> */}
         <Button
           size="large"
-          disabled={loading}
+          disabled={loading || !isValid}
           className="rounded-md capitalize"
           variant="contained"
           onClick={() => handleAddNewProduct()}
@@ -96,11 +109,13 @@ const AddProduct = () => {
     submitForm,
     validateForm,
     resetFormData,
+    checkUnSaveData,
     errors,
     loading,
   } = useProductForm();
   const [isValid, setIsValid] = useState<boolean>(false);
   const [startValidate, setStartValidate] = useState<boolean>(false);
+  const unSave = checkUnSaveData();
 
   useEffect(() => {
     setIsValid(validateForm());
@@ -108,8 +123,8 @@ const AddProduct = () => {
 
   return (
     <div className="flex flex-col items-center justify-start w-full max-w-[1430px] h-full p-3 mx-auto">
-      <div className="w-full h-full my-2 overflow-y-scroll">
-        <SubHeader />
+      <div className="w-full h-full my-2 scrollBar overflow-y-scroll">
+        <SubHeader unSave={unSave} />
         <div className="w-full flex items-start justify-center p-2 gap-3 h-full">
           <div className="w-1/2 flex flex-col items-center justify-start">
             <MantineProvider>

@@ -33,7 +33,7 @@ const ProdPackages: React.FC<ProductFormProps> = ({
   const handleSizeChange =
     (dimension: "length" | "width" | "height") =>
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      const value = parseFloat(event.target.value) || 0;
+      const value = parseFloat(event.target.value) || null;
       updateField("packages_size", {
         ...formData.packages_size,
         [dimension]: value,

@@ -26,7 +26,7 @@ const ProdPricing: React.FC<ProductFormProps> = ({
           {["MSRP Price", "Sale Price"].map((label, index) => (
             <div key={label} className="w-full">
               <p className="my-0 pb-1 text-[#aca4a4] text-sm">
-                {label}{" "}
+                {label}
                 {label === "MSRP Price" && (
                   <span className="text-red-600"> *</span>
                 )}

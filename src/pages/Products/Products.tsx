@@ -58,9 +58,9 @@ const ProductItem: React.FC<ProductProps> = ({ ...props }) => {
         />
       </div>
       <div className="flex h-full items-start w-full justify-start flex-col p-2">
-        <p className="text-lg my-1 font-medium">Name: {props.name}</p>{" "}
+        <p className="text-lg my-1 font-medium">{props.name}</p>
         <p className="text-lg text-blue-400 my-0 font-medium">
-          Sale Price: ${props.salePrice.toFixed(2)} $
+          Sale Price: $ {props.salePrice.toFixed(2)}
         </p>
         <p className="text-sm my-1 font-medium text-[gray]">
           Price: ${props.price.toFixed(2)} $
@@ -123,7 +123,7 @@ const Products: React.FC = () => {
       </div>
       <Stack
         spacing={2}
-        className="h-[calc(100dvh-160px)] overflow-y-scroll px-5 mt-5"
+        className="h-[calc(100dvh-160px)] overflow-y-scroll scrollBar px-5 mt-5"
       >
         {productList.length > 0 ? (
           productList

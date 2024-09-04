@@ -24,6 +24,7 @@ const ProdSellingType: React.FC<ProductFormProps> = ({
               <Checkbox
                 checked={formData.sellingType === "In-store selling only"}
                 onChange={handleChange}
+                size="small"
                 value="In-store selling only"
               />
             }
@@ -35,6 +36,7 @@ const ProdSellingType: React.FC<ProductFormProps> = ({
                 checked={formData.sellingType === "Online selling only"}
                 onChange={handleChange}
                 value="Online selling only"
+                size="small"
               />
             }
             label="Online selling only"
@@ -45,6 +47,7 @@ const ProdSellingType: React.FC<ProductFormProps> = ({
                 checked={
                   formData.sellingType === "Available both online and in-store"
                 }
+                size="small"
                 onChange={handleChange}
                 value="Available both online and in-store"
               />

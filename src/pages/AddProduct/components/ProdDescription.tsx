@@ -133,7 +133,7 @@ const ProdDescription: React.FC<ProductFormProps> = ({
               content: {
                 minHeight: "82px",
                 maxHeight: "420px",
-                overflow: "scroll",
+                overflowY: "scroll",
                 whiteSpace: "pre-wrap",
                 wordBreak: "break-word",
                 overflowWrap: "break-word",

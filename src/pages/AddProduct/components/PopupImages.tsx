@@ -38,7 +38,7 @@ const PopupImages: React.FC<PopupProductFormProps> = ({
 
   const handleImageClick = (index: number) => {
     setPrimaryIndex(index);
-    updateField("primaryImageURL", formData.images[index].url);
+    updateField("primaryImage", formData.images[index]);
   };
 
   const handleDeleteImage = (index: number) => {
@@ -48,10 +48,7 @@ const PopupImages: React.FC<PopupProductFormProps> = ({
 
     if (index === primaryIndex) {
       setPrimaryIndex(0);
-      updateField(
-        "primaryImageURL",
-        newImages.length > 0 ? newImages[0].url : ""
-      );
+      updateField("primaryImage", newImages.length > 0 ? newImages[0] : "");
     } else if (index < primaryIndex) {
       setPrimaryIndex(primaryIndex - 1);
     }

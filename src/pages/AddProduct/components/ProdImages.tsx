@@ -102,7 +102,7 @@ const ProdImages: React.FC<ProductFormProps> = ({
                 : imageList.length === 10
                 ? "w-full "
                 : "w-2/3 "
-            } h-full px-3 py-10 overflow-y-scroll max-w[500px] max-h-[300px] flex items-start justify-start flex-wrap`}
+            } h-full px-3 py-10 overflow-y-scroll scrollBar max-w[500px] max-h-[300px] flex items-start justify-start flex-wrap`}
           >
             {imageList.length > 0 && (
               <ImageList

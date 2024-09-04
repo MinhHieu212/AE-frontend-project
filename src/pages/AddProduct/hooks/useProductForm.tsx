@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "../../../utils/Toastify";
 import { createProduct, uploadImageProduct } from "../../../api/ProductApi";
 import { ImageFile } from "../types/ProductFormProps";
@@ -20,7 +20,10 @@ export const useProductForm = () => {
     packages_size: { length: null, width: null, height: null },
     pricing: { msrp: null, salePrice: null, price: null },
     images: [],
+    primaryImage: null,
   });
+  const initialFormData = useRef(formData);
+  const isFormSubmitted = useRef<boolean>(false);
 
   const [errors, setErrors] = useState({});
 
@@ -40,11 +43,12 @@ export const useProductForm = () => {
         level_1: { name: null, index: null },
         level_2: { name: null, index: null },
       },
-      inventory: { quantity: null, sku: "" },
       packages_weight: null,
+      inventory: { quantity: null, sku: "" },
       packages_size: { length: null, width: null, height: null },
       pricing: { msrp: null, salePrice: null, price: null },
       images: [],
+      primaryImage: null,
     });
 
   const validateForm = () => {
@@ -177,8 +181,21 @@ export const useProductForm = () => {
           console.log("SUCCESS: ", response_data.id);
           toast.success("New product added successfully");
 
+          isFormSubmitted.current = true;
+
+          let tempImages = null;
+          if (formData.primaryImage) {
+            tempImages = formData.images.filter(
+              (item) => item !== formData.primaryImage
+            );
+            tempImages = [formData.primaryImage, ...tempImages];
+            console.log(tempImages);
+          } else {
+            tempImages = formData.images;
+          }
+
           const payloadFormData = new FormData();
-          formData.images.forEach((images: ImageFile) => {
+          tempImages.forEach((images: ImageFile) => {
             payloadFormData.append("file", images.file);
             URL.revokeObjectURL(images.url);
           });
@@ -205,12 +222,33 @@ export const useProductForm = () => {
     }
   };
 
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (
+        !isFormSubmitted.current &&
+        JSON.stringify(formData) !== JSON.stringify(initialFormData.current)
+      ) {
+        e.preventDefault();
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [formData]);
+
+  const checkUnSaveData = () => {
+    return JSON.stringify(formData) !== JSON.stringify(initialFormData.current);
+  };
+
   return {
     formData,
     updateField,
     submitForm,
     validateForm,
     resetFormData,
+    checkUnSaveData,
     errors,
     loading,
   };

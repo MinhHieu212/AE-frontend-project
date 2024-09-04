@@ -149,7 +149,7 @@ const SideBar = () => {
         }}
       />
 
-      <Stack className="h-[calc(100dvh-140px)] overflow-y-scroll overflow-x-hidden w-full my-3">
+      <Stack className="h-[calc(100dvh-140px)] overflow-y-scroll scrollBar overflow-x-hidden w-full my-3">
         {sidebar_list.length > 0 &&
           sidebar_list.map((item, index) => (
             <SideBarItem
