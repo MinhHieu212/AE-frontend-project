@@ -1,6 +1,6 @@
 {
   "name": "material-ui-cra-tailwind-ts",
-  "homepage": "https://minhhieu212.github.io/accessed-ecommerce/",
+  "homepage": ".",
   "version": "5.0.0",
   "private": true,
   "dependencies": {

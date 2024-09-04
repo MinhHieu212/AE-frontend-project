@@ -8,7 +8,7 @@ import {
 import { CssBaseline } from "@mui/material";
 import "./index.css";
 import App from "./App";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 
 const rootElement = document.getElementById("root");
 const root = ReactDOM.createRoot(rootElement!);
@@ -35,9 +35,9 @@ root.render(
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <BrowserRouter>
+        <HashRouter>
           <App />
-        </BrowserRouter>
+        </HashRouter>
       </ThemeProvider>
     </StyledEngineProvider>
   </React.StrictMode>

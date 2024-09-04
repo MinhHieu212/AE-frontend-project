@@ -58,10 +58,6 @@ const ProdImages: React.FC<ProductFormProps> = ({
     updateField("images", imageList);
   }, [imageList]);
 
-  useEffect(() => {
-    setImageList(formData.images);
-  }, [formData.images]);
-
   return (
     <div className="w-full rounded-lg mb-2 p-3">
       <div className="flex items-center justify-between">
@@ -75,6 +71,7 @@ const ProdImages: React.FC<ProductFormProps> = ({
           updateField={updateField}
           errors={errors}
           startValidate={startValidate}
+          setImageList={setImageList}
         />
       </div>
       <div className="border-2 h-[325px] border-solid border-gray-200 rounded-lg p-5 flex gap-3">

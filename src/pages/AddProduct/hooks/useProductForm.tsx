@@ -180,6 +180,7 @@ export const useProductForm = () => {
           const payloadFormData = new FormData();
           formData.images.forEach((images: ImageFile) => {
             payloadFormData.append("file", images.file);
+            URL.revokeObjectURL(images.url);
           });
 
           const s3_response_data = await uploadImageProduct(

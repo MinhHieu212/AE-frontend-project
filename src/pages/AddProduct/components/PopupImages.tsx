@@ -9,7 +9,7 @@ import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { ProductFormProps } from "../types/ProductFormProps";
+import { PopupProductFormProps } from "../types/ProductFormProps";
 
 const style = {
   position: "absolute" as "absolute",
@@ -23,11 +23,12 @@ const style = {
   p: 4,
 };
 
-const PopupImages: React.FC<ProductFormProps> = ({
+const PopupImages: React.FC<PopupProductFormProps> = ({
   formData,
   updateField,
   errors,
   startValidate,
+  setImageList,
 }) => {
   const [open, setOpen] = React.useState(false);
   const [primaryIndex, setPrimaryIndex] = React.useState(0);
@@ -43,6 +44,7 @@ const PopupImages: React.FC<ProductFormProps> = ({
   const handleDeleteImage = (index: number) => {
     const newImages = formData.images.filter((_, i) => i !== index);
     updateField("images", newImages);
+    setImageList(newImages);
 
     if (index === primaryIndex) {
       setPrimaryIndex(0);

@@ -48,3 +48,11 @@ export interface ProductFormProps {
   errors: any;
   startValidate: boolean;
 }
+
+export interface PopupProductFormProps {
+  formData: FormData;
+  updateField: (field: string, value: any) => void;
+  errors: any;
+  startValidate: boolean;
+  setImageList: (values: any) => void;
+}

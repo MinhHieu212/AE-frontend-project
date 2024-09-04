@@ -37,6 +37,7 @@ interface ActionButtonsProps {
   errors: any;
   isValid: boolean;
   setStartValidate: any;
+  loading: boolean;
 }
 
 const ActionButtons: React.FC<ActionButtonsProps> = ({
@@ -46,6 +47,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
   errors,
   isValid = false,
   setStartValidate,
+  loading,
 }) => {
   function handleAddNewProduct() {
     setStartValidate(true);
@@ -75,12 +77,12 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
         </Button> */}
         <Button
           size="large"
-          // disabled={!isValid}
+          disabled={loading}
           className="rounded-md capitalize"
           variant="contained"
           onClick={() => handleAddNewProduct()}
         >
-          Add Product
+          {loading ? "Processing" : "Add Product"}
         </Button>
       </div>
     </div>
@@ -103,8 +105,6 @@ const AddProduct = () => {
   useEffect(() => {
     setIsValid(validateForm());
   }, [formData]);
-
-  console.log(formData);
 
   return (
     <div className="flex flex-col items-center justify-start w-full max-w-[1430px] h-full p-3 mx-auto">
@@ -165,6 +165,7 @@ const AddProduct = () => {
               isValid={isValid}
               setStartValidate={setStartValidate}
               resetFormData={resetFormData}
+              loading={loading}
             />
           </div>
         </div>
