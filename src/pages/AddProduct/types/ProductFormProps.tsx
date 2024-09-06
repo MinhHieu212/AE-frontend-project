@@ -40,6 +40,7 @@ export interface FormData {
   packages_size: PackageSize;
   pricing: Pricing;
   images: ImageFile[];
+  primaryImage: ImageFile | null;
 }
 
 export interface ProductFormProps {
@@ -55,4 +56,7 @@ export interface PopupProductFormProps {
   errors: any;
   startValidate: boolean;
   setImageList: (values: any) => void;
+  openModal: boolean;
+  setOpenModal: (value: boolean) => void;
+  imageInputRef: any;
 }

@@ -1,31 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { IconArrowLeft } from "@tabler/icons-react";
 import ProdDescription from "./components/ProdDescription";
 import ProdCategory from "./components/ProdCategory";
 import ProdPricing from "./components/ProdPricing";
 import ProdPackages from "./components/ProdPackages";
-import ProdImages from "./components/ProdImages";
 import ProdSellingType from "./components/ProdSellingType";
 import ProdInventory from "./components/ProdInventory";
 import { MantineProvider } from "@mantine/core";
 import { useProductForm } from "./hooks/useProductForm";
 import { toast } from "../../utils/Toastify";
 import ConfirmDialogButton from "./components/PopupConfirm";
+import PopupDiscardButton from "./components/PopupDiscard";
+import NewProdimages from "./components/NewProdImages";
 
 interface SubHeaderProps {
   unSave: boolean;
 }
 const SubHeader: React.FC<SubHeaderProps> = ({ unSave }) => {
   const navigate = useNavigate();
-  const handleClickBack = () => {
-    if (unSave) {
-      toast.info("Unsave data");
-    } else {
-      navigate("/products");
-    }
-  };
 
   return (
     <div className="flex items-center justify-start gap-3 px-5">
@@ -68,14 +61,15 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
 
   return (
     <div className="w-full items-center justify-between flex px-4 mt-5">
-      <Button
+      {/* <Button
         size="large"
         className="rounded-md capitalize"
         variant="outlined"
         onClick={() => resetFormData()}
       >
         Discard
-      </Button>
+      </Button> */}
+      <PopupDiscardButton />
       <div className="flex items-center justify-center gap-5">
         {/* <Button
           size="large"
@@ -86,7 +80,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
         </Button> */}
         <Button
           size="large"
-          disabled={loading || !isValid}
+          disabled={loading}
           className="rounded-md capitalize"
           variant="contained"
           onClick={() => handleAddNewProduct()}
@@ -151,7 +145,7 @@ const AddProduct = () => {
             />
           </div>
           <div className="w-1/2 flex flex-col items-center justify-start">
-            <ProdImages
+            <NewProdimages
               formData={formData}
               updateField={updateField}
               errors={errors}

@@ -3,34 +3,61 @@ import Products from "../pages/Products/Products";
 import AddProduct from "../pages/AddProduct/AddProduct";
 import { Route, Routes } from "react-router-dom";
 import OwnerLayout from "../layout/OwnerLayout/OwnerLayout";
-import Dashboard from "../pages/Dashboard/Dashboard";
-import CustomerLayout from "../layout/CustomerLayout/CustomerLayout";
+import Homepage from "../pages/Homepage/Homepage";
+import BuyerLayout from "../layout/BuyerLayout/BuyerLayout";
+import TestDemo from "../test/TestDemo";
+interface AppRouteProps {
+  user_role: string[];
+}
 
-const route_list = [
+const AppRoute = ({ user_role = ["buyer"] }: AppRouteProps) => {
+  return (
+    <Routes>
+      {public_route.map((item, index) => (
+        <Route path={item.path} element={item.element} key={index} />
+      ))}
+      {user_role.includes("buyer") &&
+        buyer_route.map((item, index) => (
+          <Route path={item.path} element={item.element} key={index} />
+        ))}
+      {user_role.includes("owner") &&
+        owner_route.map((item, index) => (
+          <Route path={item.path} element={item.element} key={index} />
+        ))}
+    </Routes>
+  );
+};
+
+export default AppRoute;
+
+const buyer_route = [
   {
     path: "/",
     element: (
-      <CustomerLayout>
-        <Dashboard />
-      </CustomerLayout>
+      <BuyerLayout>
+        <Homepage />
+      </BuyerLayout>
     ),
   },
   {
-    path: "/dashboard",
+    path: "/homepage",
     element: (
-      <CustomerLayout>
-        <Dashboard />
-      </CustomerLayout>
+      <BuyerLayout>
+        <Homepage />
+      </BuyerLayout>
     ),
   },
   {
     path: "/accessed-ecommerce",
     element: (
-      <CustomerLayout>
-        <Dashboard />
-      </CustomerLayout>
+      <BuyerLayout>
+        <Homepage />
+      </BuyerLayout>
     ),
   },
+];
+
+const owner_route = [
   {
     path: "/products",
     element: (
@@ -47,30 +74,27 @@ const route_list = [
       </OwnerLayout>
     ),
   },
+];
+
+const public_route = [
+  {
+    path: "/test",
+    element: (
+      <div className="w-full h-full flex flex-col items-center justify-center">
+        <TestDemo />
+      </div>
+    ),
+  },
   {
     path: "*",
     element: (
-      <OwnerLayout>
-        <div className="w-full h-full flex flex-col items-center justify-center">
-          <img
-            src="https://admiral.digital/wp-content/uploads/2023/08/404_page-not-found-1024x576.png"
-            alt=""
-            height={400}
-          />
-        </div>
-      </OwnerLayout>
+      <div className="w-full h-full flex flex-col items-center justify-center">
+        <img
+          src="https://admiral.digital/wp-content/uploads/2023/08/404_page-not-found-1024x576.png"
+          alt=""
+          height={400}
+        />
+      </div>
     ),
   },
 ];
-
-const AppRoute = () => {
-  return (
-    <Routes>
-      {route_list.map((item, index) => (
-        <Route path={item.path} element={item.element} />
-      ))}
-    </Routes>
-  );
-};
-
-export default AppRoute;

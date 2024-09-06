@@ -12,7 +12,7 @@ const OwnerHeader = () => {
         <Tooltip title="Need help?">
           <IconHelpHexagon size={23} />
         </Tooltip>
-        <Button variant="outlined" onClick={() => navigate("/dashboard")}>
+        <Button variant="outlined" onClick={() => navigate("/Homepage")}>
           View Shop
         </Button>
       </div>

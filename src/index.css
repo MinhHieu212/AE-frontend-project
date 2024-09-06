@@ -5,3 +5,9 @@
 .scrollBar::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }
+
+.testCss {
+  display: "flex";
+  align-items: "center";
+  justify-items: "center";
+}

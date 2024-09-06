@@ -3,7 +3,7 @@ import { IconBellRinging, IconHelpHexagon } from "@tabler/icons-react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const CustomerHeader = () => {
+const BuyerHeader = () => {
   const navigate = useNavigate();
   return (
     <div className="w-full h-[60px] flex items-center justify-end px-5">
@@ -20,4 +20,4 @@ const CustomerHeader = () => {
   );
 };
 
-export default CustomerHeader;
+export default BuyerHeader;
