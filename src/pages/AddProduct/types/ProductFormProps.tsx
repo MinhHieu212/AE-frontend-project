@@ -60,3 +60,25 @@ export interface PopupProductFormProps {
   setOpenModal: (value: boolean) => void;
   imageInputRef: any;
 }
+
+export interface SubCategoryProps {
+  id: number;
+  name: string;
+  parentID: number | null;
+  createdAt: string | null;
+  updatedAt: string | null;
+  subCategory: SubCategoryProps[]; // Recursive type definition
+  noOfViews: number;
+  productsSold: number;
+}
+
+export interface CategoryProps {
+  id: number;
+  name: string;
+  parentID: number | null;
+  createdAt: string | null;
+  updatedAt: string | null;
+  subCategory: SubCategoryProps[];
+  noOfViews: number;
+  productsSold: number;
+}

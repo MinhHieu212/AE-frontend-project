@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useDropzone, DropzoneState } from "react-dropzone";
 import { ProductFormProps } from "../types/ProductFormProps";
 import NewPopupImages from "./NewPopupImages";
@@ -146,29 +146,21 @@ const NewProdimages: React.FC<ProductFormProps> = ({
           >
             {formData.images.slice(1, 3).map((item, index) => {
               return (
-                <div className="w-full h-1/2 relative" key={index + 1}>
+                <div className="w-full h-1/2 relative">
                   <img
                     src={item.url}
                     alt={`Image file ${item.file.name}`}
                     className="w-full h-full object-cover rounded-lg"
                   />
                   <div
-                    className={`w-full h-full flex items-center justify-center bg-opacity-80 absolute bg-slate-600 top-0 left-0 text-lg font-semibold rounded-lg text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex-col gap-5`}
+                    className={`w-full h-full flex items-center justify-center bg-opacity-80 absolute bg-slate-600 top-0 left-0 text-lg font-semibold rounded-lg text-white ${
+                      index === 1 && formData.images.length > 3 ? "" : "hidden"
+                    }`}
+                    onClick={() => setOpenModal(true)}
                   >
-                    <Button
-                      className="text-white"
-                      variant="contained"
-                      onClick={() => handleReplaceClick(index + 1)}
-                    >
-                      Replace
-                    </Button>
-                    <Button
-                      className="text-white"
-                      variant="contained"
-                      onClick={() => handleRemoveImage(index + 1)}
-                    >
-                      Remove
-                    </Button>
+                    <span className="text-white opacity-1">
+                      + {formData.images.length - 3}
+                    </span>
                   </div>
                 </div>
               );

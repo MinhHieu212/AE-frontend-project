@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { Box, Divider, Stack } from "@mui/material";
 import { ProductProps } from "../../Products/Products";
 import { getProductList } from "../../../api/ProductApi";
 import { toast } from "../../../utils/Toastify";
+import { IconStarFilled } from "@tabler/icons-react";
 import ProductItem from "./components/ProductItem";
 
-const PopularProducts = () => {
+const NewArrivals = () => {
   const [productList, setProductList] = useState<ProductProps[]>([]);
 
   useEffect(() => {
@@ -21,8 +23,8 @@ const PopularProducts = () => {
   }, []);
 
   return (
-    <div className="w-full my-[20px] mb-10">
-      <h2 className="mx-[auto]"> Popular Products 2023</h2>
+    <div className="w-full my-[20px] mt-[40px] mb-10">
+      <h2 className="mx-[auto]"> New Arrivals 2023</h2>
       <div className="overflow-x-scroll flex items-start justify-start gap-14 mx-[auto]">
         {productList.length > 0 ? (
           productList.map((item) => <ProductItem key={item.id} {...item} />)
@@ -36,4 +38,4 @@ const PopularProducts = () => {
   );
 };
 
-export default PopularProducts;
+export default NewArrivals;
