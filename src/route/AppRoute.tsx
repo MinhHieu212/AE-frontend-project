@@ -1,27 +1,23 @@
 import React from "react";
-import Products from "../pages/Products/Products";
-import AddProduct from "../pages/AddProduct/AddProduct";
-import { Route, Routes } from "react-router-dom";
-import OwnerLayout from "../layout/OwnerLayout/OwnerLayout";
-import Homepage from "../pages/Homepage/Homepage";
-import BuyerLayout from "../layout/BuyerLayout/BuyerLayout";
+import Products from "../pages/(seller)/product-list/ProductList";
+import AddProduct from "../pages/(seller)/add-product/AddProduct";
+import Homepage from "../pages/(buyer)/home-page/Homepage";
 import TestDemo from "../test/TestDemo";
-interface AppRouteProps {
-  user_role: string[];
-}
+import MainLayout from "../layout/MainLayout";
+import { Route, Routes } from "react-router-dom";
+import { useAppSelector } from "../store/store";
 
-const AppRoute = ({ user_role = ["buyer"] }: AppRouteProps) => {
+const AppRoute = () => {
+  const userRole = useAppSelector((state) => state.role.user_role);
+
   return (
     <Routes>
-      {public_route.map((item, index) => (
-        <Route path={item.path} element={item.element} key={index} />
-      ))}
-      {user_role.includes("buyer") &&
+      {userRole === "buyer" &&
         buyer_route.map((item, index) => (
           <Route path={item.path} element={item.element} key={index} />
         ))}
-      {user_role.includes("owner") &&
-        owner_route.map((item, index) => (
+      {userRole === "seller" &&
+        seller_route.map((item, index) => (
           <Route path={item.path} element={item.element} key={index} />
         ))}
     </Routes>
@@ -34,55 +30,25 @@ const buyer_route = [
   {
     path: "/",
     element: (
-      <BuyerLayout showFooter={true}>
+      <MainLayout>
         <Homepage />
-      </BuyerLayout>
+      </MainLayout>
     ),
   },
   {
     path: "/homepage",
     element: (
-      <BuyerLayout showFooter={true}>
+      <MainLayout>
         <Homepage />
-      </BuyerLayout>
+      </MainLayout>
     ),
   },
   {
     path: "/accessed-ecommerce",
     element: (
-      <BuyerLayout showFooter={true}>
+      <MainLayout>
         <Homepage />
-      </BuyerLayout>
-    ),
-  },
-];
-
-const owner_route = [
-  {
-    path: "/products",
-    element: (
-      <OwnerLayout>
-        <Products />
-      </OwnerLayout>
-    ),
-  },
-  {
-    path: "/products/add-product",
-    element: (
-      <OwnerLayout>
-        <AddProduct />
-      </OwnerLayout>
-    ),
-  },
-];
-
-const public_route = [
-  {
-    path: "/test",
-    element: (
-      <div className="w-full h-full flex flex-col items-center justify-center">
-        <TestDemo />
-      </div>
+      </MainLayout>
     ),
   },
   {
@@ -95,6 +61,25 @@ const public_route = [
           height={400}
         />
       </div>
+    ),
+  },
+];
+
+const seller_route = [
+  {
+    path: "/products",
+    element: (
+      <MainLayout>
+        <Products />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/products/add-product",
+    element: (
+      <MainLayout>
+        <AddProduct />
+      </MainLayout>
     ),
   },
 ];

@@ -7,9 +7,9 @@ import {
   Select,
 } from "@mui/material";
 import { ProductFormProps } from "../types/ProductFormProps";
-import { getCategories } from "../../../api/CategoryApi";
-import { fake_data_categorys } from "../../../data/fake_data_category";
-import { toast } from "../../../utils/Toastify";
+import { getCategories } from "../../../../api/CategoryApi";
+import { fake_data_categorys } from "../../../../fake_data/fake_data_category";
+import { toast } from "../../../../utils/Toastify";
 
 interface CategoryProps {
   id: number;

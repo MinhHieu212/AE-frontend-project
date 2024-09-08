@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { toast } from "../../../utils/Toastify";
-import { createProduct, uploadImageProduct } from "../../../api/ProductApi";
+import { toast } from "../../../../utils/Toastify";
+import { createProduct, uploadImageProduct } from "../../../../api/ProductApi";
 import { ImageFile } from "../types/ProductFormProps";
 import { useNavigate } from "react-router-dom";
 

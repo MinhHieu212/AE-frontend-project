@@ -9,7 +9,7 @@ import ProdSellingType from "./components/ProdSellingType";
 import ProdInventory from "./components/ProdInventory";
 import { MantineProvider } from "@mantine/core";
 import { useProductForm } from "./hooks/useProductForm";
-import { toast } from "../../utils/Toastify";
+import { toast } from "../../../utils/Toastify";
 import ConfirmDialogButton from "./components/PopupConfirm";
 import PopupDiscardButton from "./components/PopupDiscard";
 import NewProdimages from "./components/NewProdImages";

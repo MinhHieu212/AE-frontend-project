@@ -1,9 +1,9 @@
+import React from "react";
 import { Button, Tooltip } from "@mui/material";
 import { IconBellRinging, IconHelpHexagon } from "@tabler/icons-react";
-import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const OwnerHeader = () => {
+const SellerHeader = () => {
   const navigate = useNavigate();
   return (
     <div className="w-full h-[60px] flex items-center justify-end px-5">
@@ -20,4 +20,4 @@ const OwnerHeader = () => {
   );
 };
 
-export default OwnerHeader;
+export default SellerHeader;

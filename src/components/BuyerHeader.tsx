@@ -23,10 +23,18 @@ import {
 } from "@tabler/icons-react";
 import React, { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
+import { setRole } from "../store/slices/roleSlice";
+import { useAppDispatch } from "../store/store";
 
 const BuyerHeader = () => {
-  const navigate = useNavigate();
+  const useDispatch = useAppDispatch();
   const [category, setCategory] = useState<string>("");
+  const navigate = useNavigate();
+
+  const handleViewSellerRole = () => {
+    useDispatch(setRole({ user_role: "seller" }));
+    navigate("/products");
+  };
 
   return (
     <div className="w-full h-[60px] flex items-center justify-between px-10 shadow-md mb-5">
@@ -87,24 +95,27 @@ const BuyerHeader = () => {
       </Paper>
 
       <div className="flex items-center justify-between gap-5">
-        <div className="flex items-center justify-center gap-3">
+        <div
+          className="flex items-center justify-center gap-3 cursor-pointer"
+          onClick={handleViewSellerRole}
+        >
           <IconUser size={25} />
           <div className="flex flex-col items-start justify-start">
             <span className="text-gray-400 text-[8px]">Sign in</span>
             <span className="font-semibold text-sm">Account</span>
           </div>
         </div>
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center cursor-pointer">
           <Badge badgeContent={4} color="primary">
             <IconMail size={25} />
           </Badge>
         </div>
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center cursor-pointer">
           <Badge badgeContent={4} color="primary">
             <IconHeart size={25} />
           </Badge>
         </div>
-        <div className="flex items-center justify-centern gap-3">
+        <div className="flex items-center justify-centern gap-3 cursor-pointer">
           <IconShoppingCart size={25} />
           <div className="flex flex-col items-start justify-start">
             <span className="text-gray-400 text-[8px]">Total</span>

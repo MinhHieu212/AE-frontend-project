@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button, Pagination, Stack, Tooltip, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { getProductList } from "../../api/ProductApi";
-import { toast } from "../../utils/Toastify";
+import { getProductList } from "../../../api/ProductApi";
+import { toast } from "../../../utils/Toastify";
 
 interface CategoryProps {
   id: number;
@@ -12,13 +12,13 @@ interface CategoryProps {
   updatedAt: string | null;
   subCategory: CategoryProps[];
   noOfViews: number;
-  productsSold: number;
+  ListSold: number;
 }
 interface Dimensions {
-  weight?: number; // Assuming weight might be optional
-  length?: number; // Assuming dimensions might be optional
-  width?: number; // Assuming dimensions might be optional
-  height?: number; // Assuming dimensions might be optional
+  weight?: number;
+  length?: number;
+  width?: number;
+  height?: number;
 }
 export interface ProductProps {
   id: number;
@@ -83,7 +83,7 @@ const ProductItem: React.FC<ProductProps> = ({ ...props }) => {
 
 const MAX_ITEM_PER_PAGE = 8;
 
-const Products: React.FC = () => {
+const ProductList: React.FC = () => {
   const navigate = useNavigate();
   const [productList, setProductList] = useState<ProductProps[]>([]);
   const [page, setPage] = useState<number>(1);
@@ -111,12 +111,12 @@ const Products: React.FC = () => {
   return (
     <div className="w-full max-w-[1430px] p-3 mx-auto h-full">
       <div className="flex h-12 items-center justify-between px-5 mt-5">
-        <h2 className="font-bold">Products</h2>
+        <h2 className="font-bold">List</h2>
         <Button
           size="large"
           variant="contained"
           className="capitalize"
-          onClick={() => navigate("/products/add-product")}
+          onClick={() => navigate("/List/add-product")}
         >
           Add new Product
         </Button>
@@ -150,4 +150,4 @@ const Products: React.FC = () => {
   );
 };
 
-export default Products;
+export default ProductList;

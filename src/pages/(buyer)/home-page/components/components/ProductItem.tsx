@@ -5,7 +5,7 @@ import {
   IconHeartFilled,
   IconHeart,
 } from "@tabler/icons-react";
-import { ProductProps } from "../../../Products/Products";
+import { ProductProps } from "../../../../(seller)/product-list/ProductList";
 
 const ProductItem = (props: ProductProps) => {
   const fallbackImageURL =

@@ -19,7 +19,7 @@ const BuyerFooter = () => {
                 alt="Company avatar"
                 className="w-[60px] h-[60px] object-cover rounded-md"
               />
-  
+
               <h2 className="text-[black]">Nasa Store</h2>
             </div>
           </Link>
@@ -61,28 +61,28 @@ const BuyerFooter = () => {
           <h2 className="font-bold mb-4">Useful Links</h2>
           <Link
             href="/"
-            className="hover:underline decoration-transparent text-gray-500"
+            className="hover:underline decoration-transparent text-gray-500 text-sm"
           >
             Home
           </Link>
 
           <Link
             href="/"
-            className="hover:underline decoration-transparent text-gray-500"
+            className="hover:underline decoration-transparent text-gray-500 text-sm"
           >
             About
           </Link>
 
           <Link
             href="/"
-            className="hover:underline decoration-transparent text-gray-500"
+            className="hover:underline decoration-transparent text-gray-500 text-sm"
           >
             Blog
           </Link>
 
           <Link
             href="/"
-            className="hover:underline decoration-transparent text-gray-500"
+            className="hover:underline decoration-transparent text-gray-500 text-sm"
           >
             Contact
           </Link>
@@ -94,21 +94,21 @@ const BuyerFooter = () => {
           <h2 className="font-bold mb-4">My Account</h2>
           <Link
             href="/"
-            className="hover:underline decoration-transparent text-gray-500"
+            className="hover:underline decoration-transparent text-gray-500 text-sm"
           >
             Orders Tracking
           </Link>
 
           <Link
             href="/"
-            className="hover:underline decoration-transparent text-gray-500"
+            className="hover:underline decoration-transparent text-gray-500 text-sm"
           >
             Checkout
           </Link>
 
           <Link
             href="/"
-            className="hover:underline decoration-transparent text-gray-500"
+            className="hover:underline decoration-transparent text-gray-500 text-sm"
           >
             Wishlist
           </Link>

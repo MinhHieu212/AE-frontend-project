@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { ProductProps } from "../../Products/Products";
-import { getProductList } from "../../../api/ProductApi";
-import { toast } from "../../../utils/Toastify";
+import { ProductProps } from "../../../(seller)/product-list/ProductList";
+import { getProductList } from "../../../../api/ProductApi";
+import { toast } from "../../../../utils/Toastify";
 import ProductItem from "./components/ProductItem";
 import { Button, Grid2, TablePagination } from "@mui/material";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";

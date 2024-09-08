@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@mui/material";
-import { ProductProps } from "../../Products/Products";
-import { getProductList } from "../../../api/ProductApi";
-import { toast } from "../../../utils/Toastify";
+import { ProductProps } from "../../../(seller)/product-list/ProductList";
+import { getProductList } from "../../../../api/ProductApi";
+import { toast } from "../../../../utils/Toastify";
 import ProductItem from "./components/ProductItem";
 import Grid2 from "@mui/material/Grid2";
 

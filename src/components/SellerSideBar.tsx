@@ -14,29 +14,29 @@ import {
 } from "@tabler/icons-react";
 import { Divider, InputAdornment, Link, Stack, TextField } from "@mui/material";
 
-interface SubSideBarProps {
+interface SubSellerSideBarProps {
   name: string;
   path: string;
   disable: boolean;
 }
 
-interface SideBarItemProps {
+interface SellerSideBarItemProps {
   name: string;
   disable: boolean;
   icon: React.ReactNode;
   paths: string[];
   iconActive: React.ReactNode;
-  subItems: SubSideBarProps[] | null;
+  subItems: SubSellerSideBarProps[] | null;
 }
 
-const SideBarItem = ({
+const SellerSideBarItem = ({
   icon,
   iconActive,
   name,
   disable,
   paths,
   subItems,
-}: SideBarItemProps) => {
+}: SellerSideBarItemProps) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [expand, setExpand] = useState<boolean>(
@@ -113,7 +113,7 @@ const SideBarItem = ({
   );
 };
 
-const SideBar = () => {
+const SellerSideBar = () => {
   // const navigate = useNavigate();
   return (
     <div className="w-[400px] h-[100dvh] bg-[#eef3ff] flex flex-col justify-start items-center px-5">
@@ -150,9 +150,9 @@ const SideBar = () => {
       />
 
       <Stack className="h-[calc(100dvh-140px)] overflow-y-scroll scrollBar overflow-x-hidden w-full my-3">
-        {sidebar_list.length > 0 &&
-          sidebar_list.map((item, index) => (
-            <SideBarItem
+        {SellerSideBar_list.length > 0 &&
+          SellerSideBar_list.map((item, index) => (
+            <SellerSideBarItem
               key={index}
               icon={item.icon}
               iconActive={item.iconActive}
@@ -182,9 +182,9 @@ const SideBar = () => {
   );
 };
 
-export default SideBar;
+export default SellerSideBar;
 
-const sidebar_list = [
+const SellerSideBar_list = [
   {
     icon: <IconHome size={23} color="#77787b" />,
     iconActive: <IconHome size={23} color="#099cff" />,

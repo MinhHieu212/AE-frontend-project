@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Box } from "@mui/material";
-import { ProductProps } from "../../Products/Products";
-import { getProductList } from "../../../api/ProductApi";
-import { toast } from "../../../utils/Toastify";
-import { fake_data_categorys } from "../../../data/fake_data_category";
+import { ProductProps } from "../../../(seller)/product-list/ProductList";
+import { getProductList } from "../../../../api/ProductApi";
+import { toast } from "../../../../utils/Toastify";
+import { fake_data_categorys } from "../../../../fake_data/fake_data_category";
 import { IconAdCircle } from "@tabler/icons-react";
-import { CategoryProps } from "../../AddProduct/types/ProductFormProps";
+import { CategoryProps } from "../../../(seller)/add-product/types/ProductFormProps";
 
 const CategoryItem = (props: CategoryProps) => {
   return (
