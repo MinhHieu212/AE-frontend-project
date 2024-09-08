@@ -109,7 +109,7 @@ const Products: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full max-w-[1430px] mx-auto h-full">
+    <div className="w-full max-w-[1430px] p-3 mx-auto h-full">
       <div className="flex h-12 items-center justify-between px-5 mt-5">
         <h2 className="font-bold">Products</h2>
         <Button

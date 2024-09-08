@@ -16,7 +16,7 @@ const bannerList: BannerProp[] = [
     cover_url:
       "https://i.pinimg.com/originals/ea/bd/aa/eabdaadef69a169117a2900e77bfde9f.jpg",
     image_object: "top",
-    color: "white",
+    color: "black",
     direct_path: "/outline-generator",
   },
   {
@@ -38,7 +38,7 @@ const bannerList: BannerProp[] = [
     cover_url:
       "https://cuahangsamsung.vn/filemanager/userfiles/hinh-san-pham/banner/samsung-banner-watch.png",
     image_object: "center",
-    color: "black",
+    color: "gray",
     direct_path: "/ai-buildere",
   },
 ];
@@ -56,7 +56,7 @@ const Banner = (props: BannerProp) => {
         height: "500px",
         color: props.color,
         width: "100%",
-        borderRadius: "20px",
+        borderRadius: "15px",
         position: "relative",
       }}
     >
@@ -67,14 +67,12 @@ const Banner = (props: BannerProp) => {
           <p className="text-[50px] my-0  font-bold">20% OFF</p>
         </div>
         <Button
-          className={`bg-gray-500 flex items-center justify-center`}
+          className={`bg-black text-white flex items-center justify-center`}
           variant="contained"
           size="large"
         >
-          <IconGardenCart className="mr-2" size={22} color={props.color} />
-          <span className={`text-${props.color} capitalize mt-[1px]`}>
-            Shopping now
-          </span>
+          <IconGardenCart className="mr-2" size={22} />
+          <span className={`capitalize mt-[1px]`}>Shopping now</span>
         </Button>
       </div>
     </Paper>

@@ -34,7 +34,7 @@ const buyer_route = [
   {
     path: "/",
     element: (
-      <BuyerLayout>
+      <BuyerLayout showFooter={true}>
         <Homepage />
       </BuyerLayout>
     ),
@@ -42,7 +42,7 @@ const buyer_route = [
   {
     path: "/homepage",
     element: (
-      <BuyerLayout>
+      <BuyerLayout showFooter={true}>
         <Homepage />
       </BuyerLayout>
     ),
@@ -50,7 +50,7 @@ const buyer_route = [
   {
     path: "/accessed-ecommerce",
     element: (
-      <BuyerLayout>
+      <BuyerLayout showFooter={true}>
         <Homepage />
       </BuyerLayout>
     ),

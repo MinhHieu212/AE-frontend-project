@@ -120,9 +120,9 @@ const SideBar = () => {
       <Link href="/products" underline="none" className="w-full my-2">
         <div className="w-full flex items-center gap-3">
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/NASA_logo.svg/918px-NASA_logo.svg.png"
+            src="https://cdn.worldvectorlogo.com/logos/nasa-2.svg"
             alt="Company avatar"
-            className="w-[50px] h-[50px] object-cover rounded-md"
+            className="w-[60px] h-[60px] object-cover rounded-md"
           />
 
           <h2 className="text-[blue]">Nasa Store</h2>
