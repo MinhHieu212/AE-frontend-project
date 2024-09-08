@@ -6,7 +6,7 @@ import { toast } from "../../../../utils/Toastify";
 import ProductItem from "./components/ProductItem";
 import Grid2 from "@mui/material/Grid2";
 
-const NewArrivalsProducts = () => {
+const NewArrivals = () => {
   const [productList, setProductList] = useState<ProductProps[]>([]);
   const [row, setRow] = useState<number>(1);
 
@@ -18,7 +18,6 @@ const NewArrivalsProducts = () => {
     const callApi = async () => {
       try {
         const response_data = await getProductList();
-        console.log(response_data);
         setProductList(response_data);
       } catch (error: any) {
         toast.error(error.message);
@@ -32,8 +31,8 @@ const NewArrivalsProducts = () => {
       <h2 className="mx-[auto]"> New Arrivals 2023</h2>
       <Grid2 container spacing={4}>
         {productList.length > 0 ? (
-          productList.slice(0, 4 * row).map((item) => (
-            <Grid2 size={3}>
+          productList.slice(0, 4 * row).map((item, index) => (
+            <Grid2 size={3} key={index}>
               <ProductItem key={item.id} {...item} />
             </Grid2>
           ))
@@ -69,4 +68,4 @@ const NewArrivalsProducts = () => {
   );
 };
 
-export default NewArrivalsProducts;
+export default NewArrivals;

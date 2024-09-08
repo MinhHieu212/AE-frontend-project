@@ -178,7 +178,6 @@ export const useProductForm = () => {
         setLoading(true);
         const response_data = await createProduct(convertedData);
         if (response_data.id) {
-          console.log("SUCCESS: ", response_data.id);
           toast.success("New product added successfully");
 
           isFormSubmitted.current = true;
@@ -189,7 +188,6 @@ export const useProductForm = () => {
               (item) => item !== formData.primaryImage
             );
             tempImages = [formData.primaryImage, ...tempImages];
-            console.log(tempImages);
           } else {
             tempImages = formData.images;
           }
@@ -206,7 +204,6 @@ export const useProductForm = () => {
           );
 
           if (s3_response_data.id) {
-            console.log("SUCCESS: ", response_data.id);
             toast.success("Image of new product save successfully");
 
             setTimeout(() => navigator("/products"), 1000);

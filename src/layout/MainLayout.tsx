@@ -3,7 +3,8 @@ import SellerHeader from "../components/SellerHeader";
 import SellerSideBar from "../components/SellerSideBar";
 import BuyerFooter from "../components/BuyerFooter";
 import BuyerHeader from "../components/BuyerHeader";
-import { useAppSelector } from "../store/store";
+import { useAppDispatch, useAppSelector } from "../store/store";
+import { setRole } from "../store/slices/roleSlice";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -11,6 +12,9 @@ interface MainLayoutProps {
 
 const MainLayout = ({ children }: MainLayoutProps) => {
   const userRole = useAppSelector((state) => state.role.user_role);
+  const useDispatch = useAppDispatch();
+
+  console.log("re-render on Main layout");
 
   return (
     <div className="flex-col flex items-center justify-start w-[100dvw] h-[100dvh] overflow-hidden">

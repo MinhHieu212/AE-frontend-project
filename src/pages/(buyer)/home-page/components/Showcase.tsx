@@ -1,5 +1,3 @@
-// src/components/ProductShowcase.js
-
 import React from "react";
 import { Box, Button, Divider, Grid2, Typography } from "@mui/material";
 import {
@@ -9,7 +7,7 @@ import {
   IconHeadset,
 } from "@tabler/icons-react";
 
-const ProductShowcase = () => {
+const Showcase = () => {
   const product = {
     name: "Product Name Will Be Here",
     price: 56.78,
@@ -76,8 +74,8 @@ const ProductShowcase = () => {
           </Box>
         </Grid2>
         <Grid2 size={4} className="h-full">
-          <Box className="flex w-full flex-col items-center justify-center h-full p-3">
-            <Box className="h-1/2 shadow-lg p-3 w-full overflow-hidden relative">
+          <Box className="flex w-full flex-col items-center justify-center h-full">
+            <Box className="h-1/2 shadow-lg px-3 pb-3 w-full overflow-hidden relative">
               <Typography variant="h5" className="font-bold">
                 Samsung Galaxy Watch6
               </Typography>
@@ -96,7 +94,7 @@ const ProductShowcase = () => {
                 />
               </div>
             </Box>
-            <Box className="h-1/2 shadow-lg p-3 w-full overflow-hidden relative">
+            <Box className="h-1/2 shadow-lg px-3 pt-3  w-full overflow-hidden relative">
               <Typography variant="h5" className="font-bold">
                 Hyperwork gen 2
               </Typography>
@@ -122,4 +120,4 @@ const ProductShowcase = () => {
   );
 };
 
-export default ProductShowcase;
+export default Showcase;

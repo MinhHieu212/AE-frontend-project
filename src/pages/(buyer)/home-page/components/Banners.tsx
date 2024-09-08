@@ -79,12 +79,12 @@ const Banner = (props: BannerProp) => {
   );
 };
 
-const BannerCarousel = () => {
+const Banners = () => {
   return (
     <div className="mx-auto w-full] mb-10">
       <Carousel
-        next={() => console.log(`we left and are now at`)}
-        prev={() => console.log(`we left and are now at`)}
+        next={() => {}}
+        prev={() => {}}
         indicatorContainerProps={{
           style: {
             position: "absolute",
@@ -110,4 +110,4 @@ const BannerCarousel = () => {
   );
 };
 
-export default BannerCarousel;
+export default Banners;

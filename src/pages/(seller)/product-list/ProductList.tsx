@@ -111,7 +111,7 @@ const ProductList: React.FC = () => {
   return (
     <div className="w-full max-w-[1430px] p-3 mx-auto h-full">
       <div className="flex h-12 items-center justify-between px-5 mt-5">
-        <h2 className="font-bold">List</h2>
+        <h2 className="font-bold">Product List</h2>
         <Button
           size="large"
           variant="contained"

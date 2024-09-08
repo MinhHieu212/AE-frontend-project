@@ -2,10 +2,10 @@ import React from "react";
 import Products from "../pages/(seller)/product-list/ProductList";
 import AddProduct from "../pages/(seller)/add-product/AddProduct";
 import Homepage from "../pages/(buyer)/home-page/Homepage";
-import TestDemo from "../test/TestDemo";
 import MainLayout from "../layout/MainLayout";
 import { Route, Routes } from "react-router-dom";
 import { useAppSelector } from "../store/store";
+import ProductDetails from "../pages/(buyer)/product-details/ProductDetails";
 
 const AppRoute = () => {
   const userRole = useAppSelector((state) => state.role.user_role);
@@ -40,6 +40,14 @@ const buyer_route = [
     element: (
       <MainLayout>
         <Homepage />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/:slug",
+    element: (
+      <MainLayout>
+        <ProductDetails />
       </MainLayout>
     ),
   },
@@ -80,6 +88,18 @@ const seller_route = [
       <MainLayout>
         <AddProduct />
       </MainLayout>
+    ),
+  },
+  {
+    path: "*",
+    element: (
+      <div className="w-full h-full flex flex-col items-center justify-center">
+        <img
+          src="https://admiral.digital/wp-content/uploads/2023/08/404_page-not-found-1024x576.png"
+          alt=""
+          height={400}
+        />
+      </div>
     ),
   },
 ];

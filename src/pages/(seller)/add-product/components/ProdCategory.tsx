@@ -59,7 +59,6 @@ const ProdCategory: React.FC<ProductFormProps> = ({
     const callApi = async () => {
       try {
         const response_data = await getCategories();
-        console.log(response_data);
         setCategories(response_data);
       } catch (error: any) {
         toast.error(error.message);

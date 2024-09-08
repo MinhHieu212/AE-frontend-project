@@ -6,10 +6,12 @@ import {
   IconHeart,
 } from "@tabler/icons-react";
 import { ProductProps } from "../../../../(seller)/product-list/ProductList";
+import { useNavigate } from "react-router-dom";
 
 const ProductItem = (props: ProductProps) => {
   const fallbackImageURL =
     "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=";
+  const navigate = useNavigate();
   const [like, setLike] = useState<boolean>(true);
 
   return (
@@ -19,11 +21,11 @@ const ProductItem = (props: ProductProps) => {
           src={props.primaryImageURL ? props.primaryImageURL : fallbackImageURL}
           alt={`Product: ${props.name}`}
           className="w-[300px] h-[300px]  object-cover cursor-pointer mt-2"
-          onClick={() => console.log(JSON.stringify(props, null, 2))}
+          onClick={() => navigate(`/${props.name.split(" ").join("_")}`)}
         />
         <div
           onClick={() => setLike((prev) => !prev)}
-          className="flex items-center justify-center p-2 bg-slate-100 absolute top-5 left-5 z-100 rounded-full bg-opacity-80"
+          className="flex items-center justify-center p-2 bg-slate-100 absolute top-5 left-5 z-100 rounded-full bg-opacity-80 cursor-pointer"
         >
           {like ? <IconHeart /> : <IconHeartFilled />}
         </div>
@@ -45,8 +47,8 @@ const ProductItem = (props: ProductProps) => {
               <Divider
                 orientation="vertical"
                 variant="middle"
-                flexItem
                 className="my-1"
+                flexItem
               />
               <p className="text-black my-0">$ {props.salePrice.toFixed(2)}</p>
             </div>

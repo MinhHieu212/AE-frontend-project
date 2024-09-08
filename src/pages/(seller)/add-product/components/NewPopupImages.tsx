@@ -55,8 +55,6 @@ const NewPopupImages: React.FC<PopupProductFormProps> = ({
     setOpenModal(false);
   };
 
-  console.log(formData.primaryImage);
-
   const handleAddMore = (acceptedFiles: FileList | null) => {
     if (!acceptedFiles) return;
 

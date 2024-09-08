@@ -6,7 +6,7 @@ import ProductItem from "./components/ProductItem";
 import { Button, Grid2, TablePagination } from "@mui/material";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 
-const PopularProducts = () => {
+const Populars = () => {
   const [productList, setProductList] = useState<ProductProps[]>([]);
   const [index, setIndex] = useState<number>(0);
 
@@ -27,7 +27,6 @@ const PopularProducts = () => {
     const callApi = async () => {
       try {
         const response_data = await getProductList();
-        console.log(response_data);
         setProductList(response_data);
       } catch (error: any) {
         toast.error(error.message);
@@ -59,8 +58,8 @@ const PopularProducts = () => {
       </div>
       <Grid2 container spacing={4} className="transition-all">
         {productList.length > 0 ? (
-          productList.slice(index * 4, (index + 1) * 4).map((item) => (
-            <Grid2 size={3}>
+          productList.slice(index * 4, (index + 1) * 4).map((item, index) => (
+            <Grid2 size={3} key={index}>
               <ProductItem key={item.id} {...item} />
             </Grid2>
           ))
@@ -76,4 +75,4 @@ const PopularProducts = () => {
   );
 };
 
-export default PopularProducts;
+export default Populars;

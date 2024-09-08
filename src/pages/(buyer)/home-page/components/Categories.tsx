@@ -27,7 +27,6 @@ const Categories = () => {
     const callApi = async () => {
       try {
         const response_data = await getProductList();
-        console.log(response_data);
         setProductList(response_data);
       } catch (error: any) {
         toast.error(error.message);

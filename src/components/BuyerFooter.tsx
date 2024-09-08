@@ -133,8 +133,8 @@ const BuyerFooter = () => {
           </div>
         </Grid2>
       </Grid2>
-      <Divider className="my-6 bg-gray-900" />
-      <div className="w-full text-center mt-8">
+      <Divider className="my-6 mb-3 bg-gray-900" />
+      <div className="w-full mb-3 text-center flex items-center justify-center">
         <p className="my-0">&copy; 2023 Your Company. All rights reserved.</p>
       </div>
     </div>

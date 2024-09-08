@@ -34,6 +34,7 @@ const BuyerHeader = () => {
   const handleViewSellerRole = () => {
     useDispatch(setRole({ user_role: "seller" }));
     navigate("/products");
+    localStorage.setItem("user_role", "seller");
   };
 
   return (
@@ -63,7 +64,7 @@ const BuyerHeader = () => {
         />
         <FormControl
           sx={{
-            minWidth: 150,
+            minWidth: 120,
             height: "100%",
             borderLeft: "1px solid lightgray",
           }}
