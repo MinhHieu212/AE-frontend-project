@@ -38,7 +38,7 @@ const bannerList: BannerProp[] = [
     cover_url:
       "https://cuahangsamsung.vn/filemanager/userfiles/hinh-san-pham/banner/samsung-banner-watch.png",
     image_object: "center",
-    color: "gray",
+    color: "black",
     direct_path: "/ai-buildere",
   },
 ];

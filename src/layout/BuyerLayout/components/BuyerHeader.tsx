@@ -11,17 +11,18 @@ import {
   MenuItem,
   FormHelperText,
   Box,
+  Badge,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import {
-  IconBellRinging,
-  IconHelpHexagon,
+  IconHeart,
+  IconMail,
   IconSearch,
+  IconShoppingCart,
+  IconUser,
 } from "@tabler/icons-react";
 import React, { useState } from "react";
-import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-import DirectionsIcon from "@mui/icons-material/Directions";
 
 const BuyerHeader = () => {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ const BuyerHeader = () => {
 
       <Paper
         component="form"
-        className="flex items-center border-[0.2px] border-solid border-gray-300 justify-between w-[600px] rounded-lg overflow-hidden h-[45px] my-auto shadow-none"
+        className="flex items-center border-[0.2px] border-solid border-gray-300 justify-between w-[600px] rounded-lg overflow-hidden h-[40px] my-auto shadow-none"
       >
         <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
           <SearchIcon />
@@ -85,14 +86,31 @@ const BuyerHeader = () => {
         </Box>
       </Paper>
 
-      <div className="flex justify-center items-center gap-4">
-        <IconBellRinging size={23} />
-        <Tooltip title="Need help?">
-          <IconHelpHexagon size={23} />
-        </Tooltip>
-        <Button variant="outlined" onClick={() => navigate("/products")}>
-          Owner Site
-        </Button>
+      <div className="flex items-center justify-between gap-5">
+        <div className="flex items-center justify-center gap-3">
+          <IconUser size={25} />
+          <div className="flex flex-col items-start justify-start">
+            <span className="text-gray-400 text-[8px]">Sign in</span>
+            <span className="font-semibold text-sm">Account</span>
+          </div>
+        </div>
+        <div className="flex items-center justify-center">
+          <Badge badgeContent={4} color="primary">
+            <IconMail size={25} />
+          </Badge>
+        </div>
+        <div className="flex items-center justify-center">
+          <Badge badgeContent={4} color="primary">
+            <IconHeart size={25} />
+          </Badge>
+        </div>
+        <div className="flex items-center justify-centern gap-3">
+          <IconShoppingCart size={25} />
+          <div className="flex flex-col items-start justify-start">
+            <span className="text-gray-400 text-[8px]">Total</span>
+            <span className="font-semibold text-sm">$ 400.00</span>
+          </div>
+        </div>
       </div>
     </div>
   );
