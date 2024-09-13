@@ -8,7 +8,7 @@ import { useAppSelector } from "../store/store";
 import ProductDetails from "../pages/(buyer)/product-details/ProductDetails";
 
 const AppRoute = () => {
-  const userRole = useAppSelector((state) => state.role.user_role);
+  const userRole = useAppSelector((state) => state.roles.user_role);
 
   return (
     <Routes>

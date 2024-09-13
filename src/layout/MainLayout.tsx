@@ -11,7 +11,7 @@ interface MainLayoutProps {
 }
 
 const MainLayout = ({ children }: MainLayoutProps) => {
-  const userRole = useAppSelector((state) => state.role.user_role);
+  const userRole = useAppSelector((state) => state.roles.user_role);
   const useDispatch = useAppDispatch();
 
   console.log("re-render on Main layout");

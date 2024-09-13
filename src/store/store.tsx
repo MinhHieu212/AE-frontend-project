@@ -3,10 +3,12 @@ import { configureStore } from "@reduxjs/toolkit";
 import { roleSlice } from "./slices/roleSlice";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { productFormSlice } from "./slices/productFormSlice";
+import { variantSlice } from "./slices/variantSlice";
 
 export const store = configureStore({
   reducer: {
-    role: roleSlice.reducer,
+    roles: roleSlice.reducer,
+    variants: variantSlice.reducer,
     ProductFormState: productFormSlice.reducer,
   },
 });

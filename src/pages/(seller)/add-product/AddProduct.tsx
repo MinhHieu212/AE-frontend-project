@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { MantineProvider } from "@mantine/core";
+import { useProductForm } from "./hooks/useProductForm";
 import ProdDescription from "./components/ProdDescription";
 import ProdCategory from "./components/ProdCategory";
-import ProdPricing from "./components/ProdPricing";
 import ProdPackages from "./components/ProdPackages";
 import ProdSellingType from "./components/ProdSellingType";
 import ProdInventory from "./components/ProdInventory";
-import { MantineProvider } from "@mantine/core";
-import { useProductForm } from "./hooks/useProductForm";
-import { toast } from "../../../utils/Toastify";
 import ConfirmDialogButton from "./components/PopupConfirm";
 import PopupDiscardButton from "./components/PopupDiscard";
 import NewProdimages from "./components/NewProdImages";
+import PhoneVariants from "./components/PhoneVariants";
+import ProdVariantTable from "./components/ProdVariantTable";
 
 interface SubHeaderProps {
   unSave: boolean;
@@ -60,7 +60,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
   }
 
   return (
-    <div className="w-full items-center justify-between flex px-4 mt-5">
+    <div className="w-full items-center justify-end gap-3 flex px-4 mt-10">
       {/* <Button
         size="large"
         className="rounded-md capitalize"
@@ -113,9 +113,9 @@ const AddProduct = () => {
 
   return (
     <div className="flex flex-col items-center justify-start w-full max-w-[1430px] h-full p-3 mx-auto">
-      <div className="w-full h-full my-2 scrollBar overflow-y-scroll">
+      <div className="w-full h-full my-2 scrollBar">
         <SubHeader unSave={unSave} />
-        <div className="w-full flex items-start justify-center p-2 gap-3 h-full">
+        <div className="w-full flex items-start justify-center p-2 gap-3">
           <div className="w-1/2 flex flex-col items-center justify-start">
             <MantineProvider>
               <ProdDescription
@@ -131,18 +131,12 @@ const AddProduct = () => {
               errors={errors}
               startValidate={startValidate}
             />
-            <ProdInventory
-              formData={formData}
-              updateField={updateField}
-              errors={errors}
-              startValidate={startValidate}
-            />
             <ProdSellingType
               formData={formData}
               updateField={updateField}
               errors={errors}
               startValidate={startValidate}
-            />
+            />{" "}
           </div>
           <div className="w-1/2 flex flex-col items-center justify-start">
             <NewProdimages
@@ -157,23 +151,31 @@ const AddProduct = () => {
               errors={errors}
               startValidate={startValidate}
             />
-            <ProdPricing
+            <ProdInventory
               formData={formData}
               updateField={updateField}
               errors={errors}
               startValidate={startValidate}
             />
-            <ActionButtons
-              submitForm={submitForm}
-              validateForm={validateForm}
+            {/* <ProdPricing
+              formData={formData}
+              updateField={updateField}
               errors={errors}
-              isValid={isValid}
-              setStartValidate={setStartValidate}
-              resetFormData={resetFormData}
-              loading={loading}
-            />
+              startValidate={startValidate}
+            /> */}
           </div>
         </div>
+        <PhoneVariants />
+        <ProdVariantTable />
+        <ActionButtons
+          submitForm={submitForm}
+          validateForm={validateForm}
+          errors={errors}
+          isValid={isValid}
+          setStartValidate={setStartValidate}
+          resetFormData={resetFormData}
+          loading={loading}
+        />
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 export const fake_data_categorys = [
   {
     id: 2,
-    name: "ELECTRONIC",
+    name: "Electronic",
     parentID: null,
     createdAt: null,
     updatedAt: null,

@@ -117,7 +117,7 @@ const ProdCategory: React.FC<ProductFormProps> = ({
           )}
         </div>
 
-        <div>
+        <div className="mt-3">
           <p className="my-0 mb-1 text-[#aca4a4] text-sm">
             Product Sub-category
           </p>
