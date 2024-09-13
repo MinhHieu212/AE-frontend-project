@@ -116,7 +116,7 @@ const ProductList: React.FC = () => {
           size="large"
           variant="contained"
           className="capitalize"
-          onClick={() => navigate("/List/add-product")}
+          onClick={() => navigate("/product-list/add-product")}
         >
           Add new Product
         </Button>

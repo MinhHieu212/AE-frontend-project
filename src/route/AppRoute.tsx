@@ -83,7 +83,7 @@ const seller_route = [
     ),
   },
   {
-    path: "/products/add-product",
+    path: "/product-list/add-product",
     element: (
       <MainLayout>
         <AddProduct />
