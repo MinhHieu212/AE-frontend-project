@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,88 +7,45 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useAppSelector } from "../../../../store/store";
+import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import { TextField, Button } from "@mui/material";
-
-interface CombinationObject {
-  [key: string]: string;
-  price: string;
-  salePrice: string;
-  quantity: string;
-}
+import {
+  initializeCombinations,
+  saveCombinations,
+  updateCombination,
+} from "../../../../store/slices/variantSlice";
 
 const ProdVariantTable: React.FC = () => {
+  const dispatch = useAppDispatch();
   const phone_variant = useAppSelector((state) => state.variants.phone_variant);
-  const [combinations, setCombinations] = useState<CombinationObject[]>([]);
-
-  const generateCombinations = (arrays: string[][]): string[][] => {
-    const result: string[][] = [];
-
-    const combine = (index: number, current: string[]) => {
-      if (index === arrays?.length) {
-        result.push(current);
-        return;
-      }
-
-      for (let i = 0; i < arrays[index]?.length; i++) {
-        combine(index + 1, [...current, arrays[index][i]]);
-      }
-    };
-
-    combine(0, []);
-    return result;
-  };
-
-  const variants: { [key: string]: string[] } = phone_variant.reduce(
-    (acc: { [key: string]: string[] }, variant: any) => {
-      acc[variant.type] = variant.values;
-      return acc;
-    },
-    {}
+  const combinations = useAppSelector((state) => state.variants.combinations);
+  const isTableGenerated = useAppSelector(
+    (state) => state.variants.isTableGenerated
   );
 
-  React.useEffect(() => {
-    const allCombinations = generateCombinations(Object.values(variants));
-    const initialCombinations: CombinationObject[] = allCombinations.map(
-      (combination) => {
-        const combinationObject: CombinationObject = {
-          price: "",
-          salePrice: "",
-          quantity: "",
-        };
-
-        Object.keys(variants).forEach((key, index) => {
-          combinationObject[key] = combination[index];
-        });
-
-        return combinationObject;
-      }
-    );
-    setCombinations(initialCombinations);
-  }, [phone_variant]);
-
   const handleInputChange = (index: number, field: string, value: string) => {
-    const updatedCombinations = [...combinations];
-    updatedCombinations[index][field] = value;
-    setCombinations(updatedCombinations);
+    dispatch(updateCombination({ index, field, value }));
   };
 
-  const handleSave = () => {
-    // Here you would typically dispatch an action to save the data to your store or send it to an API
-    console.log("Saving data:", combinations);
-    // Example: dispatch(saveVariantData(combinations));
-  };
+  if (isTableGenerated === false) return <></>;
 
   return (
-    <div className="w-full rounded-lg mb-2 p-5">
+    <div className="w-full rounded-lg p-5">
+      <p className="font-medium text-lg">
+        Product Variants Table{" "}
+        <span className="text-gray-400 font-normal text-[16px]">
+          (pricing, quantity)
+        </span>
+        <span className="text-red-600"> *</span>
+      </p>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
-            <TableRow>
+            <TableRow className="border-2 border-solid border-gray-200">
               <StyledTableCell className="uppercase" align="center">
                 #
               </StyledTableCell>
-              {phone_variant.map((item: any, index: number) => (
+              {phone_variant.map((item, index) => (
                 <StyledTableCell
                   className="uppercase"
                   align="center"
@@ -113,9 +70,9 @@ const ProdVariantTable: React.FC = () => {
             {combinations.map((combination, index) => (
               <StyledTableRow key={index}>
                 <StyledTableCell align="center">{index + 1}</StyledTableCell>
-                {Object.keys(variants).map((key, idx) => (
+                {phone_variant.map((variant, idx) => (
                   <StyledTableCell key={idx} align="center">
-                    {combination[key]}
+                    {combination[variant.type]}
                   </StyledTableCell>
                 ))}
                 <StyledTableCell align="center">
@@ -160,7 +117,7 @@ const ProdVariantTable: React.FC = () => {
                     label="Quantity"
                     type="number"
                     size="small"
-                    className="max-w-[120px]"
+                    className="max-w-[150px]"
                     value={combination.quantity}
                     onChange={(e) =>
                       handleInputChange(index, "quantity", e.target.value)
@@ -177,26 +134,19 @@ const ProdVariantTable: React.FC = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleSave}
-        className="mt-4"
-      >
-        Save Data
-      </Button>
     </div>
   );
 };
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
+    backgroundColor: theme.palette.common.white,
+    color: theme.palette.common.black,
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 15,
     fontWeight: "semibold",
+    color: "gray",
   },
 }));
 

@@ -43,7 +43,7 @@ const ProdPackages: React.FC<ProductFormProps> = ({
   return (
     <div className="w-full rounded-lg mb-2 p-3">
       <p className="font-medium text-lg"> Shiping and Delivery </p>
-      <div className="border-2 border-solid border-gray-200 rounded-lg p-5 h-full flex flex-col gap-3">
+      <div className="border-2 border-solid border-gray-200 rounded-lg p-5 h-full flex flex-col gap-3 mt-5">
         <div>
           <p className="my-0 pb-1 text-[#aca4a4] text-sm">Item weight</p>
           <div className="w-full flex items-center justify-between px-1 border-2 h-[42px] border-solid border-[#c8c3c3] rounded-md">
@@ -85,8 +85,8 @@ const ProdPackages: React.FC<ProductFormProps> = ({
           )}
         </div>
         <div>
-          <p className="font-medium"> Package Size</p>
-          <div className="flex item-start justify-between gap-5">
+          {/* <p className="font-medium"> Package Size</p> */}
+          <div className="flex item-start justify-between gap-5 mt-4">
             {["length", "width", "height"].map((dim) => (
               <div
                 key={dim}

@@ -1,33 +1,38 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
 interface Variant {
   id: number;
   type: string;
   values: string[];
 }
 
-interface VariantList {
-  phone_variant: Variant[];
+interface CombinationObject {
+  [key: string]: string;
+  price: string;
+  salePrice: string;
+  quantity: string;
 }
 
-const initialState: VariantList = {
+interface VariantsState {
+  phone_variant: Variant[];
+  combinations: CombinationObject[];
+  isTableGenerated: boolean;
+}
+
+const initialState: VariantsState = {
   phone_variant: [
     {
       id: 0,
-      type: "color",
-      values: ["red", "blue"],
+      type: "",
+      values: [],
     },
     {
       id: 1,
-      type: "ram",
-      values: ["16", "32"],
-    },
-    {
-      id: 2,
-      type: "storage",
-      values: ["128", "256"],
+      type: "",
+      values: [],
     },
   ],
+  combinations: [],
+  isTableGenerated: false,
 };
 
 export const variantSlice = createSlice({
@@ -44,6 +49,11 @@ export const variantSlice = createSlice({
         },
       ];
     },
+
+    setIsTableGenerated: (state, action: PayloadAction<{ value: boolean }>) => {
+      state.isTableGenerated = action.payload.value;
+    },
+
     setVariantType: (
       state,
       action: PayloadAction<{ id: number; new_type: string }>
@@ -54,11 +64,13 @@ export const variantSlice = createSlice({
           : item
       );
     },
+
     removeVariant: (state, action: PayloadAction<{ id: number }>) => {
       state.phone_variant = state.phone_variant.filter(
         (item) => item.id !== action.payload.id
       );
     },
+
     setVariantValue: (
       state,
       action: PayloadAction<{ id: number; new_value: string }>
@@ -69,6 +81,7 @@ export const variantSlice = createSlice({
           : item
       );
     },
+
     removeVariantValue: (
       state,
       action: PayloadAction<{ id: number; remove_value: string }>
@@ -84,6 +97,57 @@ export const variantSlice = createSlice({
           : item
       );
     },
+
+    initializeCombinations: (state, action: PayloadAction<Variant[]>) => {
+      state.phone_variant = action.payload;
+      const variants: { [key: string]: string[] } = action.payload.reduce(
+        (acc: { [key: string]: string[] }, variant: Variant) => {
+          acc[variant.type] = variant.values;
+          return acc;
+        },
+        {}
+      );
+
+      const generateCombinations = (arrays: string[][]): string[][] => {
+        const result: string[][] = [];
+        const combine = (index: number, current: string[]) => {
+          if (index === arrays.length) {
+            result.push(current);
+            return;
+          }
+          for (let i = 0; i < arrays[index].length; i++) {
+            combine(index + 1, [...current, arrays[index][i]]);
+          }
+        };
+        combine(0, []);
+        return result;
+      };
+
+      const allCombinations = generateCombinations(Object.values(variants));
+      state.combinations = allCombinations.map((combination) => {
+        const combinationObject: CombinationObject = {
+          price: "",
+          salePrice: "",
+          quantity: "",
+        };
+        Object.keys(variants).forEach((key, index) => {
+          combinationObject[key] = combination[index];
+        });
+        return combinationObject;
+      });
+    },
+
+    updateCombination: (
+      state,
+      action: PayloadAction<{ index: number; field: string; value: string }>
+    ) => {
+      const { index, field, value } = action.payload;
+      state.combinations[index][field] = value;
+    },
+
+    saveCombinations: (state) => {
+      console.log("Saving combinations:", state.combinations);
+    },
   },
 });
 
@@ -93,4 +157,8 @@ export const {
   setVariantType,
   setVariantValue,
   removeVariantValue,
+  initializeCombinations,
+  updateCombination,
+  saveCombinations,
+  setIsTableGenerated,
 } = variantSlice.actions;

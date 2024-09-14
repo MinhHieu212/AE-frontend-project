@@ -1,11 +1,11 @@
 import React from "react";
-import Products from "../pages/(seller)/product-list/ProductList";
-import AddProduct from "../pages/(seller)/add-product/AddProduct";
-import Homepage from "../pages/(buyer)/home-page/Homepage";
-import MainLayout from "../layout/MainLayout";
 import { Route, Routes } from "react-router-dom";
 import { useAppSelector } from "../store/store";
+import MainLayout from "../layout/MainLayout";
+import Homepage from "../pages/(buyer)/home-page/Homepage";
+import AddProduct from "../pages/(seller)/add-product/AddProduct";
 import ProductDetails from "../pages/(buyer)/product-details/ProductDetails";
+import ProductList from "../pages/(seller)/product-list/ProductList";
 
 const AppRoute = () => {
   const userRole = useAppSelector((state) => state.roles.user_role);
@@ -78,15 +78,15 @@ const seller_route = [
     path: "/products",
     element: (
       <MainLayout>
-        <Products />
+        <ProductList />
       </MainLayout>
     ),
   },
   {
-    path: "/product-list/add-product",
+    path: "/products/add-product",
     element: (
       <MainLayout>
-        <AddProduct />
+        <AddProduct />  
       </MainLayout>
     ),
   },

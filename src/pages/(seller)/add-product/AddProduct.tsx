@@ -11,8 +11,8 @@ import ProdInventory from "./components/ProdInventory";
 import ConfirmDialogButton from "./components/PopupConfirm";
 import PopupDiscardButton from "./components/PopupDiscard";
 import NewProdimages from "./components/NewProdImages";
-import PhoneVariants from "./components/PhoneVariants";
 import ProdVariantTable from "./components/ProdVariantTable";
+import ProdVariants from "./components/ProdVariants";
 
 interface SubHeaderProps {
   unSave: boolean;
@@ -60,24 +60,9 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
   }
 
   return (
-    <div className="w-full items-center justify-end gap-3 flex px-4 mt-10">
-      {/* <Button
-        size="large"
-        className="rounded-md capitalize"
-        variant="outlined"
-        onClick={() => resetFormData()}
-      >
-        Discard
-      </Button> */}
+    <div className="w-full items-center justify-end gap-3 flex px-4 my-[50px]">
       <PopupDiscardButton />
       <div className="flex items-center justify-center gap-5">
-        {/* <Button
-          size="large"
-          variant="outlined"
-          className="rounded-md capitalize"
-        >
-          Clone
-        </Button> */}
         <Button
           size="large"
           disabled={loading}
@@ -136,7 +121,7 @@ const AddProduct = () => {
               updateField={updateField}
               errors={errors}
               startValidate={startValidate}
-            />{" "}
+            />
           </div>
           <div className="w-1/2 flex flex-col items-center justify-start">
             <NewProdimages
@@ -157,15 +142,9 @@ const AddProduct = () => {
               errors={errors}
               startValidate={startValidate}
             />
-            {/* <ProdPricing
-              formData={formData}
-              updateField={updateField}
-              errors={errors}
-              startValidate={startValidate}
-            /> */}
           </div>
         </div>
-        <PhoneVariants />
+        <ProdVariants />
         <ProdVariantTable />
         <ActionButtons
           submitForm={submitForm}

@@ -21,7 +21,7 @@ function ConfirmDialog(props: ConfirmDialogProps) {
   const { onClose, open, title, message } = props;
 
   const handleCancel = () => {
-    onClose(false); // Close dialog without confirming
+    onClose(false);
   };
 
   const handleConfirm = () => {

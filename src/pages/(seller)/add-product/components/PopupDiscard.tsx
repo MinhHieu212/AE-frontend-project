@@ -70,12 +70,7 @@ export default function PopupDiscardButton() {
       >
         Discard
       </Button>
-      {/* <Box
-        className="rounded-lg w-[50px] h-[50px] flex items-center justify-center border-[2px] border-solid border-gray-400 px-0"
-        onClick={handleClickOpen}
-      >
-        <IconArrowLeft size={25} color="gray" />
-      </Box> */}
+
       <PopupDiscard
         open={open}
         onClose={handleClose}
