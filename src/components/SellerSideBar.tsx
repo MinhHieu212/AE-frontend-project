@@ -122,7 +122,7 @@ const SellerSideBarItem = ({
 const SellerSideBar = () => {
   // const navigate = useNavigate();
   return (
-    <div className="w-[400px] h-[100dvh] bg-[#dcdfe0] flex flex-col justify-start items-center px-5">
+    <div className="w-[400px] h-[100dvh] bg-[#efeded] flex flex-col justify-start items-center px-5">
       <Link href="/products" underline="none" className="w-full my-2">
         <div className="w-full flex items-center gap-3">
           <img

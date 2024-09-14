@@ -1,13 +1,16 @@
 import React from "react";
 import { TextField } from "@mui/material";
-import { ProductFormProps } from "../types/ProductFormProps";
+import { useAppDispatch, useAppSelector } from "../../../../store/store";
+import { updateProductField } from "../../../../store/slices/productSlice";
 
-const ProdInventory: React.FC<ProductFormProps> = ({
-  formData,
-  updateField,
-  errors,
-  startValidate,
-}) => {
+const ProdInventory = () => {
+  const useDispatch = useAppDispatch();
+  const inventory = useAppSelector((state) => state.product.inventory);
+
+  function updateField(field: string, value: any) {
+    useDispatch(updateProductField({ field, value }));
+  }
+
   return (
     <div className="w-full rounded-lg mb-2 p-3">
       <p className="font-medium text-lg">
@@ -24,9 +27,8 @@ const ProdInventory: React.FC<ProductFormProps> = ({
               fullWidth
               required
               size="small"
-              className="pb-4"
               type="number"
-              value={formData.inventory.quantity}
+              value={inventory.quantity}
               onKeyDown={(e) => {
                 if (e.key === "-" || e.key === "." || e.key === ",") {
                   e.preventDefault();
@@ -35,7 +37,7 @@ const ProdInventory: React.FC<ProductFormProps> = ({
               }}
               onChange={(e) =>
                 updateField("inventory", {
-                  ...formData.inventory,
+                  ...inventory,
                   quantity: Number(e.target.value) || null,
                 })
               }
@@ -48,22 +50,16 @@ const ProdInventory: React.FC<ProductFormProps> = ({
               fullWidth
               required
               size="small"
-              className="pb-4"
-              value={formData.inventory.sku}
+              value={inventory.sku}
               onChange={(e) =>
                 updateField("inventory", {
-                  ...formData.inventory,
+                  ...inventory,
                   sku: e.target.value,
                 })
               }
             />
           </div>
         </div>
-        {startValidate && errors.inventory && (
-          <p className="my-0 text-[#f12727] text-sm">
-            {startValidate && errors.inventory}
-          </p>
-        )}
       </div>
     </div>
   );

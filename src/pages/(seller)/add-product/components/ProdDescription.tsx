@@ -1,9 +1,7 @@
 import React, { useRef } from "react";
 import { Button, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { ProductFormProps } from "../types/ProductFormProps";
 import { IconUpload } from "@tabler/icons-react";
-
 import "@mantine/core/styles.css";
 import "@mantine/tiptap/styles.css";
 import { RichTextEditor, Link } from "@mantine/tiptap";
@@ -14,6 +12,8 @@ import Underline from "@tiptap/extension-underline";
 import TextAlign from "@tiptap/extension-text-align";
 import Superscript from "@tiptap/extension-superscript";
 import SubScript from "@tiptap/extension-subscript";
+import { useAppDispatch, useAppSelector } from "../../../../store/store";
+import { updateProductField } from "../../../../store/slices/productSlice";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -27,12 +27,13 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-const ProdDescription: React.FC<ProductFormProps> = ({
-  formData,
-  updateField,
-  errors,
-  startValidate,
-}) => {
+const ProdDescription = () => {
+  const useDispatch = useAppDispatch();
+  const description = useAppSelector((state) => state.product.description);
+  const name = useAppSelector((state) => state.product.name);
+
+  console.log("Check prodcut data");
+
   const fileInputRef = useRef<HTMLInputElement>(null);
   const editor = useEditor({
     extensions: [
@@ -44,9 +45,11 @@ const ProdDescription: React.FC<ProductFormProps> = ({
       Highlight,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
     ],
-    content: formData.description,
+    content: description,
     onUpdate: ({ editor: _editor }) => {
-      updateField("description", _editor.getHTML());
+      useDispatch(
+        updateProductField({ field: "description", value: _editor.getHTML() })
+      );
     },
   });
 
@@ -66,8 +69,9 @@ const ProdDescription: React.FC<ProductFormProps> = ({
           .replace(/\n/g, "<br>")
           .replace(/ {2,}/g, (match) => "&nbsp;".repeat(match.length));
 
-        console.log("HTML content:", htmlContent);
-        updateField("description", htmlContent);
+        useDispatch(
+          updateProductField({ field: "description", value: htmlContent })
+        );
         editor?.commands.setContent(htmlContent);
         if (fileInputRef.current) {
           fileInputRef.current.value = "";
@@ -95,14 +99,13 @@ const ProdDescription: React.FC<ProductFormProps> = ({
             fullWidth
             required
             size="small"
-            value={formData.name}
-            onChange={(e) => updateField("name", e.target.value)}
+            value={name}
+            onChange={(e) =>
+              useDispatch(
+                updateProductField({ field: "name", value: e.target.value })
+              )
+            }
           />
-          {startValidate && errors.name && (
-            <p className="my-2 text-[#f12727] text-sm">
-              {startValidate && errors.name}
-            </p>
-          )}
         </div>
         <div>
           <div className="flex items-center justify-between gap-3 ">
@@ -131,8 +134,7 @@ const ProdDescription: React.FC<ProductFormProps> = ({
             w="100%"
             styles={{
               content: {
-                minHeight: "82px",
-                maxHeight: "420px",
+                height: "215px",
                 overflowY: "scroll",
                 whiteSpace: "pre-wrap",
                 wordBreak: "break-word",
@@ -196,11 +198,6 @@ const ProdDescription: React.FC<ProductFormProps> = ({
             )}
             <RichTextEditor.Content />
           </RichTextEditor>
-          {startValidate && errors.description && (
-            <p className="my-2 text-[#f12727] text-sm">
-              {startValidate && errors.description}
-            </p>
-          )}
         </div>
       </div>
     </div>

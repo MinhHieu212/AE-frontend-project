@@ -4,11 +4,10 @@ interface VariantImage {
   url: string;
 }
 
-interface Variant {
+interface VariantProps {
   id: number;
   type: string;
   values: string[];
-  images: VariantImage[];
 }
 
 interface CombinationObject {
@@ -18,24 +17,22 @@ interface CombinationObject {
   quantity: string;
 }
 
-interface VariantsState {
-  product_variant: Variant[];
+interface VariantsStateProps {
+  product_variant: VariantProps[];
   combinations: CombinationObject[];
 }
 
-const initialState: VariantsState = {
+const initialState: VariantsStateProps = {
   product_variant: [
     {
       id: 0,
       type: "",
       values: [],
-      images: [],
     },
     {
       id: 1,
       type: "",
       values: [],
-      images: [],
     },
   ],
   combinations: [],
@@ -52,7 +49,6 @@ export const variantSlice = createSlice({
           id: state.product_variant.length,
           type: "",
           values: [],
-          images: [],
         },
       ];
     },
@@ -115,10 +111,10 @@ export const variantSlice = createSlice({
       );
     },
 
-    initializeCombinations: (state, action: PayloadAction<Variant[]>) => {
+    initializeCombinations: (state, action: PayloadAction<VariantProps[]>) => {
       state.product_variant = action.payload;
       const variants: { [key: string]: string[] } = action.payload.reduce(
-        (acc: { [key: string]: string[] }, variant: Variant) => {
+        (acc: { [key: string]: string[] }, variant: VariantProps) => {
           acc[variant.type] = variant.values;
           return acc;
         },

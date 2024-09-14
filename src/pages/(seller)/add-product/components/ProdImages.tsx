@@ -1,30 +1,33 @@
 import { Button } from "@mui/material";
 import React, { useRef, useState } from "react";
 import { useDropzone, DropzoneState } from "react-dropzone";
-import { ProductFormProps } from "../types/ProductFormProps";
-import NewPopupImages from "./NewPopupImages";
+import { useAppDispatch, useAppSelector } from "../../../../store/store";
+import { updateProductField } from "../../../../store/slices/productSlice";
+import PopupImages from "./PopupImages";
 
-const NewProdimages: React.FC<ProductFormProps> = ({
-  formData,
-  updateField,
-  errors,
-  startValidate,
-}) => {
+const ProdImages = () => {
+  const useDispatch = useAppDispatch();
+  const images = useAppSelector((state) => state.product.images);
+  const primaryImage = useAppSelector((state) => state.product.primaryImage);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const imageInputRef = useRef<HTMLInputElement>(null);
 
+  function updateField(field: string, value: any) {
+    useDispatch(updateProductField({ field, value }));
+  }
+
   const onDrop = (acceptedFiles: File[]) => {
     const maxFiles = 10;
-    const totalFiles = formData.images.length + acceptedFiles.length;
+    const totalFiles = images.length + acceptedFiles.length;
     if (totalFiles > maxFiles) {
-      const filesToAdd = maxFiles - formData.images.length;
+      const filesToAdd = maxFiles - images.length;
       acceptedFiles = acceptedFiles.slice(0, filesToAdd);
     }
     const newFiles = acceptedFiles.map((file) => ({
       file: file,
       url: URL.createObjectURL(file),
     }));
-    const prev_images = formData.images;
+    const prev_images = images;
     updateField("images", [...prev_images, ...newFiles]);
     updateField("primaryImage", prev_images[0]);
   };
@@ -35,12 +38,12 @@ const NewProdimages: React.FC<ProductFormProps> = ({
     });
 
   const handleRemoveImage = (index: number) => {
-    const updatedImages = formData.images.filter((_, i) => i !== index);
+    const updatedImages = images.filter((_, i) => i !== index);
     updateField("images", updatedImages);
   };
 
   const handleReplaceImage = (index: number, file: File) => {
-    const updatedImages = formData.images.map((img, i) =>
+    const updatedImages = images.map((img, i) =>
       i === index ? { file: file, url: URL.createObjectURL(file) } : img
     );
     updateField("images", updatedImages);
@@ -65,27 +68,18 @@ const NewProdimages: React.FC<ProductFormProps> = ({
         <p className="font-medium text-lg">
           Product images <span className="text-red-600"> * </span>
           <span className="text-blue-700 text-sm">
-            [{formData.images.length} / 10 files]
+            [{images.length} / 10 files]
           </span>
         </p>
-        <NewPopupImages
-          formData={formData}
-          updateField={updateField}
-          errors={errors}
-          startValidate={startValidate}
-          openModal={openModal}
-          setImageList={onDrop}
-          setOpenModal={setOpenModal}
-          imageInputRef={imageInputRef}
-        />
+        <PopupImages openModal={openModal} setOpenModal={setOpenModal} />
       </div>
       <div className="flex w-full items-center p-2 px-5 rounded-lg border-2 h-[325px] border-solid border-gray-200 gap-3">
         <div
           {...getRootProps()}
           className={`${
-            formData.images.length === 0
+            images.length === 0
               ? "w-full"
-              : formData.images.length === 10
+              : images.length === 10
               ? "hidden"
               : "w-1/3"
           } ${
@@ -93,29 +87,33 @@ const NewProdimages: React.FC<ProductFormProps> = ({
               ? "border-blue-500 bg-blue-50"
               : "border-gray-300 bg-slate-100"
           } h-[calc(100%-14px)] my-2 flex items-center justify-center border-2 border-dashed rounded-lg transition-colors ${
-            formData.images.length >= 10 ? "hidden" : ""
+            images.length >= 10 ? "hidden" : ""
           }`}
         >
           <input {...getInputProps()} ref={imageInputRef} />
-          <p className="text-sm">Upload or Drag Image</p>
+          <p className="text-sm font-medium text-blue-400">
+            Upload or Drag Image
+          </p>
         </div>
         <div
           className={`${
-            formData.images.length >= 10
+            images.length >= 10
               ? "w-full"
-              : formData.images.length > 0
+              : images.length > 0
               ? "w-2/3"
               : "hidden"
           } h-full flex items-center justify-center`}
         >
           <div
             className={`${
-              formData.images.length === 1 ? "w-full" : "w-1/2"
+              images.length === 1 ? "w-full" : "w-1/2"
             } h-[calc(100%-14px)] flex items-center justify-center px-2 relative group`}
           >
             <img
-              src={formData.images[0]?.url}
-              alt={`Image file ${formData.images[0]?.file.name}`}
+              src={primaryImage?.url || images[0]?.url}
+              alt={`Image file ${
+                primaryImage?.file.name || images[0]?.file.name
+              }`}
               className="w-full h-full object-cover rounded-lg"
             />
             <div
@@ -141,10 +139,10 @@ const NewProdimages: React.FC<ProductFormProps> = ({
 
           <div
             className={`${
-              formData.images.length === 1 ? "hidden" : "w-1/2"
+              images.length === 1 ? "hidden" : "w-1/2"
             } h-[calc(100%-14px)] flex flex-col items-evenly justify-start py-2 gap-2`}
           >
-            {formData.images.slice(1, 3).map((item, index) => {
+            {images.slice(1, 3).map((item, index) => {
               return (
                 <div className="w-full h-1/2 relative">
                   <img
@@ -154,12 +152,12 @@ const NewProdimages: React.FC<ProductFormProps> = ({
                   />
                   <div
                     className={`w-full h-full flex items-center justify-center bg-opacity-80 absolute bg-slate-600 top-0 left-0 text-lg font-semibold rounded-lg text-white ${
-                      index === 1 && formData.images.length > 3 ? "" : "hidden"
+                      index === 1 && images.length > 3 ? "" : "hidden"
                     }`}
                     onClick={() => setOpenModal(true)}
                   >
                     <span className="text-white opacity-1">
-                      + {formData.images.length - 3}
+                      + {images.length - 3}
                     </span>
                   </div>
                 </div>
@@ -172,4 +170,4 @@ const NewProdimages: React.FC<ProductFormProps> = ({
   );
 };
 
-export default NewProdimages;
+export default ProdImages;

@@ -1,15 +1,16 @@
 import React from "react";
 import { Checkbox, FormControlLabel, FormGroup } from "@mui/material";
-import { ProductFormProps } from "../types/ProductFormProps";
+import { useAppDispatch, useAppSelector } from "../../../../store/store";
+import { updateProductField } from "../../../../store/slices/productSlice";
 
-const ProdSellingType: React.FC<ProductFormProps> = ({
-  formData,
-  updateField,
-  errors,
-  startValidate,
-}) => {
+const ProdSellingType = () => {
+  const useDispatch = useAppDispatch();
+  const sellingType = useAppSelector((state) => state.product.sellingType);
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    updateField("sellingType", event.target.value);
+    useDispatch(
+      updateProductField({ field: "sellingType", value: event.target.value })
+    );
   };
 
   return (
@@ -22,7 +23,7 @@ const ProdSellingType: React.FC<ProductFormProps> = ({
           <FormControlLabel
             control={
               <Checkbox
-                checked={formData.sellingType === "In-store selling only"}
+                checked={sellingType === "In-store selling only"}
                 onChange={handleChange}
                 size="small"
                 value="In-store selling only"
@@ -33,7 +34,7 @@ const ProdSellingType: React.FC<ProductFormProps> = ({
           <FormControlLabel
             control={
               <Checkbox
-                checked={formData.sellingType === "Online selling only"}
+                checked={sellingType === "Online selling only"}
                 onChange={handleChange}
                 value="Online selling only"
                 size="small"
@@ -44,9 +45,7 @@ const ProdSellingType: React.FC<ProductFormProps> = ({
           <FormControlLabel
             control={
               <Checkbox
-                checked={
-                  formData.sellingType === "Available both online and in-store"
-                }
+                checked={sellingType === "Available both online and in-store"}
                 size="small"
                 onChange={handleChange}
                 value="Available both online and in-store"

@@ -1,27 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { MantineProvider } from "@mantine/core";
-import { useProductForm } from "./hooks/useProductForm";
+import { useAppSelector } from "../../../store/store";
 import ProdDescription from "./components/ProdDescription";
 import ProdCategory from "./components/ProdCategory";
 import ProdPackages from "./components/ProdPackages";
 import ProdSellingType from "./components/ProdSellingType";
 import ProdInventory from "./components/ProdInventory";
 import ConfirmDialogButton from "./components/PopupConfirm";
-import PopupDiscardButton from "./components/PopupDiscard";
-import NewProdimages from "./components/NewProdImages";
 import ProdVariantTable from "./components/ProdVariantTable";
 import ProdVariants from "./components/ProdVariants";
-import { useSelector } from "react-redux";
-import { useAppSelector } from "../../../store/store";
+import ProdImages from "./components/ProdImages";
+import ProdBranchFeature from "./components/ProdBranchFeature";
 
-interface SubHeaderProps {
-  unSave: boolean;
-}
-const SubHeader: React.FC<SubHeaderProps> = ({ unSave }) => {
-  const navigate = useNavigate();
-
+const SubHeader = () => {
   return (
     <div className="flex items-center justify-start gap-3 px-5">
       <ConfirmDialogButton />
@@ -33,51 +25,29 @@ const SubHeader: React.FC<SubHeaderProps> = ({ unSave }) => {
   );
 };
 
-interface ActionButtonsProps {
-  submitForm: () => void;
-  validateForm: () => boolean;
-  resetFormData: () => void;
-  errors: any;
-  isValid: boolean;
-  setStartValidate: any;
-  loading: boolean;
-}
-
-const ActionButtons: React.FC<ActionButtonsProps> = ({
-  submitForm,
-  validateForm,
-  resetFormData,
-  errors,
-  isValid = false,
-  setStartValidate,
-  loading,
-}) => {
+const ActionButtons = () => {
+  const product = useAppSelector((state) => state.product);
   const product_variant = useAppSelector(
     (state) => state.variants.product_variant
   );
 
   function handleAddNewProduct() {
     console.log(JSON.stringify(product_variant, null, 2));
-    setStartValidate(true);
-    if (validateForm()) {
-      submitForm();
-    } else {
-      console.log(JSON.stringify(errors, null, 2));
-    }
+    console.log(JSON.stringify(product, null, 2));
   }
 
   return (
     <div className="w-full items-center justify-end gap-3 flex px-4 my-[50px]">
-      <PopupDiscardButton />
+      <Button className="rounded-md capitalize" variant="outlined">
+        Discard
+      </Button>
       <div className="flex items-center justify-center gap-5">
         <Button
-          size="large"
-          disabled={loading}
           className="rounded-md capitalize"
           variant="contained"
           onClick={() => handleAddNewProduct()}
         >
-          {loading ? "Processing" : "Add Product"}
+          Add Product
         </Button>
       </div>
     </div>
@@ -85,88 +55,38 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
 };
 
 const AddProduct = () => {
-  const {
-    formData,
-    updateField,
-    submitForm,
-    validateForm,
-    resetFormData,
-    checkUnSaveData,
-    errors,
-    loading,
-  } = useProductForm();
-  const [isValid, setIsValid] = useState<boolean>(false);
-  const [startValidate, setStartValidate] = useState<boolean>(false);
-  const unSave = checkUnSaveData();
-
-  useEffect(() => {
-    setIsValid(validateForm());
-  }, [formData]);
+  const cate_level_1 = useAppSelector(
+    (state) => state.product.category.level_1
+  );
 
   return (
     <div className="flex flex-col items-center justify-start w-full max-w-[1430px] h-full p-3 mx-auto">
       <div className="w-full h-full my-2 scrollBar">
-        <SubHeader unSave={unSave} />
+        <SubHeader />
         <div className="w-full flex items-start justify-center p-2 gap-3">
           <div className="w-1/2 flex flex-col items-center justify-start">
             <MantineProvider>
-              <ProdDescription
-                formData={formData}
-                updateField={updateField}
-                errors={errors}
-                startValidate={startValidate}
-              />
+              <ProdDescription />
             </MantineProvider>
-            <ProdCategory
-              formData={formData}
-              updateField={updateField}
-              errors={errors}
-              startValidate={startValidate}
-            />
-            <ProdSellingType
-              formData={formData}
-              updateField={updateField}
-              errors={errors}
-              startValidate={startValidate}
-            />
+            <ProdCategory />
+            <ProdPackages />
           </div>
           <div className="w-1/2 flex flex-col items-center justify-start">
-            <NewProdimages
-              formData={formData}
-              updateField={updateField}
-              errors={errors}
-              startValidate={startValidate}
-            />
-            <ProdPackages
-              formData={formData}
-              updateField={updateField}
-              errors={errors}
-              startValidate={startValidate}
-            />
-            <ProdInventory
-              formData={formData}
-              updateField={updateField}
-              errors={errors}
-              startValidate={startValidate}
-            />
+            <ProdImages />
+            <ProdBranchFeature />
+            <ProdSellingType />
+
+            <ProdInventory />
           </div>
         </div>
-        {(formData.category.level_1.name === "Smart Phone" ||
-          formData.category.level_1.name === "Electronic") && (
+        {(cate_level_1.name === "Smart Phone" ||
+          cate_level_1.name === "Electronic") && (
           <>
             <ProdVariants />
             <ProdVariantTable />
           </>
         )}
-        <ActionButtons
-          submitForm={submitForm}
-          validateForm={validateForm}
-          errors={errors}
-          isValid={isValid}
-          setStartValidate={setStartValidate}
-          resetFormData={resetFormData}
-          loading={loading}
-        />
+        <ActionButtons />
       </div>
     </div>
   );

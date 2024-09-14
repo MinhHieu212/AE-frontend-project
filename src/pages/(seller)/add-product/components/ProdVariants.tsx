@@ -5,25 +5,22 @@ import {
   setVariantValue,
   removeVariantValue,
 } from "../../../../store/slices/variantSlice";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import React, { useState } from "react";
-import {
-  TextField,
-  Chip,
-  Box,
-  Button,
-  Stack,
-  Divider,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-} from "@mui/material";
+import { TextField, Chip, Box, Button, Stack, Divider } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
-
-import PopupVariantImages from "./PopupVariantImages";
-
+import { PlusOne, X } from "@mui/icons-material";
+interface VariantImage {
+  file: File;
+  url: string;
+}
+interface VariantImagesListProps {
+  type: string;
+  value: string;
+  images: VariantImage[];
+}
 interface Variant {
   id: number;
   type: string;
@@ -31,9 +28,18 @@ interface Variant {
 }
 
 const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
-  const useDispatch = useAppDispatch();
-  const [open, setOpen] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  const [show, setShow] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>("");
+  const [variantImagesList, setVariantImagesList] = useState<
+    VariantImagesListProps[]
+  >(
+    values.map((item) => ({
+      type,
+      value: item,
+      images: [],
+    }))
+  );
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -46,12 +52,7 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
     ) {
       event.preventDefault();
       if (values.includes(inputValue.trim())) return;
-      useDispatch(
-        setVariantValue({
-          id,
-          new_value: inputValue.trim(),
-        })
-      );
+      dispatch(setVariantValue({ id, new_value: inputValue.trim() }));
       setInputValue("");
     }
 
@@ -60,11 +61,8 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
       inputValue.trim() === "" &&
       values.length > 0
     ) {
-      useDispatch(
-        removeVariantValue({
-          id,
-          remove_value: values[values.length - 1],
-        })
+      dispatch(
+        removeVariantValue({ id, remove_value: values[values.length - 1] })
       );
       setInputValue("");
     }
@@ -72,13 +70,39 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
 
   const handleInputBlur = () => {
     if (values.includes(inputValue.trim()) || inputValue.trim() === "") return;
-    useDispatch(
-      setVariantValue({
-        id,
-        new_value: inputValue.trim(),
-      })
-    );
+    dispatch(setVariantValue({ id, new_value: inputValue.trim() }));
     setInputValue("");
+  };
+
+  const handleFileChange =
+    (value: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (event.target.files) {
+        const newImages = Array.from(event.target.files).map((file) => ({
+          url: URL.createObjectURL(file),
+          file: file,
+        }));
+
+        setVariantImagesList((prev) =>
+          prev.map((item) =>
+            item.value === value
+              ? { ...item, images: [...item.images, ...newImages] }
+              : item
+          )
+        );
+      }
+    };
+
+  const handleRemoveImage = (value: string, imageUrl: string) => {
+    setVariantImagesList((prev) =>
+      prev.map((item) =>
+        item.value === value
+          ? {
+              ...item,
+              images: item.images.filter((img) => img.url !== imageUrl),
+            }
+          : item
+      )
+    );
   };
 
   return (
@@ -90,13 +114,15 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
           placeholder="Enter type"
           value={type}
           onChange={(e) =>
-            useDispatch(
+            dispatch(
               setVariantType({ id: id, new_type: e.target.value.toLowerCase() })
             )
           }
         />
         <Divider
-          className={`w-[30px] ${values.length > 0 ? "bg-black" : ""}`}
+          className={`w-[30px] ${
+            values.length > 0 ? "bg-gray-300" : "bg-white"
+          }`}
         />
         <Box className="w-full flex items-center justify-start flex-wrap gap-3 px-4 border-2 border-solid border-[#c8c3c3] p-[2px] rounded-[4px]">
           {values.map((chip) => (
@@ -106,7 +132,7 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
               size="small"
               className="px-1"
               onDelete={() =>
-                useDispatch(removeVariantValue({ id, remove_value: chip }))
+                dispatch(removeVariantValue({ id, remove_value: chip }))
               }
             />
           ))}
@@ -125,24 +151,75 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
           />
         </Box>
         <Divider
-          className={`w-[30px] ${values.length > 0 ? "bg-black" : ""}`}
+          className={`w-[30px] ${
+            values.length > 0 ? "bg-gray-300" : "bg-white"
+          }`}
         />
-        <PopupVariantImages
-          open={open}
-          setOpen={setOpen}
-          id={id}
-          type={type}
-          values={values}
-        />
+        <Button
+          startIcon={show ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          onClick={() => setShow((prev) => !prev)}
+          className="w-1/5 capitalize"
+          color="primary"
+        >
+          Upload Images
+        </Button>
+        <Divider orientation="vertical" variant="middle" flexItem />
         <Box
           className={`cursor-pointer text-red-400 flex items-center justify-center w-[120px]`}
           onClick={() => {
-            useDispatch(removeVariant({ id }));
+            dispatch(removeVariant({ id }));
           }}
         >
           <DeleteOutlineIcon />
         </Box>
       </div>
+
+      <div
+        className={`space-y-3 p-3 px-5 pb-10 image-section ${
+          show ? "show" : ""
+        } transition ease-in-out delay-500 ${show ? "" : "hidden"}`}
+      >
+        {variantImagesList.map((item) => (
+          <div key={item.value} className="space-y-2">
+            <p className="font-medium">
+              <span className="font-bold uppercase"> {item.type} </span>:{" "}
+              {item.value}
+            </p>
+            <div className="grid grid-cols-5 gap-4">
+              {item.images?.map((subItem, index) => (
+                <div key={index} className="relative group">
+                  <img
+                    src={subItem.url}
+                    alt={`Preview ${subItem.file.name}`}
+                    className="w-full h-32 object-cover rounded-lg"
+                  />
+                  <Box
+                    onClick={() => handleRemoveImage(item.value, subItem.url)}
+                    className="absolute top-1 right-1 text-black rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                  >
+                    <X className="h-4 w-4" />
+                  </Box>
+                </div>
+              ))}
+              <label
+                htmlFor={`file-${item.value}`}
+                className="border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center h-32 cursor-pointer hover:bg-gray-50 transition-colors"
+              >
+                <input
+                  type="file"
+                  id={`file-${item.value}`}
+                  accept="image/*"
+                  multiple
+                  onChange={handleFileChange(item.value)}
+                  className="hidden"
+                />
+                <PlusOne className="h-8 w-8 text-gray-400" />
+              </label>
+            </div>
+          </div>
+        ))}
+      </div>
+
       <Divider className="mt-3" />
     </Box>
   );
@@ -180,8 +257,9 @@ const ProdVariants = () => {
             />
           ))}
         </Stack>
+
         <div className="flex items-center justify-between w-full">
-          <Box className="flex items-center justify-end ml-[45px]">
+          <Box className="flex items-center justify-end">
             <Button
               className="capitalize m-0 p-0 font-medium"
               onClick={() => {

@@ -11,3 +11,18 @@
   align-items: "center";
   justify-items: "center";
 }
+
+.image-section {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out, opacity 0.2s ease-out,
+    padding 0.3s ease-out;
+  opacity: 0;
+  padding: 0 20px;
+}
+
+.image-section.show {
+  max-height: 1000px;
+  opacity: 1;
+  padding: 12px 20px 40px;
+}

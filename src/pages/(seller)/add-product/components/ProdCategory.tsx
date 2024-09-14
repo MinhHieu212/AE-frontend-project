@@ -10,6 +10,8 @@ import { ProductFormProps } from "../types/ProductFormProps";
 import { getCategories } from "../../../../api/CategoryApi";
 import { fake_data_categorys } from "../../../../fake_data/fake_data_category";
 import { toast } from "../../../../utils/Toastify";
+import { useAppDispatch, useAppSelector } from "../../../../store/store";
+import { updateProductField } from "../../../../store/slices/productSlice";
 
 interface CategoryProps {
   id: number;
@@ -22,38 +24,45 @@ interface CategoryProps {
   productsSold: number;
 }
 
-const ProdCategory: React.FC<ProductFormProps> = ({
-  formData,
-  updateField,
-  errors,
-  startValidate,
-}) => {
+const ProdCategory = () => {
+  const useDispatch = useAppDispatch();
+  const category = useAppSelector((state) => state.product.category);
   const [subCategory, setSubCategory] = useState<any>([]);
   const [categories, setCategories] =
     useState<CategoryProps[]>(fake_data_categorys);
 
   const handleChange = (value: string, level: string) => {
     if (value === "") {
-      updateField("category", {
-        ...formData.category,
-        [level]: { name: null, index: null },
-      });
+      useDispatch(
+        updateProductField({
+          field: "category",
+          value: {
+            ...category,
+            [level]: { name: null, index: null },
+          },
+        })
+      );
     } else {
       const values = value.split(" and ");
-      updateField("category", {
-        ...formData.category,
-        [level]: { name: values[0], index: Number(values[1]) },
-      });
+      useDispatch(
+        updateProductField({
+          field: "category",
+          value: {
+            ...category,
+            [level]: { name: values[0], index: Number(values[1]) },
+          },
+        })
+      );
     }
   };
 
   useEffect(() => {
     const selectedCategory = categories.find(
-      (item) => item.name === formData.category.level_1.name
+      (item) => item.name === category.level_1.name
     );
     handleChange("", "level_2");
     setSubCategory(selectedCategory?.subCategory || []);
-  }, [formData.category.level_1]);
+  }, [category.level_1]);
 
   useEffect(() => {
     const callApi = async () => {
@@ -82,14 +91,14 @@ const ProdCategory: React.FC<ProductFormProps> = ({
             <Select
               id="demo-multiple-chip"
               inputProps={{ "aria-label": "Without label" }}
-              value={formData.category.level_1}
+              value={category.level_1}
               onChange={(e) => handleChange(String(e.target.value), "level_1")}
               input={<OutlinedInput id="select-multiple-chip" />}
               className="h-[42px] w-full cursor-pointer"
               renderValue={() => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                   <span className="text-sm font-medium">
-                    {formData.category.level_1.name}
+                    {category.level_1.name}
                   </span>
                 </Box>
               )}
@@ -110,11 +119,6 @@ const ProdCategory: React.FC<ProductFormProps> = ({
               ))}
             </Select>
           </FormControl>
-          {startValidate && errors.category && (
-            <p className="my-2 text-[#f12727] text-sm">
-              {startValidate && errors.category}
-            </p>
-          )}
         </div>
 
         <div className="mt-3">
@@ -126,14 +130,14 @@ const ProdCategory: React.FC<ProductFormProps> = ({
               disabled={subCategory.length === 0}
               id="demo-multiple-chip"
               inputProps={{ "aria-label": "Without label" }}
-              value={formData.category.level_2}
+              value={category.level_2}
               onChange={(e) => handleChange(String(e.target.value), "level_2")}
               input={<OutlinedInput id="select-multiple-chip" />}
               className="h-[42px] w-full cursor-pointer"
               renderValue={() => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                   <span className="text-sm font-medium">
-                    {formData.category.level_2.name}
+                    {category.level_2.name}
                   </span>
                 </Box>
               )}

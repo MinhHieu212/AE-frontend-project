@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { ProductFormProps } from "../types/ProductFormProps";
 import {
   Divider,
   InputBase,
@@ -8,34 +7,36 @@ import {
   TextField,
   InputAdornment,
 } from "@mui/material";
+import { updateProductField } from "../../../../store/slices/productSlice";
+import { useAppDispatch, useAppSelector } from "../../../../store/store";
 
-const ProdPackages: React.FC<ProductFormProps> = ({
-  formData,
-  updateField,
-  errors,
-  startValidate,
-}) => {
-  // State for unit (Kg/Pound)
-  const [unit, setUnit] = useState(formData.packages_weight ? "Kg" : "Pound");
+const ProdPackages = () => {
+  const useDispatch = useAppDispatch();
+  const packages_weight = useAppSelector(
+    (state) => state.product.packages_weight
+  );
+  const packages_size = useAppSelector((state) => state.product.packages_size);
+  const [unit, setUnit] = useState(packages_weight ? "Kg" : "Pound");
 
-  // Handler to update weight
+  function updateField(field: string, value: any) {
+    useDispatch(updateProductField({ field, value }));
+  }
+
   const handleWeightChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const weight = parseFloat(event.target.value) || 0;
-    updateField("packages_weight", weight); // Update the weight in formData
+    updateField("packages_weight", weight);
   };
 
-  // Handler to update unit
   const handleUnitChange = (value: string) => {
     setUnit(value);
   };
 
-  // Handler to update package size dimensions
   const handleSizeChange =
     (dimension: "length" | "width" | "height") =>
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const value = parseFloat(event.target.value) || null;
       updateField("packages_size", {
-        ...formData.packages_size,
+        ...packages_size,
         [dimension]: value,
       });
     };
@@ -52,8 +53,8 @@ const ProdPackages: React.FC<ProductFormProps> = ({
               placeholder="00.00"
               type="number"
               className="h-[42px]"
-              value={formData.packages_weight || ""} // Bind to formData
-              onChange={handleWeightChange} // Handle weight change
+              value={packages_weight || ""}
+              onChange={handleWeightChange}
               onKeyDown={(e) => {
                 if (e.key === "-" || e.key === ",") {
                   e.preventDefault();
@@ -78,14 +79,8 @@ const ProdPackages: React.FC<ProductFormProps> = ({
               <MenuItem value="Pound">Pb</MenuItem>
             </Select>
           </div>
-          {startValidate && errors.packages_weight && (
-            <p className="my-0 text-[#f12727] text-sm">
-              {startValidate && errors.packages_weight}
-            </p>
-          )}
         </div>
         <div>
-          {/* <p className="font-medium"> Package Size</p> */}
           <div className="flex item-start justify-between gap-5 mt-4">
             {["length", "width", "height"].map((dim) => (
               <div
@@ -107,20 +102,11 @@ const ProdPackages: React.FC<ProductFormProps> = ({
                   variant="outlined"
                   placeholder="00.00"
                   className="w-full rounded-md"
-                  value={
-                    formData.packages_size[
-                      dim as keyof typeof formData.packages_size
-                    ] || ""
-                  }
+                  value={packages_size[dim as keyof typeof packages_size] || ""}
                   onChange={handleSizeChange(
                     dim as "length" | "width" | "height"
                   )}
                 />
-                {errors[`packages_weight.${dim}`] && (
-                  <p className="my-0 text-[#f12727] text-sm">
-                    {errors[`packages_weight.${dim}`]}
-                  </p>
-                )}
               </div>
             ))}
           </div>
