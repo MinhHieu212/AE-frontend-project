@@ -1,8 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+interface VariantImage {
+  file: File;
+  url: string;
+}
+
 interface Variant {
   id: number;
   type: string;
   values: string[];
+  images: VariantImage[];
 }
 
 interface CombinationObject {
@@ -13,39 +19,44 @@ interface CombinationObject {
 }
 
 interface VariantsState {
-  phone_variant: Variant[];
+  product_variant: Variant[];
   combinations: CombinationObject[];
   isTableGenerated: boolean;
+  primary_variant: number;
 }
 
 const initialState: VariantsState = {
-  phone_variant: [
+  product_variant: [
     {
       id: 0,
       type: "",
       values: [],
+      images: [],
     },
     {
       id: 1,
       type: "",
       values: [],
+      images: [],
     },
   ],
+  primary_variant: 0,
   combinations: [],
   isTableGenerated: false,
 };
 
 export const variantSlice = createSlice({
-  name: "phone_variant",
+  name: "product_variant",
   initialState,
   reducers: {
     addVariant: (state) => {
-      state.phone_variant = [
-        ...state.phone_variant,
+      state.product_variant = [
+        ...state.product_variant,
         {
-          id: state.phone_variant.length,
+          id: state.product_variant.length,
           type: "",
           values: [],
+          images: [],
         },
       ];
     },
@@ -54,11 +65,15 @@ export const variantSlice = createSlice({
       state.isTableGenerated = action.payload.value;
     },
 
+    setPrimaryVariant: (state, action: PayloadAction<{ index: number }>) => {
+      state.primary_variant = action.payload.index;
+    },
+
     setVariantType: (
       state,
       action: PayloadAction<{ id: number; new_type: string }>
     ) => {
-      state.phone_variant = state.phone_variant.map((item) =>
+      state.product_variant = state.product_variant.map((item) =>
         item.id === action.payload.id
           ? { ...item, type: action.payload.new_type }
           : item
@@ -66,8 +81,22 @@ export const variantSlice = createSlice({
     },
 
     removeVariant: (state, action: PayloadAction<{ id: number }>) => {
-      state.phone_variant = state.phone_variant.filter(
+      state.product_variant = state.product_variant.filter(
         (item) => item.id !== action.payload.id
+      );
+    },
+
+    updateVariantImages: (
+      state,
+      action: PayloadAction<{ id: number; images: VariantImage[] }>
+    ) => {
+      state.product_variant = state.product_variant.map((item) =>
+        item.id === action.payload.id
+          ? {
+              ...item,
+              images: action.payload.images,
+            }
+          : item
       );
     },
 
@@ -75,7 +104,7 @@ export const variantSlice = createSlice({
       state,
       action: PayloadAction<{ id: number; new_value: string }>
     ) => {
-      state.phone_variant = state.phone_variant.map((item) =>
+      state.product_variant = state.product_variant.map((item) =>
         item.id === action.payload.id
           ? { ...item, values: [...item.values, action.payload.new_value] }
           : item
@@ -86,7 +115,7 @@ export const variantSlice = createSlice({
       state,
       action: PayloadAction<{ id: number; remove_value: string }>
     ) => {
-      state.phone_variant = state.phone_variant.map((item) =>
+      state.product_variant = state.product_variant.map((item) =>
         item.id === action.payload.id
           ? {
               ...item,
@@ -99,7 +128,7 @@ export const variantSlice = createSlice({
     },
 
     initializeCombinations: (state, action: PayloadAction<Variant[]>) => {
-      state.phone_variant = action.payload;
+      state.product_variant = action.payload;
       const variants: { [key: string]: string[] } = action.payload.reduce(
         (acc: { [key: string]: string[] }, variant: Variant) => {
           acc[variant.type] = variant.values;
@@ -161,4 +190,6 @@ export const {
   updateCombination,
   saveCombinations,
   setIsTableGenerated,
+  setPrimaryVariant,
+  updateVariantImages,
 } = variantSlice.actions;

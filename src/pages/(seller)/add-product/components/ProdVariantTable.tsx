@@ -17,7 +17,9 @@ import {
 
 const ProdVariantTable: React.FC = () => {
   const dispatch = useAppDispatch();
-  const phone_variant = useAppSelector((state) => state.variants.phone_variant);
+  const product_variant = useAppSelector(
+    (state) => state.variants.product_variant
+  );
   const combinations = useAppSelector((state) => state.variants.combinations);
   const isTableGenerated = useAppSelector(
     (state) => state.variants.isTableGenerated
@@ -45,7 +47,7 @@ const ProdVariantTable: React.FC = () => {
               <StyledTableCell className="uppercase" align="center">
                 #
               </StyledTableCell>
-              {phone_variant.map((item, index) => (
+              {product_variant.map((item, index) => (
                 <StyledTableCell
                   className="uppercase"
                   align="center"
@@ -70,7 +72,7 @@ const ProdVariantTable: React.FC = () => {
             {combinations.map((combination, index) => (
               <StyledTableRow key={index}>
                 <StyledTableCell align="center">{index + 1}</StyledTableCell>
-                {phone_variant.map((variant, idx) => (
+                {product_variant.map((variant, idx) => (
                   <StyledTableCell key={idx} align="center">
                     {combination[variant.type]}
                   </StyledTableCell>

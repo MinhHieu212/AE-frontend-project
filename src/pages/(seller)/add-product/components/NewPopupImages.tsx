@@ -10,19 +10,21 @@ import CloseIcon from "@mui/icons-material/Close";
 import { ImageFile, PopupProductFormProps } from "../types/ProductFormProps";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { IconStarFilled } from "@tabler/icons-react";
+import { Chip, FormControl, FormLabel, RadioGroup, Stack } from "@mui/material";
+import { useAppSelector } from "../../../../store/store";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
-    width: "900px",
+    width: "1200px",
   },
   "& .MuiDialogActions-root": {
     padding: theme.spacing(1),
   },
   "& .MuiPaper-root": {
     maxWidth: "none",
-    width: "900px",
-    height: "500px",
+    width: "1200px",
+    height: "600px",
   },
 }));
 
@@ -51,6 +53,7 @@ const NewPopupImages: React.FC<PopupProductFormProps> = ({
   const handleClickOpen = () => {
     setOpenModal(true);
   };
+
   const handleClose = () => {
     setOpenModal(false);
   };
@@ -78,7 +81,11 @@ const NewPopupImages: React.FC<PopupProductFormProps> = ({
 
   return (
     <React.Fragment>
-      <Button onClick={handleClickOpen}>View all</Button>
+      {formData.images?.length > 0 && (
+        <Button onClick={handleClickOpen} className="capitalize">
+          Set Image label
+        </Button>
+      )}
       <BootstrapDialog onClose={handleClose} open={openModal}>
         <DialogTitle sx={{ m: 0, p: 2 }}>All Images</DialogTitle>
         <IconButton
@@ -104,7 +111,8 @@ const NewPopupImages: React.FC<PopupProductFormProps> = ({
                 />
               )}
             </div>
-            <div className="w-3/5  p-4 flex items-start justify-start flex-wrap">
+
+            <div className="w-3/5 p-3 flex items-start justify-start flex-wrap">
               {formData.images.map((item, index) => {
                 return (
                   <div className="w-1/4 max-h-[120px] p-2 relative" key={index}>

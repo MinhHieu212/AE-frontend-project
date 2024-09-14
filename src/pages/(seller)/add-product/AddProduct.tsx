@@ -13,6 +13,8 @@ import PopupDiscardButton from "./components/PopupDiscard";
 import NewProdimages from "./components/NewProdImages";
 import ProdVariantTable from "./components/ProdVariantTable";
 import ProdVariants from "./components/ProdVariants";
+import { useSelector } from "react-redux";
+import { useAppSelector } from "../../../store/store";
 
 interface SubHeaderProps {
   unSave: boolean;
@@ -50,7 +52,12 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
   setStartValidate,
   loading,
 }) => {
+  const product_variant = useAppSelector(
+    (state) => state.variants.product_variant
+  );
+
   function handleAddNewProduct() {
+    console.log(JSON.stringify(product_variant, null, 2));
     setStartValidate(true);
     if (validateForm()) {
       submitForm();

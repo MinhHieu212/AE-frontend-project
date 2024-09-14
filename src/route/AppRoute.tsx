@@ -75,6 +75,22 @@ const buyer_route = [
 
 const seller_route = [
   {
+    path: "/",
+    element: (
+      <MainLayout>
+        <ProductList />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/accessed-ecommerce",
+    element: (
+      <MainLayout>
+        <ProductList />
+      </MainLayout>
+    ),
+  },
+  {
     path: "/products",
     element: (
       <MainLayout>
@@ -86,7 +102,7 @@ const seller_route = [
     path: "/products/add-product",
     element: (
       <MainLayout>
-        <AddProduct />  
+        <AddProduct />
       </MainLayout>
     ),
   },
