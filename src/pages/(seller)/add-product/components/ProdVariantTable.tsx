@@ -11,7 +11,6 @@ import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import { TextField, Button } from "@mui/material";
 import {
   initializeCombinations,
-  saveCombinations,
   updateCombination,
 } from "../../../../store/slices/variantSlice";
 
@@ -21,15 +20,14 @@ const ProdVariantTable: React.FC = () => {
     (state) => state.variants.product_variant
   );
   const combinations = useAppSelector((state) => state.variants.combinations);
-  const isTableGenerated = useAppSelector(
-    (state) => state.variants.isTableGenerated
-  );
 
   const handleInputChange = (index: number, field: string, value: string) => {
     dispatch(updateCombination({ index, field, value }));
   };
 
-  if (isTableGenerated === false) return <></>;
+  useEffect(() => {
+    dispatch(initializeCombinations(product_variant));
+  }, [product_variant]);
 
   return (
     <div className="w-full rounded-lg p-5">

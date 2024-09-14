@@ -31,6 +31,16 @@ export const fake_data_categorys = [
     productsSold: 0,
   },
   {
+    id: 44,
+    name: "Smart Phone",
+    parentID: null,
+    createdAt: "2024-09-03T16:15:23.149005144",
+    updatedAt: null,
+    subCategory: [],
+    noOfViews: 0,
+    productsSold: 0,
+  },
+  {
     id: 3,
     name: "Book",
     parentID: null,
@@ -110,16 +120,7 @@ export const fake_data_categorys = [
     noOfViews: 0,
     productsSold: 0,
   },
-  {
-    id: 44,
-    name: "Smart Phone",
-    parentID: null,
-    createdAt: "2024-09-03T16:15:23.149005144",
-    updatedAt: null,
-    subCategory: [],
-    noOfViews: 0,
-    productsSold: 0,
-  },
+
   {
     id: 55,
     name: "Laptop",

@@ -151,8 +151,13 @@ const AddProduct = () => {
             />
           </div>
         </div>
-        <ProdVariants />
-        <ProdVariantTable />
+        {(formData.category.level_1.name === "Smart Phone" ||
+          formData.category.level_1.name === "Electronic") && (
+          <>
+            <ProdVariants />
+            <ProdVariantTable />
+          </>
+        )}
         <ActionButtons
           submitForm={submitForm}
           validateForm={validateForm}

@@ -4,12 +4,7 @@ import {
   setVariantType,
   setVariantValue,
   removeVariantValue,
-  initializeCombinations,
-  setIsTableGenerated,
-  setPrimaryVariant,
 } from "../../../../store/slices/variantSlice";
-import TableViewIcon from "@mui/icons-material/TableView";
-import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import React, { useState } from "react";
 import {
@@ -24,32 +19,10 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-  Checkbox,
 } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
-// import { styled } from "@mui/material/styles";
-// import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+
 import PopupVariantImages from "./PopupVariantImages";
-
-// const VisuallyHiddenInput = styled("input")({
-//   clip: "rect(0 0 0 0)",
-//   clipPath: "inset(50%)",
-//   height: 1,
-//   overflow: "hidden",
-//   position: "absolute",
-//   bottom: 0,
-//   left: 0,
-//   whiteSpace: "nowrap",
-//   width: 1,
-// });
-
-{
-  /* <VisuallyHiddenInput
-            type="file"
-            onChange={(event) => console.log(event.target.files)}
-            multiple
-          /> */
-}
 
 interface Variant {
   id: number;
@@ -61,21 +34,18 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
   const useDispatch = useAppDispatch();
   const [open, setOpen] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>("");
-  const isTableGenerated = useAppSelector(
-    (state) => state.variants.isTableGenerated
-  );
-  const primary_variant = useAppSelector(
-    (state) => state.variants.primary_variant
-  );
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
 
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter" && inputValue.trim() !== "") {
+    if (
+      (event.key === "Enter" || event.key === ",") &&
+      inputValue.trim() !== ""
+    ) {
+      event.preventDefault();
       if (values.includes(inputValue.trim())) return;
-
       useDispatch(
         setVariantValue({
           id,
@@ -100,20 +70,24 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
     }
   };
 
+  const handleInputBlur = () => {
+    if (values.includes(inputValue.trim()) || inputValue.trim() === "") return;
+    useDispatch(
+      setVariantValue({
+        id,
+        new_value: inputValue.trim(),
+      })
+    );
+    setInputValue("");
+  };
+
   return (
     <Box>
       <div className="flex items-center">
-        <Box className="w-[160px] flex items-center justify-center">
-          <Checkbox
-            checked={primary_variant === id}
-            onClick={() => useDispatch(setPrimaryVariant({ index: id }))}
-          />
-        </Box>
         <TextField
           className="w-1/4"
           size="small"
           placeholder="Enter type"
-          disabled={isTableGenerated}
           value={type}
           onChange={(e) =>
             useDispatch(
@@ -131,7 +105,6 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
               label={chip}
               size="small"
               className="px-1"
-              disabled={isTableGenerated}
               onDelete={() =>
                 useDispatch(removeVariantValue({ id, remove_value: chip }))
               }
@@ -141,9 +114,9 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
             size="small"
             variant="standard"
             value={inputValue}
-            disabled={isTableGenerated}
             onChange={handleInputChange}
             onKeyDown={handleInputKeyDown}
+            onBlur={handleInputBlur}
             className={`flex-grow min-w-[50px] mt-1`}
             placeholder={values.length === 0 ? "Enter values" : ""}
             InputProps={{
@@ -162,13 +135,9 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
           values={values}
         />
         <Box
-          className={`${
-            isTableGenerated
-              ? "cursor-not-allowed opacity-50"
-              : "cursor-pointer"
-          } text-red-400 flex items-center justify-center w-[120px]`}
+          className={`cursor-pointer text-red-400 flex items-center justify-center w-[120px]`}
           onClick={() => {
-            if (!isTableGenerated) useDispatch(removeVariant({ id }));
+            useDispatch(removeVariant({ id }));
           }}
         >
           <DeleteOutlineIcon />
@@ -184,29 +153,6 @@ const ProdVariants = () => {
   const product_variant = useAppSelector(
     (state) => state.variants.product_variant
   );
-  const isTableGenerated = useAppSelector(
-    (state) => state.variants.isTableGenerated
-  );
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleGenerateTable = () => {
-    if (isTableGenerated) handleClickOpen();
-    useDispatch(initializeCombinations(product_variant));
-    useDispatch(setIsTableGenerated({ value: true }));
-  };
-
-  const handleChangeVariant = () => {
-    useDispatch(setIsTableGenerated({ value: false }));
-    setOpen(false);
-  };
 
   return (
     <div className="w-full rounded-lg mb-2 px-5">
@@ -217,7 +163,6 @@ const ProdVariants = () => {
         className={`border-2 border-solid border-gray-200 rounded-lg p-5 h-full flex flex-col gap-3`}
       >
         <div className="flex items-center w-full">
-          <p className="w-[140px] my-1 font-medium px-2">Primary</p>
           <p className="w-1/4 my-1 font-medium">Variant type</p>
           <p className="w-full my-1 font-medium pl-[20px]">Variant values</p>
           <p className="w-1/5 my-1 font-medium px-2 mr-[70px]">
@@ -240,55 +185,14 @@ const ProdVariants = () => {
             <Button
               className="capitalize m-0 p-0 font-medium"
               onClick={() => {
-                if (!isTableGenerated) useDispatch(addVariant());
+                useDispatch(addVariant());
               }}
             >
               + Add Another Variant
             </Button>
           </Box>
-          <Box className="flex items-center justify-end w-[250px]">
-            <Button
-              className={`capitalize ${
-                isTableGenerated ? "border-red-400 text-[red]" : ""
-              }`}
-              variant="outlined"
-              onClick={handleGenerateTable}
-            >
-              {isTableGenerated ? <RestartAltIcon /> : <TableViewIcon />}
-              <span className="ml-2">
-                {isTableGenerated
-                  ? "Change Variants"
-                  : "Generate variation table"}
-              </span>
-            </Button>
-          </Box>
         </div>
       </div>
-      <React.Fragment>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">{"Confirm Changes"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText
-              id="alert-dialog-description"
-              className="max-w-[400px]"
-            >
-              Are you sure you want to proceed? All existing variant data will
-              be cleared.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Disagree</Button>
-            <Button onClick={handleChangeVariant} autoFocus>
-              Agree
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </React.Fragment>
     </div>
   );
 };

@@ -21,8 +21,6 @@ interface CombinationObject {
 interface VariantsState {
   product_variant: Variant[];
   combinations: CombinationObject[];
-  isTableGenerated: boolean;
-  primary_variant: number;
 }
 
 const initialState: VariantsState = {
@@ -40,9 +38,7 @@ const initialState: VariantsState = {
       images: [],
     },
   ],
-  primary_variant: 0,
   combinations: [],
-  isTableGenerated: false,
 };
 
 export const variantSlice = createSlice({
@@ -61,14 +57,6 @@ export const variantSlice = createSlice({
       ];
     },
 
-    setIsTableGenerated: (state, action: PayloadAction<{ value: boolean }>) => {
-      state.isTableGenerated = action.payload.value;
-    },
-
-    setPrimaryVariant: (state, action: PayloadAction<{ index: number }>) => {
-      state.primary_variant = action.payload.index;
-    },
-
     setVariantType: (
       state,
       action: PayloadAction<{ id: number; new_type: string }>
@@ -81,9 +69,9 @@ export const variantSlice = createSlice({
     },
 
     removeVariant: (state, action: PayloadAction<{ id: number }>) => {
-      state.product_variant = state.product_variant.filter(
-        (item) => item.id !== action.payload.id
-      );
+      state.product_variant = state.product_variant
+        .filter((item) => item.id !== action.payload.id)
+        .map((item, index) => ({ ...item, id: index }));
     },
 
     updateVariantImages: (
@@ -189,7 +177,5 @@ export const {
   initializeCombinations,
   updateCombination,
   saveCombinations,
-  setIsTableGenerated,
-  setPrimaryVariant,
   updateVariantImages,
 } = variantSlice.actions;
