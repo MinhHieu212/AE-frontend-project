@@ -16,18 +16,18 @@ import {
 
 const ProdVariantTable: React.FC = () => {
   const dispatch = useAppDispatch();
-  const product_variant = useAppSelector(
-    (state) => state.variants.product_variant
+  const variants = useAppSelector((state) => state.variants.variants);
+  const combineVariantWithPricing = useAppSelector(
+    (state) => state.variants.combineVariantWithPricing
   );
-  const combinations = useAppSelector((state) => state.variants.combinations);
 
   const handleInputChange = (index: number, field: string, value: string) => {
     dispatch(updateCombination({ index, field, value }));
   };
 
   useEffect(() => {
-    dispatch(initializeCombinations(product_variant));
-  }, [product_variant]);
+    dispatch(initializeCombinations(variants));
+  }, [variants]);
 
   return (
     <div className="w-full rounded-lg p-5">
@@ -45,7 +45,7 @@ const ProdVariantTable: React.FC = () => {
               <StyledTableCell className="uppercase" align="center">
                 #
               </StyledTableCell>
-              {product_variant.map((item, index) => (
+              {variants.map((item, index) => (
                 <StyledTableCell
                   className="uppercase"
                   align="center"
@@ -67,10 +67,10 @@ const ProdVariantTable: React.FC = () => {
           </TableHead>
 
           <TableBody>
-            {combinations.map((combination, index) => (
+            {combineVariantWithPricing.map((combination, index) => (
               <StyledTableRow key={index}>
                 <StyledTableCell align="center">{index + 1}</StyledTableCell>
-                {product_variant.map((variant, idx) => (
+                {variants.map((variant, idx) => (
                   <StyledTableCell key={idx} align="center">
                     {combination[variant.type]}
                   </StyledTableCell>

@@ -27,12 +27,10 @@ const SubHeader = () => {
 
 const ActionButtons = () => {
   const product = useAppSelector((state) => state.product);
-  const product_variant = useAppSelector(
-    (state) => state.variants.product_variant
-  );
+  const variants = useAppSelector((state) => state.variants.variants);
 
   function handleAddNewProduct() {
-    console.log(JSON.stringify(product_variant, null, 2));
+    console.log(JSON.stringify(variants, null, 2));
     console.log(JSON.stringify(product, null, 2));
   }
 

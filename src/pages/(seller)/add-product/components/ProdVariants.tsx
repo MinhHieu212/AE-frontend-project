@@ -8,18 +8,18 @@ import {
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import React, { useState } from "react";
 import { TextField, Chip, Box, Button, Stack, Divider } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
+import React, { useEffect, useState } from "react";
 import { PlusOne, X } from "@mui/icons-material";
-interface VariantImage {
+interface FileImageProps {
   file: File;
   url: string;
 }
 interface VariantImagesListProps {
   type: string;
   value: string;
-  images: VariantImage[];
+  images: FileImageProps[];
 }
 interface Variant {
   id: number;
@@ -33,13 +33,17 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
   const [inputValue, setInputValue] = useState<string>("");
   const [variantImagesList, setVariantImagesList] = useState<
     VariantImagesListProps[]
-  >(
-    values.map((item) => ({
-      type,
-      value: item,
-      images: [],
-    }))
-  );
+  >([]);
+
+  useEffect(() => {
+    setVariantImagesList(
+      values.map((item) => ({
+        type,
+        value: item,
+        images: [],
+      }))
+    );
+  }, [values]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -227,9 +231,7 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
 
 const ProdVariants = () => {
   const useDispatch = useAppDispatch();
-  const product_variant = useAppSelector(
-    (state) => state.variants.product_variant
-  );
+  const variants = useAppSelector((state) => state.variants.variants);
 
   return (
     <div className="w-full rounded-lg mb-2 px-5">
@@ -248,7 +250,7 @@ const ProdVariants = () => {
         </div>
 
         <Stack spacing={2}>
-          {product_variant.map((item, index) => (
+          {variants.map((item, index) => (
             <VariantOption
               key={index}
               id={item.id}

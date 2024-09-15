@@ -1,29 +1,34 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-interface VariantImage {
-  file: File;
-  url: string;
-}
 
-interface VariantProps {
+interface VariantObjProps {
   id: number;
   type: string;
   values: string[];
 }
+interface FileImageProps {
+  file: File;
+  url: string;
+}
+interface VariantWithImageProps {
+  type: string;
+  value: string;
+  images: FileImageProps[];
+}
 
-interface CombinationObject {
+interface VariantCombinationProps {
   [key: string]: string;
   price: string;
   salePrice: string;
   quantity: string;
 }
-
-interface VariantsStateProps {
-  product_variant: VariantProps[];
-  combinations: CombinationObject[];
+interface ProductVariantProps {
+  variants: VariantObjProps[];
+  combineVariantWithPricing: VariantCombinationProps[];
+  variantWithImages: VariantWithImageProps[];
 }
 
-const initialState: VariantsStateProps = {
-  product_variant: [
+const initialState: ProductVariantProps = {
+  variants: [
     {
       id: 0,
       type: "",
@@ -35,18 +40,19 @@ const initialState: VariantsStateProps = {
       values: [],
     },
   ],
-  combinations: [],
+  combineVariantWithPricing: [],
+  variantWithImages: [],
 };
 
 export const variantSlice = createSlice({
-  name: "product_variant",
+  name: "variant",
   initialState,
   reducers: {
     addVariant: (state) => {
-      state.product_variant = [
-        ...state.product_variant,
+      state.variants = [
+        ...state.variants,
         {
-          id: state.product_variant.length,
+          id: state.variants.length,
           type: "",
           values: [],
         },
@@ -57,7 +63,7 @@ export const variantSlice = createSlice({
       state,
       action: PayloadAction<{ id: number; new_type: string }>
     ) => {
-      state.product_variant = state.product_variant.map((item) =>
+      state.variants = state.variants.map((item) =>
         item.id === action.payload.id
           ? { ...item, type: action.payload.new_type }
           : item
@@ -65,16 +71,16 @@ export const variantSlice = createSlice({
     },
 
     removeVariant: (state, action: PayloadAction<{ id: number }>) => {
-      state.product_variant = state.product_variant
+      state.variants = state.variants
         .filter((item) => item.id !== action.payload.id)
         .map((item, index) => ({ ...item, id: index }));
     },
 
     updateVariantImages: (
       state,
-      action: PayloadAction<{ id: number; images: VariantImage[] }>
+      action: PayloadAction<{ id: number; images: FileImageProps[] }>
     ) => {
-      state.product_variant = state.product_variant.map((item) =>
+      state.variants = state.variants.map((item) =>
         item.id === action.payload.id
           ? {
               ...item,
@@ -88,7 +94,7 @@ export const variantSlice = createSlice({
       state,
       action: PayloadAction<{ id: number; new_value: string }>
     ) => {
-      state.product_variant = state.product_variant.map((item) =>
+      state.variants = state.variants.map((item) =>
         item.id === action.payload.id
           ? { ...item, values: [...item.values, action.payload.new_value] }
           : item
@@ -99,7 +105,7 @@ export const variantSlice = createSlice({
       state,
       action: PayloadAction<{ id: number; remove_value: string }>
     ) => {
-      state.product_variant = state.product_variant.map((item) =>
+      state.variants = state.variants.map((item) =>
         item.id === action.payload.id
           ? {
               ...item,
@@ -111,10 +117,13 @@ export const variantSlice = createSlice({
       );
     },
 
-    initializeCombinations: (state, action: PayloadAction<VariantProps[]>) => {
-      state.product_variant = action.payload;
+    initializeCombinations: (
+      state,
+      action: PayloadAction<VariantObjProps[]>
+    ) => {
+      state.variants = action.payload;
       const variants: { [key: string]: string[] } = action.payload.reduce(
-        (acc: { [key: string]: string[] }, variant: VariantProps) => {
+        (acc: { [key: string]: string[] }, variant: VariantObjProps) => {
           acc[variant.type] = variant.values;
           return acc;
         },
@@ -137,8 +146,8 @@ export const variantSlice = createSlice({
       };
 
       const allCombinations = generateCombinations(Object.values(variants));
-      state.combinations = allCombinations.map((combination) => {
-        const combinationObject: CombinationObject = {
+      state.combineVariantWithPricing = allCombinations.map((combination) => {
+        const combinationObject: VariantCombinationProps = {
           price: "",
           salePrice: "",
           quantity: "",
@@ -155,11 +164,14 @@ export const variantSlice = createSlice({
       action: PayloadAction<{ index: number; field: string; value: string }>
     ) => {
       const { index, field, value } = action.payload;
-      state.combinations[index][field] = value;
+      state.combineVariantWithPricing[index][field] = value;
     },
 
     saveCombinations: (state) => {
-      console.log("Saving combinations:", state.combinations);
+      console.log(
+        "Saving combineVariantWithPricing:",
+        state.combineVariantWithPricing
+      );
     },
   },
 });

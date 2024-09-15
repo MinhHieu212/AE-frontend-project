@@ -4,14 +4,14 @@ import { ProductProps } from "../../../(seller)/product-list/ProductList";
 import { getProductList } from "../../../../api/ProductApi";
 import { toast } from "../../../../utils/Toastify";
 import { fake_data_categorys } from "../../../../fake_data/fake_data_category";
-import { IconAdCircle } from "@tabler/icons-react";
 import { CategoryProps } from "../../../(seller)/add-product/types/ProductFormProps";
+import DynamicIcon from "../../../../components/DynamicIcon";
 
 const CategoryItem = (props: CategoryProps) => {
   return (
     <Box className="rounded-lg w-[300px] flex items-center justify-center flex-col">
       <div className="flex items-center justify-center p-3 rounded-full bg-slate-200">
-        <IconAdCircle size={25} />
+        <DynamicIcon iconName="Smartphone" size="large" />
       </div>
       <p className="text-sm my-1 font-medium text-[gray] capitalize">
         {props.name || "no name"}
