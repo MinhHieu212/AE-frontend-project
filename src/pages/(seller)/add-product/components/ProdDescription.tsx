@@ -134,7 +134,7 @@ const ProdDescription = () => {
             w="100%"
             styles={{
               content: {
-                height: "213px",
+                height: "224px",
                 overflowY: "scroll",
                 whiteSpace: "pre-wrap",
                 wordBreak: "break-word",
@@ -160,14 +160,14 @@ const ProdDescription = () => {
                 <RichTextEditor.H4 />
               </RichTextEditor.ControlsGroup>
 
-              <RichTextEditor.ControlsGroup>
+              {/* <RichTextEditor.ControlsGroup>
                 <RichTextEditor.Blockquote />
                 <RichTextEditor.Hr />
                 <RichTextEditor.BulletList />
                 <RichTextEditor.OrderedList />
                 <RichTextEditor.Subscript />
                 <RichTextEditor.Superscript />
-              </RichTextEditor.ControlsGroup>
+              </RichTextEditor.ControlsGroup> */}
 
               <RichTextEditor.ControlsGroup>
                 <RichTextEditor.Link />

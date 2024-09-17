@@ -6,6 +6,7 @@ import {
   MenuItem,
   OutlinedInput,
   Select,
+  Switch,
 } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import { updateProductField } from "../../../../store/slices/productSlice";
@@ -14,6 +15,7 @@ const ProdBranchFeature = () => {
   const useDispatch = useAppDispatch();
   const branch = useAppSelector((state) => state.product.branch);
   const isFeatured = useAppSelector((state) => state.product.isFeatured);
+  const haveVariants = useAppSelector((state) => state.product.haveVariants);
 
   return (
     <div className="w-full rounded-lg mb-2 p-3">
@@ -62,19 +64,51 @@ const ProdBranchFeature = () => {
             </Select>
           </FormControl>
         </div>
-        <div className="mt-4">
-          <p className="my-0 text-[#aca4a4] text-sm">Is Featured</p>
-          <Checkbox
-            checked={isFeatured}
-            onClick={() =>
-              useDispatch(
-                updateProductField({ field: "isFeatured", value: !isFeatured })
-              )
-            }
-          />
-          <span>
-            Featured item, giving it higher visibility on the homepage.
-          </span>
+        <div className="flex items-start justify-between mt-4">
+          <div className="flex items-center justify-start gap-3 w-1/2">
+            <label>
+              <span
+                aria-label="haveVariants"
+                className="cursor-pointer text-[#aca4a4]"
+              >
+                Have variants <span className="text-red-600"> *</span>
+              </span>
+            </label>
+            <Switch
+              defaultChecked
+              checked={haveVariants}
+              id="haveVariants"
+              onChange={(e) =>
+                useDispatch(
+                  updateProductField({
+                    field: "haveVariants",
+                    value: e.target.checked,
+                  })
+                )
+              }
+            />
+          </div>
+          <div className="w-1/2 flex items-center justify-end">
+            <span
+              aria-label="isFeatured"
+              className="cursor-pointer text-[#aca4a4]"
+            >
+              Featured Product
+            </span>
+            <Checkbox
+              checked={isFeatured}
+              id="isFeatured"
+              size="small"
+              onClick={() =>
+                useDispatch(
+                  updateProductField({
+                    field: "isFeatured",
+                    value: !isFeatured,
+                  })
+                )
+              }
+            />
+          </div>
         </div>
       </div>
     </div>

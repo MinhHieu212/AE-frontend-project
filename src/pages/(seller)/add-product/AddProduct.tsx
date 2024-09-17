@@ -56,6 +56,7 @@ const AddProduct = () => {
   const cate_level_1 = useAppSelector(
     (state) => state.product.category.level_1
   );
+  const haveVariants = useAppSelector((state) => state.product.haveVariants);
 
   return (
     <div className="flex flex-col items-center justify-start w-full max-w-[1430px] h-full p-3 mx-auto">
@@ -63,27 +64,27 @@ const AddProduct = () => {
         <SubHeader />
         <div className="w-full flex items-start justify-center p-2 gap-3">
           <div className="w-1/2 flex flex-col items-center justify-start">
+            <ProdCategory />
             <MantineProvider>
               <ProdDescription />
             </MantineProvider>
-            <ProdCategory />
             <ProdPackages />
           </div>
           <div className="w-1/2 flex flex-col items-center justify-start">
-            <ProdImages />
             <ProdBranchFeature />
-            <ProdSellingType />
-
             <ProdInventory />
+            <ProdSellingType />
+            <ProdImages />
           </div>
         </div>
         {(cate_level_1.name === "Smart Phone" ||
-          cate_level_1.name === "Electronic") && (
-          <>
-            <ProdVariants />
-            <ProdVariantTable />
-          </>
-        )}
+          cate_level_1.name === "Electronic") &&
+          haveVariants && (
+            <>
+              <ProdVariants />
+              <ProdVariantTable />
+            </>
+          )}
         <ActionButtons />
       </div>
     </div>

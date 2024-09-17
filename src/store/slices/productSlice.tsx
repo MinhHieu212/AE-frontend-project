@@ -33,6 +33,7 @@ interface ProductState {
   packages_size: PackageSize;
   images: ImageList[];
   primaryImage: ImageList | null;
+  haveVariants: boolean;
 }
 
 const initialState: ProductState = {
@@ -50,6 +51,7 @@ const initialState: ProductState = {
     level_1: { name: null, index: null },
     level_2: { name: null, index: null },
   },
+  haveVariants: false,
 };
 
 export const productSlice = createSlice({

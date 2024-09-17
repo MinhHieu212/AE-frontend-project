@@ -9,6 +9,7 @@ const ProdImages = () => {
   const useDispatch = useAppDispatch();
   const images = useAppSelector((state) => state.product.images);
   const primaryImage = useAppSelector((state) => state.product.primaryImage);
+  const haveVariants = useAppSelector((state) => state.product.haveVariants);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const imageInputRef = useRef<HTMLInputElement>(null);
 
@@ -63,7 +64,7 @@ const ProdImages = () => {
   };
 
   return (
-    <div className="w-full rounded-lg mb-2 p-3">
+    <div className={`w-full rounded-lg mb-2 p-3`}>
       <div className="flex items-center justify-between">
         <p className="font-medium text-lg">
           Product images <span className="text-red-600"> * </span>
@@ -73,7 +74,12 @@ const ProdImages = () => {
         </p>
         <PopupImages openModal={openModal} setOpenModal={setOpenModal} />
       </div>
-      <div className="flex w-full items-center p-2 px-5 rounded-lg border-2 h-[325px] border-solid border-gray-200 gap-3">
+      <div className="flex w-full items-center p-2 px-5 rounded-lg border-2 h-[325px] border-solid border-gray-200 gap-3 relative">
+        <div
+          className={`absolute top-0 left-0 right-0 bottom-0 bg-slate-100 cursor-not-allowed ${
+            haveVariants ? "opacity-80" : "hidden"
+          }`}
+        ></div>
         <div
           {...getRootProps()}
           className={`${
