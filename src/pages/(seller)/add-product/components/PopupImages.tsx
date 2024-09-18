@@ -113,7 +113,7 @@ const PopupImages: React.FC<PopupProductFormProps> = ({
         </IconButton>
         <DialogContent dividers>
           <div className="flex items-start justify-between w-full">
-            <div className="w-2/5 p-4">
+            <div className="w-2/5 p-3">
               {images.length > 0 && (
                 <img
                   src={primaryImage?.url || images[0].url}
@@ -123,17 +123,24 @@ const PopupImages: React.FC<PopupProductFormProps> = ({
               )}
             </div>
 
-            <div className="w-3/5 p-3 flex items-start justify-start flex-wrap">
+            <div className="w-3/5 p-3 flex items-start justify-start flex-wrap gap-2">
               {images.map((item, index) => {
                 return (
-                  <div className="w-1/4 max-h-[120px] p-2 relative" key={index}>
+                  <div
+                    className={`w-1/4 h-[120px] p-2 relative ${
+                      primaryImage?.url === item.url
+                        ? "border-[#8f8ff6]  border-[2px] border-solid"
+                        : "border-[#aaaaaa]  border-[1px]  border-dashed"
+                    } overflow-hidden rounded-md`}
+                    key={index}
+                  >
                     <img
                       src={item.url}
                       alt={`Image file ${item.file.name}`}
                       className="w-full h-full object-cover rounded-lg"
                       onClick={() => handleSetPrimaryImage(item)}
                     />
-                    {primaryImage && primaryImage.url === item.url ? (
+                    {primaryImage && primaryImage?.url === item.url ? (
                       <div className="absolute top-0 right-0 w-[25px] h-[25px] cursor-pointer">
                         <IconStarFilled color="blue" />
                       </div>

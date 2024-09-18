@@ -9,9 +9,15 @@ import {
 import { ProductFormProps } from "../types/ProductFormProps";
 import { getCategories } from "../../../../api/CategoryApi";
 import { fake_data_categorys } from "../../../../fake_data/fake_data_category";
+import { fake_data_variants } from "../../../../fake_data/fake_data_variants";
 import { toast } from "../../../../utils/Toastify";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import { updateProductField } from "../../../../store/slices/productSlice";
+import {
+  initialVariants,
+  setPrimaryVariants,
+  updateVariantImages,
+} from "../../../../store/slices/variantSlice";
 
 interface CategoryProps {
   id: number;
@@ -76,6 +82,25 @@ const ProdCategory = () => {
     callApi();
   }, []);
 
+  useEffect(() => {
+    const getCategoryVariants = (categoryName: string) => {
+      const selectedCategory = fake_data_variants.find(
+        (item) => item.name === categoryName
+      );
+      return selectedCategory?.default_variants || [];
+    };
+
+    const categoryName = category.level_2.name || category.level_1.name;
+
+    if (categoryName) {
+      const variants = getCategoryVariants(categoryName);
+      if (variants.length > 0) {
+        useDispatch(initialVariants({ variants }));
+        useDispatch(setPrimaryVariants({ variant: variants[0].type }));
+      }
+    }
+  }, [category]);
+
   return (
     <div className="w-full rounded-lg mb-2 p-3">
       <p className="font-medium text-lg">
@@ -84,14 +109,14 @@ const ProdCategory = () => {
       <div className="border-2 border-solid border-gray-200 rounded-lg p-5 h-full flex flex-col gap-3">
         <div>
           <p className="my-0 mb-1 text-[#aca4a4] text-sm">
-            Product Category
+            Product category
             <span className="text-red-600"> *</span>
           </p>
           <FormControl className="w-full">
             <Select
               id="demo-multiple-chip"
               inputProps={{ "aria-label": "Without label" }}
-              value={category.level_1}
+              value={category.level_1 || ""}
               onChange={(e) => handleChange(String(e.target.value), "level_1")}
               input={<OutlinedInput id="select-multiple-chip" />}
               className="h-[42px] w-full cursor-pointer"
@@ -123,14 +148,19 @@ const ProdCategory = () => {
 
         <div className="mt-3">
           <p className="my-0 mb-1 text-[#aca4a4] text-sm">
-            Product Sub-category
+            {category.level_1.name || "Product"} sub-category
           </p>
-          <FormControl className="w-full">
+          <FormControl className="w-full relative">
+            {subCategory.length === 0 && (
+              <div className="absolute z-100 cursor-not-allowed top-0 right-0 left-0 bottom-0 flex items-center justify-center bg-slate-100 text-sm font-light text-gray-300 ">
+                no sub-category
+              </div>
+            )}
             <Select
               disabled={subCategory.length === 0}
               id="demo-multiple-chip"
               inputProps={{ "aria-label": "Without label" }}
-              value={category.level_2}
+              value={category.level_2 || ""}
               onChange={(e) => handleChange(String(e.target.value), "level_2")}
               input={<OutlinedInput id="select-multiple-chip" />}
               className="h-[42px] w-full cursor-pointer"

@@ -10,7 +10,7 @@ interface Inventory {
   sku: string;
 }
 
-interface ImageList {
+interface ImageFile {
   file: File;
   url: string;
 }
@@ -24,22 +24,22 @@ interface PackageSize {
 interface ProductState {
   name: string;
   description: string;
-  branch: string;
+  brand: string;
   isFeatured: boolean;
   sellingType: string;
   category: Category;
   inventory: Inventory;
   packages_weight: number | null;
   packages_size: PackageSize;
-  images: ImageList[];
-  primaryImage: ImageList | null;
-  haveVariants: boolean;
+  images: ImageFile[];
+  primaryImage: ImageFile | null;
+  hasVariants: boolean;
 }
 
 const initialState: ProductState = {
   name: "",
   description: "",
-  branch: "",
+  brand: "",
   isFeatured: false,
   sellingType: "In-store selling only",
   images: [],
@@ -51,7 +51,7 @@ const initialState: ProductState = {
     level_1: { name: null, index: null },
     level_2: { name: null, index: null },
   },
-  haveVariants: false,
+  hasVariants: false,
 };
 
 export const productSlice = createSlice({

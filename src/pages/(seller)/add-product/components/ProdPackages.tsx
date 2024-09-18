@@ -64,7 +64,7 @@ const ProdPackages = () => {
             />
             <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
             <Select
-              value={unit}
+              value={unit || ""}
               onChange={(e) => handleUnitChange(e.target.value)}
               size="small"
               className="outline-none"

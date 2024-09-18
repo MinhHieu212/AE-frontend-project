@@ -1,22 +1,23 @@
-import React, { useEffect } from "react";
 import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
+import React, { useEffect } from "react";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
-import { TextField, Button } from "@mui/material";
+import { TextField } from "@mui/material";
 import {
   initializeCombinations,
   updateCombination,
 } from "../../../../store/slices/variantSlice";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 
 const ProdVariantTable: React.FC = () => {
   const dispatch = useAppDispatch();
   const variants = useAppSelector((state) => state.variants.variants);
+  const hasVariants = useAppSelector((state) => state.product.hasVariants);
   const combineVariantWithPricing = useAppSelector(
     (state) => state.variants.combineVariantWithPricing
   );
@@ -28,6 +29,8 @@ const ProdVariantTable: React.FC = () => {
   useEffect(() => {
     dispatch(initializeCombinations(variants));
   }, [variants]);
+
+  if (!hasVariants) return <></>;
 
   return (
     <div className="w-full rounded-lg p-5">
@@ -58,6 +61,9 @@ const ProdVariantTable: React.FC = () => {
                 Price
               </StyledTableCell>
               <StyledTableCell className="uppercase" align="center">
+                Mrsp Price
+              </StyledTableCell>
+              <StyledTableCell className="uppercase" align="center">
                 Sale Price
               </StyledTableCell>
               <StyledTableCell className="uppercase" align="center">
@@ -85,6 +91,24 @@ const ProdVariantTable: React.FC = () => {
                     value={combination.price}
                     onChange={(e) =>
                       handleInputChange(index, "price", e.target.value)
+                    }
+                    slotProps={{
+                      inputLabel: {
+                        shrink: true,
+                      },
+                    }}
+                  />
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  <TextField
+                    id={`mrspPrice-${index}`}
+                    label="Mrsp Price"
+                    type="number"
+                    size="small"
+                    className="max-w-[150px]"
+                    value={combination.mrspPrice}
+                    onChange={(e) =>
+                      handleInputChange(index, "mrspPrice", e.target.value)
                     }
                     slotProps={{
                       inputLabel: {

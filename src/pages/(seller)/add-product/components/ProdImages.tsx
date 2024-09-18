@@ -9,7 +9,7 @@ const ProdImages = () => {
   const useDispatch = useAppDispatch();
   const images = useAppSelector((state) => state.product.images);
   const primaryImage = useAppSelector((state) => state.product.primaryImage);
-  const haveVariants = useAppSelector((state) => state.product.haveVariants);
+  const hasVariants = useAppSelector((state) => state.product.hasVariants);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const imageInputRef = useRef<HTMLInputElement>(null);
 
@@ -30,7 +30,10 @@ const ProdImages = () => {
     }));
     const prev_images = images;
     updateField("images", [...prev_images, ...newFiles]);
-    updateField("primaryImage", prev_images[0]);
+    updateField(
+      "primaryImage",
+      prev_images.length > 0 ? prev_images[0] : newFiles[0]
+    );
   };
 
   const { getRootProps, getInputProps, isDragActive }: DropzoneState =
@@ -44,6 +47,7 @@ const ProdImages = () => {
   };
 
   const handleReplaceImage = (index: number, file: File) => {
+    updateField("primaryImage", null);
     const updatedImages = images.map((img, i) =>
       i === index ? { file: file, url: URL.createObjectURL(file) } : img
     );
@@ -76,10 +80,12 @@ const ProdImages = () => {
       </div>
       <div className="flex w-full items-center p-2 px-5 rounded-lg border-2 h-[325px] border-solid border-gray-200 gap-3 relative">
         <div
-          className={`absolute top-0 left-0 right-0 bottom-0 bg-slate-100 cursor-not-allowed ${
-            haveVariants ? "opacity-80" : "hidden"
+          className={`absolute top-0 left-0 right-0 bottom-0 bg-slate-100 cursor-not-allowed text-sm text-gray-500 flex items-center justify-center ${
+            hasVariants ? "bg-opacity-80" : "hidden"
           }`}
-        ></div>
+        >
+          Upload image with variation option
+        </div>
         <div
           {...getRootProps()}
           className={`${
@@ -98,7 +104,7 @@ const ProdImages = () => {
         >
           <input {...getInputProps()} ref={imageInputRef} />
           <p className="text-sm font-medium text-blue-400">
-            Upload or Drag Image
+            {!hasVariants && "Upload or Drag Image"}
           </p>
         </div>
         <div
@@ -148,27 +154,30 @@ const ProdImages = () => {
               images.length === 1 ? "hidden" : "w-1/2"
             } h-[calc(100%-14px)] flex flex-col items-evenly justify-start py-2 gap-2`}
           >
-            {images.slice(1, 3).map((item, index) => {
-              return (
-                <div className="w-full h-1/2 relative">
-                  <img
-                    src={item.url}
-                    alt={`Image file ${item.file.name}`}
-                    className="w-full h-full object-cover rounded-lg"
-                  />
-                  <div
-                    className={`w-full h-full flex items-center justify-center bg-opacity-80 absolute bg-slate-600 top-0 left-0 text-lg font-semibold rounded-lg text-white ${
-                      index === 1 && images.length > 3 ? "" : "hidden"
-                    }`}
-                    onClick={() => setOpenModal(true)}
-                  >
-                    <span className="text-white opacity-1">
-                      + {images.length - 3}
-                    </span>
+            {images
+              .filter((item) => item.url !== primaryImage?.url)
+              .slice(0, 2)
+              .map((item, index) => {
+                return (
+                  <div className="w-full h-1/2 relative">
+                    <img
+                      src={item.url}
+                      alt={`Image file ${item.file.name}`}
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                    <div
+                      className={`w-full h-full flex items-center justify-center bg-opacity-80 absolute bg-slate-600 top-0 left-0 text-lg font-semibold rounded-lg text-white ${
+                        index === 1 && images.length > 3 ? "" : "hidden"
+                      }`}
+                      onClick={() => setOpenModal(true)}
+                    >
+                      <span className="text-white opacity-1">
+                        + {images.length - 3}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
           </div>
         </div>
       </div>

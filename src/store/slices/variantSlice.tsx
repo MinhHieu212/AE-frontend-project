@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface VariantObjProps {
   id: number;
+  unit?: string;
   type: string;
   values: string[];
 }
@@ -19,29 +20,21 @@ interface VariantCombinationProps {
   [key: string]: string;
   price: string;
   salePrice: string;
+  mrspPrice: string;
   quantity: string;
 }
 interface ProductVariantProps {
   variants: VariantObjProps[];
   combineVariantWithPricing: VariantCombinationProps[];
   variantWithImages: VariantWithImageProps[];
+  primaryVariant: string;
 }
 
 const initialState: ProductVariantProps = {
-  variants: [
-    {
-      id: 0,
-      type: "",
-      values: [],
-    },
-    {
-      id: 1,
-      type: "",
-      values: [],
-    },
-  ],
+  variants: [],
   combineVariantWithPricing: [],
   variantWithImages: [],
+  primaryVariant: "",
 };
 
 export const variantSlice = createSlice({
@@ -68,6 +61,17 @@ export const variantSlice = createSlice({
           ? { ...item, type: action.payload.new_type }
           : item
       );
+    },
+
+    initialVariants: (
+      state,
+      action: PayloadAction<{ variants: VariantObjProps[] }>
+    ) => {
+      state.variants = action.payload.variants;
+    },
+
+    setPrimaryVariants: (state, action: PayloadAction<{ variant: string }>) => {
+      state.primaryVariant = action.payload.variant;
     },
 
     removeVariant: (state, action: PayloadAction<{ id: number }>) => {
@@ -151,6 +155,7 @@ export const variantSlice = createSlice({
           price: "",
           salePrice: "",
           quantity: "",
+          mrspPrice: "",
         };
         Object.keys(variants).forEach((key, index) => {
           combinationObject[key] = combination[index];
@@ -180,10 +185,12 @@ export const {
   addVariant,
   removeVariant,
   setVariantType,
+  setPrimaryVariants,
   setVariantValue,
   removeVariantValue,
   initializeCombinations,
   updateCombination,
+  initialVariants,
   saveCombinations,
   updateVariantImages,
 } = variantSlice.actions;

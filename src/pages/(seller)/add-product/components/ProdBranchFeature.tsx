@@ -13,28 +13,28 @@ import { updateProductField } from "../../../../store/slices/productSlice";
 
 const ProdBranchFeature = () => {
   const useDispatch = useAppDispatch();
-  const branch = useAppSelector((state) => state.product.branch);
+  const brand = useAppSelector((state) => state.product.brand);
   const isFeatured = useAppSelector((state) => state.product.isFeatured);
-  const haveVariants = useAppSelector((state) => state.product.haveVariants);
+  const hasVariants = useAppSelector((state) => state.product.hasVariants);
 
   return (
     <div className="w-full rounded-lg mb-2 p-3">
-      <p className="font-medium text-lg">Branch and Featured</p>
+      <p className="font-medium text-lg">Brand and Featured</p>
       <div className="border-2 border-solid border-gray-200 rounded-lg p-5 h-full flex flex-col gap-3">
         <div>
           <p className="my-0 mb-1 text-[#aca4a4] text-sm">
-            Product Branch
+            Product brand
             <span className="text-red-600"> *</span>
           </p>
           <FormControl className="w-full">
             <Select
               id="demo-multiple-chip"
               inputProps={{ "aria-label": "Without label" }}
-              value={branch}
+              value={brand || ""}
               onChange={(e) =>
                 useDispatch(
                   updateProductField({
-                    field: "branch",
+                    field: "brand",
                     value: String(e.target.value),
                   })
                 )
@@ -43,7 +43,7 @@ const ProdBranchFeature = () => {
               className="h-[42px] w-full cursor-pointer"
               renderValue={() => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  <span className="text-sm font-medium">{branch}</span>
+                  <span className="text-sm font-medium">{brand}</span>
                 </Box>
               )}
               MenuProps={{
@@ -68,7 +68,7 @@ const ProdBranchFeature = () => {
           <div className="flex items-center justify-start gap-3 w-1/2">
             <label>
               <span
-                aria-label="haveVariants"
+                aria-label="hasVariants"
                 className="cursor-pointer text-[#aca4a4]"
               >
                 Have variants <span className="text-red-600"> *</span>
@@ -76,12 +76,12 @@ const ProdBranchFeature = () => {
             </label>
             <Switch
               defaultChecked
-              checked={haveVariants}
-              id="haveVariants"
+              checked={hasVariants}
+              id="hasVariants"
               onChange={(e) =>
                 useDispatch(
                   updateProductField({
-                    field: "haveVariants",
+                    field: "hasVariants",
                     value: e.target.checked,
                   })
                 )
@@ -93,7 +93,7 @@ const ProdBranchFeature = () => {
               aria-label="isFeatured"
               className="cursor-pointer text-[#aca4a4]"
             >
-              Featured Product
+              Featured product
             </span>
             <Checkbox
               checked={isFeatured}

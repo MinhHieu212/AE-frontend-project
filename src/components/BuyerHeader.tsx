@@ -2,14 +2,11 @@ import {
   Button,
   Link,
   Paper,
-  Tooltip,
   InputBase,
-  Divider,
   IconButton,
   FormControl,
   Select,
   MenuItem,
-  FormHelperText,
   Box,
   Badge,
 } from "@mui/material";
@@ -70,7 +67,7 @@ const BuyerHeader = () => {
           }}
         >
           <Select
-            value={category}
+            value={category || ""}
             onChange={(e) => setCategory(e.target.value)}
             displayEmpty
             variant="standard"

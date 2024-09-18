@@ -4,11 +4,20 @@ import {
   setVariantType,
   setVariantValue,
   removeVariantValue,
+  setPrimaryVariants,
 } from "../../../../store/slices/variantSlice";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { TextField, Chip, Box, Button, Stack, Divider } from "@mui/material";
+import {
+  TextField,
+  Chip,
+  Box,
+  Button,
+  Stack,
+  Divider,
+  Checkbox,
+} from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import React, { useEffect, useState } from "react";
 import { PlusOne, X } from "@mui/icons-material";
@@ -28,7 +37,10 @@ interface Variant {
 }
 
 const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
-  const dispatch = useAppDispatch();
+  const useDispatch = useAppDispatch();
+  const primaryVariant = useAppSelector(
+    (state) => state.variants.primaryVariant
+  );
   const [show, setShow] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>("");
   const [variantImagesList, setVariantImagesList] = useState<
@@ -56,7 +68,7 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
     ) {
       event.preventDefault();
       if (values.includes(inputValue.trim())) return;
-      dispatch(setVariantValue({ id, new_value: inputValue.trim() }));
+      useDispatch(setVariantValue({ id, new_value: inputValue.trim() }));
       setInputValue("");
     }
 
@@ -65,7 +77,7 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
       inputValue.trim() === "" &&
       values.length > 0
     ) {
-      dispatch(
+      useDispatch(
         removeVariantValue({ id, remove_value: values[values.length - 1] })
       );
       setInputValue("");
@@ -74,7 +86,7 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
 
   const handleInputBlur = () => {
     if (values.includes(inputValue.trim()) || inputValue.trim() === "") return;
-    dispatch(setVariantValue({ id, new_value: inputValue.trim() }));
+    useDispatch(setVariantValue({ id, new_value: inputValue.trim() }));
     setInputValue("");
   };
 
@@ -112,13 +124,24 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
   return (
     <Box>
       <div className="flex items-center">
+        <Box className="w-[200px] flex items-center">
+          <Checkbox
+            checked={primaryVariant === type}
+            onChange={(e) => useDispatch(setPrimaryVariants({ variant: type }))}
+          />
+        </Box>
         <TextField
           className="w-1/4"
           size="small"
           placeholder="Enter type"
           value={type}
+          slotProps={{
+            input: {
+              readOnly: true,
+            },
+          }}
           onChange={(e) =>
-            dispatch(
+            useDispatch(
               setVariantType({ id: id, new_type: e.target.value.toLowerCase() })
             )
           }
@@ -136,7 +159,7 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
               size="small"
               className="px-1"
               onDelete={() =>
-                dispatch(removeVariantValue({ id, remove_value: chip }))
+                useDispatch(removeVariantValue({ id, remove_value: chip }))
               }
             />
           ))}
@@ -162,67 +185,70 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
         <Button
           startIcon={show ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           onClick={() => setShow((prev) => !prev)}
-          className="w-1/5 capitalize"
+          className="w-[250px] capitalize"
           color="primary"
+          disabled={primaryVariant !== type}
         >
           Upload Images
         </Button>
-        <Divider orientation="vertical" variant="middle" flexItem />
+        {/* <Divider orientation="vertical" variant="middle" flexItem />
         <Box
           className={`cursor-pointer text-red-400 flex items-center justify-center w-[120px]`}
           onClick={() => {
-            dispatch(removeVariant({ id }));
+            useDispatch(removeVariant({ id }));
           }}
         >
           <DeleteOutlineIcon />
-        </Box>
+        </Box> */}
       </div>
 
-      <div
-        className={`space-y-3 p-3 px-5 pb-10 image-section ${
-          show ? "show" : ""
-        } transition ease-in-out delay-500 ${show ? "" : "hidden"}`}
-      >
-        {variantImagesList.map((item) => (
-          <div key={item.value} className="space-y-2">
-            <p className="font-medium">
-              <span className="font-bold uppercase"> {item.type} </span>:{" "}
-              {item.value}
-            </p>
-            <div className="grid grid-cols-5 gap-4">
-              {item.images?.map((subItem, index) => (
-                <div key={index} className="relative group">
-                  <img
-                    src={subItem.url}
-                    alt={`Preview ${subItem.file.name}`}
-                    className="w-full h-32 object-cover rounded-lg"
+      {primaryVariant === type && (
+        <div
+          className={`space-y-3 p-3 px-10 pb-10 image-section ${
+            show ? "show" : ""
+          } transition ease-in-out delay-500 ${!show ? "hidden" : ""}`}
+        >
+          {variantImagesList.map((item) => (
+            <div key={item.value} className="space-y-2">
+              <p className="font-medium">
+                <span className="font-bold uppercase"> {item.type} </span>:{" "}
+                {item.value}
+              </p>
+              <div className="grid grid-cols-5 gap-4">
+                {item.images?.map((subItem, index) => (
+                  <div key={index} className="relative group">
+                    <img
+                      src={subItem.url}
+                      alt={`Preview ${subItem.file.name}`}
+                      className="w-full h-32 object-cover rounded-lg"
+                    />
+                    <Box
+                      onClick={() => handleRemoveImage(item.value, subItem.url)}
+                      className="absolute top-1 right-1 text-black rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <X className="h-4 w-4" />
+                    </Box>
+                  </div>
+                ))}
+                <label
+                  htmlFor={`file-${item.value}`}
+                  className="border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center h-32 cursor-pointer hover:bg-gray-50 transition-colors"
+                >
+                  <input
+                    type="file"
+                    id={`file-${item.value}`}
+                    accept="image/*"
+                    multiple
+                    onChange={handleFileChange(item.value)}
+                    className="hidden"
                   />
-                  <Box
-                    onClick={() => handleRemoveImage(item.value, subItem.url)}
-                    className="absolute top-1 right-1 text-black rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                  >
-                    <X className="h-4 w-4" />
-                  </Box>
-                </div>
-              ))}
-              <label
-                htmlFor={`file-${item.value}`}
-                className="border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center h-32 cursor-pointer hover:bg-gray-50 transition-colors"
-              >
-                <input
-                  type="file"
-                  id={`file-${item.value}`}
-                  accept="image/*"
-                  multiple
-                  onChange={handleFileChange(item.value)}
-                  className="hidden"
-                />
-                <PlusOne className="h-8 w-8 text-gray-400" />
-              </label>
+                  <PlusOne className="h-8 w-8 text-gray-400" />
+                </label>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       <Divider className="mt-3" />
     </Box>
@@ -230,8 +256,10 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
 };
 
 const ProdVariants = () => {
-  const useDispatch = useAppDispatch();
   const variants = useAppSelector((state) => state.variants.variants);
+  const hasVariants = useAppSelector((state) => state.product.hasVariants);
+
+  if (!hasVariants) return <></>;
 
   return (
     <div className="w-full rounded-lg mb-2 px-5">
@@ -242,11 +270,15 @@ const ProdVariants = () => {
         className={`border-2 border-solid border-gray-200 rounded-lg p-5 h-full flex flex-col gap-3`}
       >
         <div className="flex items-center w-full">
-          <p className="w-1/4 my-1 font-medium">Variant type</p>
-          <p className="w-full my-1 font-medium pl-[20px]">Variant values</p>
-          <p className="w-1/5 my-1 font-medium px-2 mr-[70px]">
+          <p className="w-[200px] my-1 font-medium">Primary</p>
+          <p className="w-1/4 my-1 font-medium mr-[30px]">Variant type</p>
+          <p className="w-full my-1  font-medium mr-[30px]">Variant values</p>
+          <p className="w-[250px] my-1 font-medium px-2 text-center">
             Variant Images
           </p>
+          {/* <p className="w-[250px] my-1 font-medium px-2 mr-[70px] text-center">
+            Variant Images
+          </p> */}
         </div>
 
         <Stack spacing={2}>
@@ -260,7 +292,7 @@ const ProdVariants = () => {
           ))}
         </Stack>
 
-        <div className="flex items-center justify-between w-full">
+        {/* <div className="flex items-center justify-between w-full">
           <Box className="flex items-center justify-end">
             <Button
               className="capitalize m-0 p-0 font-medium"
@@ -271,7 +303,7 @@ const ProdVariants = () => {
               + Add Another Variant
             </Button>
           </Box>
-        </div>
+        </div> */}
       </div>
     </div>
   );
