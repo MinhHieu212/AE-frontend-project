@@ -125,7 +125,7 @@ const ProductList: React.FC = () => {
         container
         spacing={2}
         columns={12}
-        className="h-[calc(100dvh-220px)] overflow-y-scroll scrollBar px-5 mt-5"
+        className="h-[calc(100dvh-195px)] overflow-y-scroll scrollBar px-5 mt-5"
       >
         {productList.length > 0 ? (
           productList

@@ -3,12 +3,15 @@ import { ProductProps } from "../../../(seller)/product-list/ProductList";
 import { getProductList } from "../../../../api/ProductApi";
 import { toast } from "../../../../utils/Toastify";
 import ProductItem from "./components/ProductItem";
-import { Button, Grid2, TablePagination } from "@mui/material";
+import { Button, Grid2 } from "@mui/material";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
+import { fakeProductList } from "../../../../fake_data/fake_data_products";
 
 const Populars = () => {
-  const [productList, setProductList] = useState<ProductProps[]>([]);
+  const [productList, setProductList] =
+    useState<ProductProps[]>(fakeProductList);
   const [index, setIndex] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleChangeIndex = (action: string) => {
     switch (action) {
@@ -25,11 +28,14 @@ const Populars = () => {
 
   useEffect(() => {
     const callApi = async () => {
+      setLoading(true);
       try {
         const response_data = await getProductList();
         setProductList(response_data);
       } catch (error: any) {
         toast.error(error.message);
+      } finally {
+        setLoading(false);
       }
     };
     callApi();
@@ -60,13 +66,13 @@ const Populars = () => {
         {productList.length > 0 ? (
           productList.slice(index * 4, (index + 1) * 4).map((item, index) => (
             <Grid2 size={3} key={index}>
-              <ProductItem key={item.id} {...item} />
+              <ProductItem key={item.id} item={item} loading={loading} />
             </Grid2>
           ))
         ) : (
           <Grid2 size={12}>
             <div className="w-full h-full flex items-center justify-center">
-              <p className="font-bold text-lg"> Loading... </p>
+              <p className="font-bold text-lg"> No Products </p>
             </div>
           </Grid2>
         )}

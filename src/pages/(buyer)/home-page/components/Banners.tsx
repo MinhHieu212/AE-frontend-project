@@ -1,6 +1,5 @@
 import { Button, Paper } from "@mui/material";
 import { IconGardenCart } from "@tabler/icons-react";
-import { relative } from "path";
 import React from "react";
 import Carousel from "react-material-ui-carousel";
 
@@ -14,9 +13,9 @@ interface BannerProp {
 const bannerList: BannerProp[] = [
   {
     cover_url:
-      "https://i.pinimg.com/originals/ea/bd/aa/eabdaadef69a169117a2900e77bfde9f.jpg",
+      "https://www.vodacombusiness.co.za/sites/vodacombusinesscoza/files/styles/extra_large_landscape/public/2022-11/vb_desktopbanner_1920x720_iphone_14_pro1.jpg?itok=i2n1frC_",
     image_object: "top",
-    color: "black",
+    color: "white",
     direct_path: "/outline-generator",
   },
   {
@@ -67,7 +66,9 @@ const Banner = (props: BannerProp) => {
           <p className="text-[50px] my-0  font-bold">20% OFF</p>
         </div>
         <Button
-          className={`bg-black text-white flex items-center justify-center`}
+          className={`${
+            props.color !== "white" ? "bg-black" : "bg-darkGreen"
+          } text-lime flex items-center justify-center`}
           variant="contained"
           size="large"
         >

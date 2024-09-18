@@ -5,10 +5,13 @@ import { getProductList } from "../../../../api/ProductApi";
 import { toast } from "../../../../utils/Toastify";
 import ProductItem from "./components/ProductItem";
 import Grid2 from "@mui/material/Grid2";
+import { fakeProductList } from "../../../../fake_data/fake_data_products";
 
 const NewArrivals = () => {
-  const [productList, setProductList] = useState<ProductProps[]>([]);
+  const [productList, setProductList] =
+    useState<ProductProps[]>(fakeProductList);
   const [row, setRow] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleShowMore = () => {
     setRow((prev) => prev + 1);
@@ -16,11 +19,14 @@ const NewArrivals = () => {
 
   useEffect(() => {
     const callApi = async () => {
+      setLoading(true);
       try {
         const response_data = await getProductList();
         setProductList(response_data);
       } catch (error: any) {
         toast.error(error.message);
+      } finally {
+        setLoading(false);
       }
     };
     callApi();
@@ -33,13 +39,13 @@ const NewArrivals = () => {
         {productList.length > 0 ? (
           productList.slice(0, 4 * row).map((item, index) => (
             <Grid2 size={3} key={index}>
-              <ProductItem key={item.id} {...item} />
+              <ProductItem key={item.id} item={item} loading={loading} />
             </Grid2>
           ))
         ) : (
           <Grid2 size={12}>
             <div className="w-full h-full flex items-center justify-center">
-              <p className="font-bold text-lg"> Loading... </p>
+              <p className="font-bold text-lg"> No Products </p>
             </div>
           </Grid2>
         )}

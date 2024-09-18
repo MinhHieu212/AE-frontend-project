@@ -110,7 +110,7 @@ const seller_route = [
     path: "*",
     element: (
       <MainLayout>
-        <div className="w-full h-full flex flex-col items-center justify-center">
+        <div className="w-full min-h-[80dvh] h-full flex flex-col items-center justify-center">
           <img
             src="https://admiral.digital/wp-content/uploads/2023/08/404_page-not-found-1024x576.png"
             alt=""

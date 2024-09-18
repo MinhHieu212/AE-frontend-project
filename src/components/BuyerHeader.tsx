@@ -1,5 +1,4 @@
 import {
-  Button,
   Link,
   Paper,
   InputBase,
@@ -36,16 +35,17 @@ const BuyerHeader = () => {
 
   return (
     <div className="w-full h-[70px] flex items-center justify-between px-10 shadow-md mb-5">
-      <Link href="/homepage" underline="none" className="my-2">
-        <div className="w-full flex items-center gap-3">
-          <img
-            src="https://cdn.worldvectorlogo.com/logos/nasa-2.svg"
-            alt="Company avatar"
-            className="w-[60px] h-[60px] object-cover rounded-md"
-          />
-          <h2 className="text-[black]">Nasa Store</h2>
-        </div>
-      </Link>
+      <div
+        className="w-full flex items-center gap-3 my-2 cursor-pointer"
+        onClick={() => navigate("/homepage")}
+      >
+        <img
+          src="https://cdn.worldvectorlogo.com/logos/nasa-2.svg"
+          alt="Company avatar"
+          className="w-[60px] h-[60px] object-cover rounded-md"
+        />
+        <h2 className="text-[black]">Nasa Store</h2>
+      </div>
 
       <Paper
         component="form"
