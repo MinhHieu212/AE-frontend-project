@@ -4,12 +4,13 @@ import { useDropzone, DropzoneState } from "react-dropzone";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import { updateProductField } from "../../../../store/slices/productSlice";
 import PopupImages from "./PopupImages";
+import { IconTemperature } from "@tabler/icons-react";
 
 const ProdImages = () => {
   const useDispatch = useAppDispatch();
   const images = useAppSelector((state) => state.product.images);
   const primaryImage = useAppSelector((state) => state.product.primaryImage);
-  const hasVariants = useAppSelector((state) => state.product.hasVariants);
+  const haveVariants = useAppSelector((state) => state.product.haveVariants);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const imageInputRef = useRef<HTMLInputElement>(null);
 
@@ -41,27 +42,34 @@ const ProdImages = () => {
       onDrop,
     });
 
-  const handleRemoveImage = (index: number) => {
-    const updatedImages = images.filter((_, i) => i !== index);
-    updateField("images", updatedImages);
-  };
-
-  const handleReplaceImage = (index: number, file: File) => {
-    updateField("primaryImage", null);
-    const updatedImages = images.map((img, i) =>
-      i === index ? { file: file, url: URL.createObjectURL(file) } : img
+  const handleRemoveImage = () => {
+    const updatedImages = images.filter(
+      (item) => item.url !== primaryImage?.url
     );
     updateField("images", updatedImages);
+    updateField(
+      "primaryImage",
+      updatedImages.length > 0 ? updatedImages[0] : null
+    );
   };
 
-  const handleReplaceClick = (index: number) => {
+  const handleReplaceImage = (file: File) => {
+    const newImage = { file: file, url: URL.createObjectURL(file) };
+    const updatedImages = images.map((img, i) =>
+      img.url === primaryImage?.url ? newImage : img
+    );
+    updateField("images", updatedImages);
+    updateField("primaryImage", newImage);
+  };
+
+  const handleReplaceClick = () => {
     const inputElement = document.createElement("input");
     inputElement.type = "file";
     inputElement.accept = "image/*";
     inputElement.onchange = (event) => {
       if (event.target && (event.target as HTMLInputElement).files) {
         const file = (event.target as HTMLInputElement).files![0];
-        handleReplaceImage(index, file);
+        handleReplaceImage(file);
       }
     };
     inputElement.click();
@@ -81,7 +89,7 @@ const ProdImages = () => {
       <div className="flex w-full items-center p-2 px-5 rounded-lg border-2 h-[325px] border-solid border-gray-200 gap-3 relative">
         <div
           className={`absolute top-0 left-0 right-0 bottom-0 bg-slate-100 cursor-not-allowed text-sm text-gray-500 flex items-center justify-center ${
-            hasVariants ? "bg-opacity-80" : "hidden"
+            haveVariants ? "bg-opacity-80" : "hidden"
           }`}
         >
           Upload image with variation option
@@ -104,7 +112,7 @@ const ProdImages = () => {
         >
           <input {...getInputProps()} ref={imageInputRef} />
           <p className="text-sm font-medium text-blue-400">
-            {!hasVariants && "Upload or Drag Image"}
+            {!haveVariants && "Upload or Drag Image"}
           </p>
         </div>
         <div
@@ -122,10 +130,8 @@ const ProdImages = () => {
             } h-[calc(100%-14px)] flex items-center justify-center px-2 relative group`}
           >
             <img
-              src={primaryImage?.url || images[0]?.url}
-              alt={`Image file ${
-                primaryImage?.file.name || images[0]?.file.name
-              }`}
+              src={primaryImage?.url}
+              alt={`Image file ${primaryImage?.file.name}`}
               className="w-full h-full object-cover rounded-lg"
             />
             <div
@@ -135,14 +141,14 @@ const ProdImages = () => {
               <Button
                 className="text-white"
                 variant="contained"
-                onClick={() => handleReplaceClick(0)}
+                onClick={() => handleReplaceClick()}
               >
                 Replace
               </Button>
               <Button
                 className="text-white"
                 variant="contained"
-                onClick={() => handleRemoveImage(0)}
+                onClick={() => handleRemoveImage()}
               >
                 Remove
               </Button>
@@ -152,7 +158,7 @@ const ProdImages = () => {
           <div
             className={`${
               images.length === 1 ? "hidden" : "w-1/2"
-            } h-[calc(100%-14px)] flex flex-col items-evenly justify-start py-2 gap-2`}
+            } h-[calc(100%-14px)] flex flex-col items-between justify-start gap-2`}
           >
             {images
               .filter((item) => item.url !== primaryImage?.url)
@@ -163,7 +169,7 @@ const ProdImages = () => {
                     <img
                       src={item.url}
                       alt={`Image file ${item.file.name}`}
-                      className="w-full h-full object-cover rounded-lg"
+                      className="w-full h-full object-cover rounded-md"
                     />
                     <div
                       className={`w-full h-full flex items-center justify-center bg-opacity-80 absolute bg-slate-600 top-0 left-0 text-lg font-semibold rounded-lg text-white ${

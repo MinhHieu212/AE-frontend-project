@@ -17,7 +17,7 @@ import Paper from "@mui/material/Paper";
 const ProdVariantTable: React.FC = () => {
   const dispatch = useAppDispatch();
   const variants = useAppSelector((state) => state.variants.variants);
-  const hasVariants = useAppSelector((state) => state.product.hasVariants);
+  const haveVariants = useAppSelector((state) => state.product.haveVariants);
   const combineVariantWithPricing = useAppSelector(
     (state) => state.variants.combineVariantWithPricing
   );
@@ -30,7 +30,7 @@ const ProdVariantTable: React.FC = () => {
     dispatch(initializeCombinations(variants));
   }, [variants]);
 
-  if (!hasVariants) return <></>;
+  if (!haveVariants) return <></>;
 
   return (
     <div className="w-full rounded-lg p-5">

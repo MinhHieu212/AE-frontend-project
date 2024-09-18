@@ -3,7 +3,7 @@ import { Button, Pagination, Stack, Tooltip, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { getProductList } from "../../../api/ProductApi";
 import { toast } from "../../../utils/Toastify";
-
+import Grid from "@mui/material/Grid2";
 interface CategoryProps {
   id: number;
   name: string;
@@ -43,13 +43,15 @@ export interface ProductProps {
   sku: string;
 }
 
+const MAX_ITEM_PER_PAGE = 12;
+
 const ProductItem: React.FC<ProductProps> = ({ ...props }) => {
   const fallbackImageURL =
     "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=";
 
   return (
-    <div className="w-full mx-auto mb-2 p-3 rounded-xl flex items-center justify-start gap-3 border-2 border-solid border-gray-200 bg-[#f9fcff] ">
-      <div className="w-[180px] h-[150px] rounded-lg overflow-hidden">
+    <div className="w-full mx-auto mb-2 p-3 rounded-xl flex items-center justify-start gap-3 border-2 border-solid border-lime bg-[#fbfdff] shadow-lg">
+      <div className="w-[320px] h-[220px] rounded-lg overflow-hidden">
         <img
           src={props.primaryImageURL ? props.primaryImageURL : fallbackImageURL}
           alt={`Product: ${props.name}`}
@@ -81,8 +83,6 @@ const ProductItem: React.FC<ProductProps> = ({ ...props }) => {
   );
 };
 
-const MAX_ITEM_PER_PAGE = 8;
-
 const ProductList: React.FC = () => {
   const navigate = useNavigate();
   const [productList, setProductList] = useState<ProductProps[]>([]);
@@ -110,41 +110,47 @@ const ProductList: React.FC = () => {
 
   return (
     <div className="w-full max-w-[1430px] p-3 mx-auto h-full">
-      <div className="flex h-12 items-center justify-between px-5 mt-5">
-        <h2 className="font-bold">Product List</h2>
+      <div className="flex h-12 items-center justify-between px-5">
+        <h2 className="font-bold text-[lighgray]">All Products</h2>
         <Button
           size="large"
           variant="contained"
-          className="capitalize bg-black text-white"
+          className="capitalize bg-darkGreen text-lime"
           onClick={() => navigate("/products/add-product")}
         >
           Add new Product
         </Button>
       </div>
-      <Stack
+      <Grid
+        container
         spacing={2}
-        className="h-[calc(100dvh-160px)] overflow-y-scroll scrollBar px-5 mt-5"
+        columns={12}
+        className="h-[calc(100dvh-220px)] overflow-y-scroll scrollBar px-5 mt-5"
       >
         {productList.length > 0 ? (
           productList
             .slice((page - 1) * MAX_ITEM_PER_PAGE, page * MAX_ITEM_PER_PAGE)
-            .map((item) => <ProductItem key={item.id} {...item} />)
+            .map((item) => (
+              <Grid size={6}>
+                <ProductItem key={item.id} {...item} />
+              </Grid>
+            ))
         ) : (
           <div className="w-full h-full flex items-center justify-center">
             <p className="font-bold text-lg">Loading...</p>
           </div>
         )}
-        <Stack
-          spacing={2}
-          className="flex items-center justify-center w-full mt-auto mb-2"
-        >
-          <Pagination
-            count={Math.ceil(productList.length / MAX_ITEM_PER_PAGE)}
-            page={page}
-            size="large"
-            onChange={handleChangePage}
-          />
-        </Stack>
+      </Grid>
+      <Stack
+        spacing={2}
+        className="flex items-center justify-center pt-2 w-full mt-auto mb-2"
+      >
+        <Pagination
+          count={Math.ceil(productList.length / MAX_ITEM_PER_PAGE)}
+          page={page}
+          size="large"
+          onChange={handleChangePage}
+        />
       </Stack>
     </div>
   );

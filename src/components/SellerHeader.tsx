@@ -10,7 +10,7 @@ const SellerHeader = () => {
   const useDispatch = useAppDispatch();
 
   return (
-    <div className="w-full h-[60px] flex items-center justify-end px-5">
+    <div className="w-full h-[55px] shadow-md flex items-center justify-end px-5">
       <div className="flex justify-center items-center gap-4">
         <IconBellRinging size={23} />
         <Tooltip title="Need help?">

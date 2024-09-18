@@ -15,7 +15,7 @@ const ProdBranchFeature = () => {
   const useDispatch = useAppDispatch();
   const brand = useAppSelector((state) => state.product.brand);
   const isFeatured = useAppSelector((state) => state.product.isFeatured);
-  const hasVariants = useAppSelector((state) => state.product.hasVariants);
+  const haveVariants = useAppSelector((state) => state.product.haveVariants);
 
   return (
     <div className="w-full rounded-lg mb-2 p-3">
@@ -68,7 +68,7 @@ const ProdBranchFeature = () => {
           <div className="flex items-center justify-start gap-3 w-1/2">
             <label>
               <span
-                aria-label="hasVariants"
+                aria-label="haveVariants"
                 className="cursor-pointer text-[#aca4a4]"
               >
                 Have variants <span className="text-red-600"> *</span>
@@ -76,16 +76,20 @@ const ProdBranchFeature = () => {
             </label>
             <Switch
               defaultChecked
-              checked={hasVariants}
-              id="hasVariants"
-              onChange={(e) =>
+              checked={haveVariants}
+              id="haveVariants"
+              onChange={(e) => {
                 useDispatch(
                   updateProductField({
-                    field: "hasVariants",
+                    field: "haveVariants",
                     value: e.target.checked,
                   })
-                )
-              }
+                );
+                if (e.target.checked)
+                  useDispatch(
+                    updateProductField({ field: "images", value: [] })
+                  );
+              }}
             />
           </div>
           <div className="w-1/2 flex items-center justify-end">

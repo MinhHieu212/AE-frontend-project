@@ -55,7 +55,7 @@ const ActionButtons = () => {
   }
 
   return (
-    <div className="w-full items-center justify-end gap-3 flex px-4 my-[50px]">
+    <div className="w-full items-center justify-end gap-3 flex px-4 my-[30px] mb-[10px]">
       <DiscardProductDialog
         onCancel={() => {}}
         onAccept={() => handleDiscardAddProduct()}
@@ -83,7 +83,7 @@ const AddProduct = () => {
   const cate_level_1 = useAppSelector(
     (state) => state.product.category.level_1
   );
-  const hasVariants = useAppSelector((state) => state.product.hasVariants);
+  const haveVariants = useAppSelector((state) => state.product.haveVariants);
 
   return (
     <div className="flex flex-col items-center justify-start w-full max-w-[1430px] h-full p-3 mx-auto">

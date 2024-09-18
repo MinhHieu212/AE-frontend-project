@@ -60,7 +60,7 @@ export default function DiscardProductDialog({
             Cancel
           </Button>
           <Button onClick={handleAccept} autoFocus>
-            Discard
+            Accept
           </Button>
         </DialogActions>
       </Dialog>

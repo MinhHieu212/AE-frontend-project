@@ -8,7 +8,6 @@ import {
 } from "../../../../store/slices/variantSlice";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import {
   TextField,
   Chip,
@@ -17,6 +16,7 @@ import {
   Stack,
   Divider,
   Checkbox,
+  InputBase,
 } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import React, { useEffect, useState } from "react";
@@ -124,15 +124,20 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
   return (
     <Box>
       <div className="flex items-center">
-        <Box className="w-[200px] flex items-center">
+        <Box className="w-[150px] flex items-center">
           <Checkbox
             checked={primaryVariant === type}
-            onChange={(e) => useDispatch(setPrimaryVariants({ variant: type }))}
+            onChange={(e) => {
+              useDispatch(setPrimaryVariants({ variant: type }));
+            }}
           />
         </Box>
-        <TextField
-          className="w-1/4"
-          size="small"
+        <InputBase
+          className={`w-1/4 border-2 ${
+            primaryVariant === type
+              ? "border-solid border-blue-300"
+              : "border-solid border-[#c8c3c3]"
+          } rounded-[4px] p-[2.5px] px-3 text-[16px]`}
           placeholder="Enter type"
           value={type}
           slotProps={{
@@ -148,10 +153,20 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
         />
         <Divider
           className={`w-[30px] ${
-            values.length > 0 ? "bg-gray-300" : "bg-white"
+            values.length > 0
+              ? primaryVariant === type
+                ? "bg-blue-300"
+                : "bg-gray-300"
+              : "bg-white"
           }`}
         />
-        <Box className="w-full flex items-center justify-start flex-wrap gap-3 px-4 border-2 border-solid border-[#c8c3c3] p-[2px] rounded-[4px]">
+        <Box
+          className={`w-full flex items-center justify-start flex-wrap gap-3 px-4 p-[2px] rounded-[4px] ${
+            primaryVariant === type
+              ? "border-2 border-blue-300 border-solid"
+              : "border-2 border-solid border-[#c8c3c3]"
+          }`}
+        >
           {values.map((chip) => (
             <Chip
               key={chip}
@@ -170,7 +185,7 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
             onChange={handleInputChange}
             onKeyDown={handleInputKeyDown}
             onBlur={handleInputBlur}
-            className={`flex-grow min-w-[50px] mt-1`}
+            className={`flex-grow min-w-[50px] mt-1 border-2`}
             placeholder={values.length === 0 ? "Enter values" : ""}
             InputProps={{
               disableUnderline: true,
@@ -179,7 +194,11 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
         </Box>
         <Divider
           className={`w-[30px] ${
-            values.length > 0 ? "bg-gray-300" : "bg-white"
+            values.length > 0
+              ? primaryVariant === type
+                ? "bg-blue-300"
+                : "bg-gray-300"
+              : "bg-white"
           }`}
         />
         <Button
@@ -257,9 +276,9 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
 
 const ProdVariants = () => {
   const variants = useAppSelector((state) => state.variants.variants);
-  const hasVariants = useAppSelector((state) => state.product.hasVariants);
+  const haveVariants = useAppSelector((state) => state.product.haveVariants);
 
-  if (!hasVariants) return <></>;
+  if (!haveVariants) return <></>;
 
   return (
     <div className="w-full rounded-lg mb-2 px-5">
@@ -270,7 +289,7 @@ const ProdVariants = () => {
         className={`border-2 border-solid border-gray-200 rounded-lg p-5 h-full flex flex-col gap-3`}
       >
         <div className="flex items-center w-full">
-          <p className="w-[200px] my-1 font-medium">Primary</p>
+          <p className="w-[150px] my-1 font-medium">Primary</p>
           <p className="w-1/4 my-1 font-medium mr-[30px]">Variant type</p>
           <p className="w-full my-1  font-medium mr-[30px]">Variant values</p>
           <p className="w-[250px] my-1 font-medium px-2 text-center">

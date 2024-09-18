@@ -35,7 +35,7 @@ const BuyerHeader = () => {
   };
 
   return (
-    <div className="w-full h-[60px] flex items-center justify-between px-10 shadow-md mb-5">
+    <div className="w-full h-[70px] flex items-center justify-between px-10 shadow-md mb-5">
       <Link href="/homepage" underline="none" className="my-2">
         <div className="w-full flex items-center gap-3">
           <img
@@ -49,7 +49,7 @@ const BuyerHeader = () => {
 
       <Paper
         component="form"
-        className="flex items-center border-[0.2px] border-solid border-gray-300 justify-between w-[600px] rounded-lg overflow-hidden h-[40px] my-auto shadow-none"
+        className="flex items-center border-[0.2px] border-solid border-gray-300 justify-between w-[600px] rounded-lg overflow-hidden h-[45px] my-auto shadow-none"
       >
         <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
           <SearchIcon />

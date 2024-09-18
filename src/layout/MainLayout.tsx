@@ -27,7 +27,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           } flex items-start justify-center`}
         >
           {userRole === "seller" && <SellerHeader />}
-          <div className="flex-col h-[calc(100dvh-60px)] w-full overflow-y-scroll flex items-center justify-start">
+          <div className="flex-col h-[calc(100dvh-70px)] w-full overflow-y-scroll flex items-center justify-start">
             <div className="w-full">{children}</div>
             {userRole === "buyer" && <BuyerFooter />}
           </div>
