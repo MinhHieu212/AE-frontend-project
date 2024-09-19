@@ -11,8 +11,8 @@ import {
   IconSearch,
   IconDoorExit,
 } from "@tabler/icons-react";
-import { Divider, InputAdornment, Link, Stack, TextField } from "@mui/material";
-import nasa_logo from "../assest/images/nasa_green.png";
+import { Divider, InputAdornment, Stack, TextField } from "@mui/material";
+import nasa_logo from "../assest/images/nasa_gray.png";
 
 interface SubSellerSideBarProps {
   name: string;
@@ -27,40 +27,29 @@ interface SellerSideBarItemProps {
   paths: string[];
   iconActive: React.ReactNode;
   subItems: SubSellerSideBarProps[] | null;
-  isExpanded: boolean;
-  onToggle: () => void;
+  expandedItem: string;
+  setExpandedItem: (value: string) => void;
 }
 
 const SellerSideBarItem = ({
   icon,
   iconActive,
   name,
-  disable,
   paths,
   subItems,
-  isExpanded,
-  onToggle,
+  expandedItem,
+  setExpandedItem,
 }: SellerSideBarItemProps) => {
   const location = useLocation();
   const navigate = useNavigate();
   const isActive = paths.includes(location.pathname.split("/")[1]);
 
-  const handleRouting = (path: string) => {
-    navigate(`/${path}`);
-  };
-
   return (
-    <div
-      className="w-full p-1 mb-1"
-      onClick={() =>
-        paths.length === 1 ? handleRouting(paths[0]) : onToggle()
-      }
-    >
+    <div className="w-full p-1 mb-1">
       <div
         className="w-full rounded-md cursor-pointer flex justify-between h-[40px] items-center gap-3"
-        onClick={(e) => {
-          e.stopPropagation(); // Prevent click event from bubbling up
-          onToggle();
+        onClick={() => {
+          setExpandedItem(expandedItem === name ? "" : name);
         }}
       >
         <div>{isActive ? iconActive : icon}</div>
@@ -74,7 +63,7 @@ const SellerSideBarItem = ({
         <div>
           {subItems === null ? (
             <></>
-          ) : isExpanded ? (
+          ) : expandedItem === name ? (
             <IconChevronUp className="text-[#77787b]" size={18} />
           ) : (
             <IconChevronDown className="text-[#77787b]" size={18} />
@@ -82,13 +71,12 @@ const SellerSideBarItem = ({
         </div>
       </div>
 
-      {isExpanded && subItems && (
+      {expandedItem === name && subItems && (
         <div
           className={`ml-[10px] border-[0] ${"border-l-[3px] border-solid border-teal"} my-2 w-full cursor-pointer`}
         >
           {subItems.map((item, index) => {
             const subIsActive = item.path === location.pathname.split("/")[1];
-
             return (
               <div className="flex items-center" key={index}>
                 <Divider
@@ -97,7 +85,7 @@ const SellerSideBarItem = ({
                   }`}
                 />
                 <div
-                  onClick={() => handleRouting(item.path)}
+                  onClick={() => navigate(item.path)}
                   className={`p-2 rounded-lg mb-1 w-[90%] h-[40px] flex items-center font-[400] ${
                     subIsActive ? "bg-teal" : ""
                   } px-2`}
@@ -120,24 +108,24 @@ const SellerSideBarItem = ({
 };
 
 const SellerSideBar = () => {
-  const [expandedItem, setExpandedItem] = useState<string | null>(null);
-
-  const handleToggle = (path: string) => {
-    setExpandedItem((prev) => (prev === path ? null : path));
-  };
+  const navigate = useNavigate();
+  const [expandedItem, setExpandedItem] = useState<string>("");
 
   return (
     <div className="w-[400px] h-[100dvh] bg-darkGreen flex flex-col justify-start items-center px-5">
-      <Link href="/products" underline="none" className="w-full my-2">
-        <div className="w-full flex items-center gap-3">
-          <img
-            src={nasa_logo}
-            alt="Company avatar"
-            className="w-[70px] h-[60px] object-cover rounded-md"
-          />
-          <h2 className="text-lime">Nasa Store</h2>
-        </div>
-      </Link>
+      <div
+        className="w-full flex items-center gap-3 cursor-pointer"
+        onClick={() => {
+          navigate("/products");
+        }}
+      >
+        <img
+          src={nasa_logo}
+          alt="Company avatar"
+          className="w-[70px] h-[60px] object-cover rounded-md"
+        />
+        <h2 className="text-myGray">Nasa Store</h2>
+      </div>
 
       <TextField
         variant="outlined"
@@ -171,8 +159,8 @@ const SellerSideBar = () => {
               paths={item.paths}
               disable={item.disable}
               subItems={item.subItems}
-              isExpanded={expandedItem === item.paths[0]} // Only one item can be expanded
-              onToggle={() => handleToggle(item.paths[0])}
+              expandedItem={expandedItem}
+              setExpandedItem={setExpandedItem}
             />
           ))}
       </Stack>
@@ -185,7 +173,7 @@ const SellerSideBar = () => {
             className="w-[40px] h-[40px] rounded-full object-cover"
           />
           <div className="h-[50px] flex flex-col items-start justify-center">
-            <p className="font-semibold my-0 text-lime">Trần Minh Hiếu</p>
+            <p className="font-semibold my-0 text-myGray">Trần Minh Hiếu</p>
             <p className="text-[gray] text-sm my-0">lana@treat.com</p>
           </div>
         </div>

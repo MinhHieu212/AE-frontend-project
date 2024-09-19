@@ -36,7 +36,7 @@ const BuyerHeader = () => {
   return (
     <div className="w-full h-[70px] flex items-center justify-between px-10 shadow-md mb-5">
       <div
-        className="w-full flex items-center gap-3 my-2 cursor-pointer"
+        className="flex items-center gap-3 my-2 cursor-pointer w-[200px]"
         onClick={() => navigate("/homepage")}
       >
         <img

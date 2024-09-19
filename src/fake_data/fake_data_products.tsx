@@ -1,4 +1,4 @@
-import { ProductProps } from "../pages/(seller)/product-list/ProductList";
+import { ProductProps } from "../types/product_types";
 
 export const fakeProductList: ProductProps[] = [
   {

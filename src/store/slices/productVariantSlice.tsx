@@ -37,7 +37,7 @@ const initialState: ProductVariantProps = {
   primaryVariant: "",
 };
 
-export const variantSlice = createSlice({
+export const productVariantSlice = createSlice({
   name: "variant",
   initialState,
   reducers: {
@@ -193,4 +193,4 @@ export const {
   initialVariants,
   saveCombinations,
   updateVariantImages,
-} = variantSlice.actions;
+} = productVariantSlice.actions;

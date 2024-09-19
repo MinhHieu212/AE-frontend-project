@@ -68,7 +68,7 @@ const Banner = (props: BannerProp) => {
         <Button
           className={`${
             props.color !== "white" ? "bg-black" : "bg-darkGreen"
-          } text-lime flex items-center justify-center`}
+          } text-myGray flex items-center justify-center`}
           variant="contained"
           size="large"
         >

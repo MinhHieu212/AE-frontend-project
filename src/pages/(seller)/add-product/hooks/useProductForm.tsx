@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { toast } from "../../../../utils/Toastify";
 import { createProduct, uploadImageProduct } from "../../../../api/ProductApi";
-import { ImageFile } from "../types/ProductFormProps";
+import { ImageFile } from "../../../../types/product_types";
 import { useNavigate } from "react-router-dom";
 
 export const useProductForm = () => {

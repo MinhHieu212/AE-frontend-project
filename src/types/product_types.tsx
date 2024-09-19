@@ -43,14 +43,14 @@ export interface FormData {
   primaryImage: ImageFile | null;
 }
 
-export interface ProductFormProps {
+export interface product_types {
   formData: FormData;
   updateField: (field: string, value: any) => void;
   errors: any;
   startValidate: boolean;
 }
 
-export interface PopupProductFormProps {
+export interface Popupproduct_types {
   formData: FormData;
   updateField: (field: string, value: any) => void;
   errors: any;
@@ -61,24 +61,43 @@ export interface PopupProductFormProps {
   imageInputRef: any;
 }
 
-export interface SubCategoryProps {
+interface CategoryProps {
   id: number;
   name: string;
   parentID: number | null;
   createdAt: string | null;
   updatedAt: string | null;
-  subCategory: SubCategoryProps[]; // Recursive type definition
+  subCategory: CategoryProps[];
   noOfViews: number;
-  productsSold: number;
+  ListSold: number;
 }
 
-export interface CategoryProps {
+interface Dimensions {
+  weight?: number;
+  length?: number;
+  width?: number;
+  height?: number;
+}
+
+export interface ProductProps {
   id: number;
   name: string;
-  parentID: number | null;
-  createdAt: string | null;
+  imageURL: string[];
+  primaryImageURL: string;
+  description: string;
+  msrp: number;
+  salePrice: number;
+  price: number;
+  rating: number;
+  viewCount: number;
+  quantity: number;
+  quantitySold: number;
+  remainingQuantity: number;
+  brandName: string | null;
+  sellingTypes: string;
+  createdAt: string;
   updatedAt: string | null;
-  subCategory: SubCategoryProps[];
-  noOfViews: number;
-  productsSold: number;
+  categories: CategoryProps[];
+  dimensions: Dimensions | null;
+  sku: string;
 }

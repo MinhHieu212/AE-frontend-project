@@ -5,7 +5,7 @@ import {
   setVariantValue,
   removeVariantValue,
   setPrimaryVariants,
-} from "../../../../store/slices/variantSlice";
+} from "../../../../store/slices/productVariantSlice";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import {

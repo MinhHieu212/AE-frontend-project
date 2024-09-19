@@ -5,8 +5,8 @@ import {
   IconHeartFilled,
   IconHeart,
 } from "@tabler/icons-react";
-import { ProductProps } from "../../../../(seller)/product-list/ProductList";
 import { useNavigate } from "react-router-dom";
+import { ProductProps } from "../../../../../types/product_types";
 
 interface ProductItemProps {
   item?: ProductProps;

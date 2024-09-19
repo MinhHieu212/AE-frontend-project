@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@mui/material";
-import { ProductProps } from "../../../(seller)/product-list/ProductList";
 import { getProductList } from "../../../../api/ProductApi";
 import { toast } from "../../../../utils/Toastify";
 import ProductItem from "./components/ProductItem";
 import Grid2 from "@mui/material/Grid2";
 import { fakeProductList } from "../../../../fake_data/fake_data_products";
+import { ProductProps } from "../../../../types/product_types";
 
 const NewArrivals = () => {
   const [productList, setProductList] =

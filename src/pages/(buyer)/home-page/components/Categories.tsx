@@ -1,11 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { Box } from "@mui/material";
-import { ProductProps } from "../../../(seller)/product-list/ProductList";
 import { getProductList } from "../../../../api/ProductApi";
 import { toast } from "../../../../utils/Toastify";
 import { fake_data_categorys } from "../../../../fake_data/fake_data_category";
-import { CategoryProps } from "../../../(seller)/add-product/types/ProductFormProps";
 import DynamicIcon from "../../../../components/DynamicIcon";
+import { ProductProps } from "../../../../types/product_types";
+
+export interface SubCategoryProps {
+  id: number;
+  name: string;
+  parentID: number | null;
+  createdAt: string | null;
+  updatedAt: string | null;
+  subCategory: SubCategoryProps[];
+  noOfViews: number;
+  productsSold: number;
+}
+
+export interface CategoryProps {
+  id: number;
+  name: string;
+  parentID: number | null;
+  createdAt: string | null;
+  updatedAt: string | null;
+  subCategory: SubCategoryProps[];
+  noOfViews: number;
+  productsSold: number;
+}
 
 const CategoryItem = (props: CategoryProps) => {
   return (

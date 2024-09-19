@@ -14,8 +14,6 @@ const MainLayout = ({ children }: MainLayoutProps) => {
   const userRole = useAppSelector((state) => state.roles.user_role);
   const useDispatch = useAppDispatch();
 
-  console.log("re-render on Main layout");
-
   return (
     <div className="flex-col flex items-center justify-start w-[100dvw] h-[100dvh] overflow-hidden">
       {userRole === "buyer" && <BuyerHeader />}

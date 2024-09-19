@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { ProductProps } from "../../../(seller)/product-list/ProductList";
 import { getProductList } from "../../../../api/ProductApi";
 import { toast } from "../../../../utils/Toastify";
 import ProductItem from "./components/ProductItem";
 import { Button, Grid2 } from "@mui/material";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import { fakeProductList } from "../../../../fake_data/fake_data_products";
+import { ProductProps } from "../../../../types/product_types";
 
 const Populars = () => {
   const [productList, setProductList] =

@@ -6,7 +6,7 @@ import { TextField } from "@mui/material";
 import {
   initializeCombinations,
   updateCombination,
-} from "../../../../store/slices/variantSlice";
+} from "../../../../store/slices/productVariantSlice";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";

@@ -6,7 +6,6 @@ import {
   OutlinedInput,
   Select,
 } from "@mui/material";
-import { ProductFormProps } from "../types/ProductFormProps";
 import { getCategories } from "../../../../api/CategoryApi";
 import { fake_data_categorys } from "../../../../fake_data/fake_data_category";
 import { fake_data_variants } from "../../../../fake_data/fake_data_variants";
@@ -17,7 +16,7 @@ import {
   initialVariants,
   setPrimaryVariants,
   updateVariantImages,
-} from "../../../../store/slices/variantSlice";
+} from "../../../../store/slices/productVariantSlice";
 
 interface CategoryProps {
   id: number;

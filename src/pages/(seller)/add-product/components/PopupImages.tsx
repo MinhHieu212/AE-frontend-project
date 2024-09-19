@@ -44,12 +44,12 @@ export interface ImageFile {
   url: string;
 }
 
-export interface PopupProductFormProps {
+export interface Popupproduct_types {
   openModal: boolean;
   setOpenModal: (value: boolean) => void;
 }
 
-const PopupImages: React.FC<PopupProductFormProps> = ({
+const PopupImages: React.FC<Popupproduct_types> = ({
   openModal,
   setOpenModal,
 }) => {

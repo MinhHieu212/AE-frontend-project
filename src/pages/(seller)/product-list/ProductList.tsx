@@ -1,92 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Button, Pagination, Stack, Tooltip, Typography } from "@mui/material";
+import { Button, Pagination, Skeleton, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { getProductList } from "../../../api/ProductApi";
 import { toast } from "../../../utils/Toastify";
+import { ProductProps } from "../../../types/product_types";
 import Grid from "@mui/material/Grid2";
-interface CategoryProps {
-  id: number;
-  name: string;
-  parentID: number | null;
-  createdAt: string | null;
-  updatedAt: string | null;
-  subCategory: CategoryProps[];
-  noOfViews: number;
-  ListSold: number;
-}
-interface Dimensions {
-  weight?: number;
-  length?: number;
-  width?: number;
-  height?: number;
-}
-export interface ProductProps {
-  id: number;
-  name: string;
-  imageURL: string[];
-  primaryImageURL: string;
-  description: string;
-  msrp: number;
-  salePrice: number;
-  price: number;
-  rating: number;
-  viewCount: number;
-  quantity: number;
-  quantitySold: number;
-  remainingQuantity: number;
-  brandName: string | null;
-  sellingTypes: string;
-  createdAt: string;
-  updatedAt: string | null;
-  categories: CategoryProps[];
-  dimensions: Dimensions | null;
-  sku: string;
-}
+import { fakeProductList } from "../../../fake_data/fake_data_products";
 
 const MAX_ITEM_PER_PAGE = 12;
 
-const ProductItem: React.FC<ProductProps> = ({ ...props }) => {
-  const fallbackImageURL =
-    "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=";
-
-  return (
-    <div className="w-full mx-auto mb-2 p-3 rounded-xl flex items-center justify-start gap-3 border-2 border-solid border-lime bg-[#fbfdff] shadow-lg">
-      <div className="w-[320px] h-[220px] rounded-lg overflow-hidden">
-        <img
-          src={props.primaryImageURL ? props.primaryImageURL : fallbackImageURL}
-          alt={`Product: ${props.name}`}
-          className="h-full w-full object-cover cursor-pointer"
-          onClick={() => console.log(JSON.stringify(props, null, 2))}
-        />
-      </div>
-      <div className="flex h-full items-start w-full justify-start flex-col p-2">
-        <p className="text-lg my-1 font-medium">{props.name}</p>
-        <p className="text-lg text-blue-400 my-0 font-medium">
-          Sale Price: $ {props.salePrice.toFixed(2)}
-        </p>
-        <p className="text-sm my-1 font-medium text-[gray]">
-          Price: ${props.price.toFixed(2)}
-        </p>
-        <p className="text-sm my-1">
-          {props.categories.map(
-            (item, index) =>
-              `${item.name} ${
-                index !== props.categories.length - 1 ? " & " : ""
-              }`
-          )}
-        </p>
-        <p className="text-sm my-1 font-medium text-[gray]">
-          Sell on: {props.sellingTypes}
-        </p>
-      </div>
-    </div>
-  );
-};
-
 const ProductList: React.FC = () => {
   const navigate = useNavigate();
-  const [productList, setProductList] = useState<ProductProps[]>([]);
+  const [productList, setProductList] =
+    useState<ProductProps[]>(fakeProductList);
   const [page, setPage] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleChangePage = (
     event: React.ChangeEvent<unknown>,
@@ -98,11 +26,14 @@ const ProductList: React.FC = () => {
   useEffect(() => {
     const callApi = async () => {
       try {
+        setLoading(true);
         const response_data = await getProductList();
         console.log(response_data);
         setProductList(response_data);
       } catch (error: any) {
         toast.error(error.message);
+      } finally {
+        setLoading(false);
       }
     };
     callApi();
@@ -115,7 +46,7 @@ const ProductList: React.FC = () => {
         <Button
           size="large"
           variant="contained"
-          className="capitalize bg-darkGreen text-lime"
+          className="capitalize bg-darkGreen text-myGray"
           onClick={() => navigate("/products/add-product")}
         >
           Add new Product
@@ -125,19 +56,19 @@ const ProductList: React.FC = () => {
         container
         spacing={2}
         columns={12}
-        className="h-[calc(100dvh-195px)] overflow-y-scroll scrollBar px-5 mt-5"
+        className="max-h-[calc(100dvh-195px)] items-start overflow-y-scroll scrollBar px-5 mt-5"
       >
         {productList.length > 0 ? (
           productList
             .slice((page - 1) * MAX_ITEM_PER_PAGE, page * MAX_ITEM_PER_PAGE)
             .map((item) => (
               <Grid size={6}>
-                <ProductItem key={item.id} {...item} />
+                <ProductItem key={item.id} item={item} loading={loading} />
               </Grid>
             ))
         ) : (
           <div className="w-full h-full flex items-center justify-center">
-            <p className="font-bold text-lg">Loading...</p>
+            <p className="font-bold text-lg">No Products</p>
           </div>
         )}
       </Grid>
@@ -157,3 +88,89 @@ const ProductList: React.FC = () => {
 };
 
 export default ProductList;
+
+interface ProductItemProps {
+  item?: ProductProps;
+  loading?: boolean;
+}
+
+const ProductItem: React.FC<ProductItemProps> = ({ item, loading }) => {
+  const fallbackImageURL =
+    "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=";
+
+  return (
+    <div className="w-full mx-auto mb-2 p-3 rounded-xl flex items-center justify-start gap-3 border-2 border-solid border-myGray bg-[#fbfdff] shadow-lg">
+      <div className="w-[320px] h-[220px] rounded-lg overflow-hidden">
+        {loading ? (
+          <Skeleton animation="wave" className="w-[320px] h-[220px]" />
+        ) : (
+          <img
+            src={
+              item?.primaryImageURL ? item?.primaryImageURL : fallbackImageURL
+            }
+            alt={`Product: ${item?.name}`}
+            className="h-full w-full object-cover cursor-pointer"
+          />
+        )}
+      </div>
+
+      <div className="flex h-full items-start w-full justify-start flex-col p-2">
+        {loading ? (
+          <Skeleton
+            animation="wave"
+            className="text-lg my-1 font-medium w-[100px]"
+          />
+        ) : (
+          <p className="text-lg my-1 font-medium">{item?.name}</p>
+        )}
+        {loading ? (
+          <Skeleton
+            animation="wave"
+            className="text-lg text-blue-400 my-0 font-medium w-[100px]"
+          />
+        ) : (
+          <p className="text-lg text-blue-400 my-0 font-medium">
+            Sale Price: $ {item?.salePrice.toFixed(2)}
+          </p>
+        )}
+        {loading ? (
+          <Skeleton
+            animation="wave"
+            className="text-lg my-1 font-medium w-[100px]"
+          />
+        ) : (
+          <p className="text-sm my-1 font-medium text-[gray]">
+            Price: ${item?.price.toFixed(2)}
+          </p>
+        )}
+
+        {loading ? (
+          <Skeleton
+            animation="wave"
+            className="text-lg my-1 font-medium w-[150px]"
+          />
+        ) : (
+          <p className="text-sm my-1">
+            {item?.categories.map(
+              (sub_item, index) =>
+                `${sub_item.name} ${
+                  index !== item?.categories.length - 1 ? " & " : ""
+                }`
+            )}
+          </p>
+        )}
+
+        {loading ? (
+          <Skeleton
+            animation="wave"
+            className="text-lg my-1 font-medium w-[100px]"
+          />
+        ) : (
+          <p className="text-sm my-1 font-medium text-[gray]">
+            Sell on: {item?.sellingTypes}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+};
