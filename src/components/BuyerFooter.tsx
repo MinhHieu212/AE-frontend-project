@@ -20,7 +20,7 @@ const BuyerFooter = () => {
                 className="w-[60px] h-[60px] object-cover rounded-md"
               />
 
-              <h2 className="text-[black]">Nasastore</h2>
+              <h2 className="text-[black] text-[20px]">Nasastore</h2>
             </div>
           </Link>
           <p className="m-2 text-sm">
@@ -58,7 +58,7 @@ const BuyerFooter = () => {
           size={2}
           className="flex flex-col items-start justify-start gap-2"
         >
-          <h2 className="font-bold mb-4">Useful Links</h2>
+          <h2 className="font-bold mb-2 text-[18px]">Useful Links</h2>
           <Link
             href="/"
             className="hover:underline decoration-transparent text-gray-500 text-sm"
@@ -91,7 +91,7 @@ const BuyerFooter = () => {
           size={2}
           className="flex flex-col items-start justify-start gap-2"
         >
-          <h2 className="font-bold mb-4">My Account</h2>
+          <h2 className="font-bold mb-2 text-[18px]">My Account</h2>
           <Link
             href="/"
             className="hover:underline decoration-transparent text-gray-500 text-sm"
@@ -114,28 +114,30 @@ const BuyerFooter = () => {
           </Link>
         </Grid2>
         <Grid2 size={3} className="flex flex-col items-end gap-2">
-          <h2 className="font-bold mb-4">Contact</h2>
+          <h2 className="font-bold mb-2 text-[18px]">Contact</h2>
           <p className="my-0">+01-22-333-22-111-2</p>
           <p className="my-0">Address here, Usa</p>
           <div className="flex mt-4 space-x-4">
-            <div className="border-2 border-solid border-black rounded-full p-3 w-[50px] h-[50px]">
+            <div className="border-2 border-solid border-gray-500 rounded-full p-2 flex items-center justify-center w-[40px] h-[40px]">
               <Instagram className="text-black" />
             </div>
-            <div className="border-2 border-solid border-black rounded-full p-3 w-[50px] h-[50px]">
+            <div className="border-2 border-solid border-gray-500 rounded-full p-2 flex items-center justify-center w-[40px] h-[40px]">
               <Facebook className="text-black" />
             </div>
-            <div className="border-2 border-solid border-black rounded-full p-3 w-[50px] h-[50px]">
+            <div className="border-2 border-solid border-gray-500 rounded-full p-2 flex items-center justify-center w-[40px] h-[40px]">
               <Twitter className="text-black" />
             </div>
-            <div className="border-2 border-solid border-black rounded-full p-3 w-[50px] h-[50px]">
+            <div className="border-2 border-solid border-gray-500 rounded-full p-2 flex items-center justify-center w-[40px] h-[40px]">
               <YouTubeIcon className="text-black" />
             </div>
           </div>
         </Grid2>
       </Grid2>
-      <Divider className="my-6 mb-3 bg-gray-900" />
+      <Divider className="my-6 mb-3 bg-gray-400" />
       <div className="w-full mb-3 text-center flex items-center justify-center">
-        <p className="my-0">&copy; 2023 Your Company. All rights reserved.</p>
+        <p className="my-0 mb-1 text-sm">
+          &copy; 2023 Your Company. All rights reserved.
+        </p>
       </div>
     </div>
   );

@@ -12,12 +12,13 @@ const SellerHeader = () => {
   return (
     <div className="w-full h-[55px] flex items-center justify-end px-5">
       <div className="flex justify-center items-center gap-4">
-        <IconBellRinging size={23} />
+        <IconBellRinging size={22} />
         <Tooltip title="Need help?">
-          <IconHelpHexagon size={23} />
+          <IconHelpHexagon size={22} />
         </Tooltip>
         <Button
           variant="outlined"
+          size="small"
           onClick={() => {
             navigate("/homepage");
             useDispatch(setRole({ user_role: "buyer" }));

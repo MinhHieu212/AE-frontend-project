@@ -53,7 +53,7 @@ const SellerSideBarItem = ({
       >
         <div>{isActive ? iconActive : icon}</div>
         <p
-          className={`w-[80%] font-[400] ${
+          className={`w-[80%] font-[400] text-[14px] ${
             isActive ? "text-[lightgray]" : "text-[#77787b]"
           }`}
         >
@@ -87,12 +87,12 @@ const SellerSideBarItem = ({
                   onClick={() => {
                     navigate(`/${item.path}`);
                   }}
-                  className={`p-2 rounded-lg mb-1 w-[90%] h-[40px] flex items-center font-[400] ${
+                  className={`p-2 rounded-lg mb-1 w-[90%] h-[35px] flex items-center font-[400] ${
                     subIsActive ? "bg-teal" : ""
                   } px-2`}
                 >
                   <p
-                    className={`${
+                    className={`text-[14px] ${
                       subIsActive ? "text-[lightgray]" : "text-[#77787b]"
                     } my-0`}
                   >
@@ -113,7 +113,7 @@ const SellerSideBar = () => {
   const [expandedItem, setExpandedItem] = useState<string>("");
 
   return (
-    <div className="w-[400px] h-[100dvh] bg-darkGreen flex flex-col justify-start items-center px-5">
+    <div className="w-[350px] h-[100dvh] bg-darkGreen flex flex-col justify-start items-center px-5">
       <div
         className="w-full flex items-center gap-3 cursor-pointer"
         onClick={() => {
@@ -123,9 +123,9 @@ const SellerSideBar = () => {
         <img
           src={`${process.env.PUBLIC_URL}/images/nasa_gray.png` || nasa_logo}
           alt="Company avatar"
-          className="w-[70px] h-[60px] object-cover rounded-md"
+          className="w-[55px] h-[55px] object-cover rounded-md"
         />
-        <h2 className="text-lightLime">Nasastore</h2>
+        <h2 className="text-lightLime text-[20px]">Nasastore</h2>
       </div>
 
       <TextField
@@ -137,15 +137,16 @@ const SellerSideBar = () => {
           input: {
             startAdornment: (
               <InputAdornment position="start">
-                <IconSearch size={20} />
+                <IconSearch size={18} />
               </InputAdornment>
             ),
             style: {
               borderRadius: "5px",
-              height: "45px",
+              height: "35px",
               background: "#21A691",
-              marginTop: "20px",
+              marginTop: "10px",
               color: "white",
+              fontSize: "14px",
             },
           },
         }}
@@ -176,7 +177,9 @@ const SellerSideBar = () => {
             className="w-[40px] h-[40px] rounded-full object-cover"
           />
           <div className="h-[50px] flex flex-col items-start justify-center">
-            <p className="font-semibold my-0 text-myGray">Trần Minh Hiếu</p>
+            <p className="font-medium my-0 text-sm text-myGray">
+              Trần Minh Hiếu
+            </p>
             <p className="text-[gray] text-sm my-0">lana@treat.com</p>
           </div>
         </div>
@@ -190,8 +193,8 @@ export default SellerSideBar;
 
 const SellerSideBar_list = [
   {
-    icon: <IconHome size={25} color="#77787b" />,
-    iconActive: <IconHome size={25} color="lightgray" />,
+    icon: <IconHome size={22} color="#77787b" />,
+    iconActive: <IconHome size={22} color="lightgray" />,
     paths: ["manager-products", "manager-orders", "manager-customer"],
     name: "Page manager",
     disable: false,
@@ -214,8 +217,8 @@ const SellerSideBar_list = [
     ],
   },
   {
-    icon: <IconBuildingStore size={25} color="#77787b" />,
-    iconActive: <IconBuildingStore size={25} color="lightgray" />,
+    icon: <IconBuildingStore size={22} color="#77787b" />,
+    iconActive: <IconBuildingStore size={22} color="lightgray" />,
     paths: ["products", "orders", "customer"],
     name: "My shop",
     disable: false,
@@ -238,8 +241,8 @@ const SellerSideBar_list = [
     ],
   },
   {
-    icon: <IconDeviceDesktopAnalytics size={25} color="#77787b" />,
-    iconActive: <IconDeviceDesktopAnalytics size={25} color="lightgray" />,
+    icon: <IconDeviceDesktopAnalytics size={22} color="#77787b" />,
+    iconActive: <IconDeviceDesktopAnalytics size={22} color="lightgray" />,
     name: "Business analytics",
     disable: false,
     paths: ["busines-product", "busines-order", "busines-customer"],
@@ -262,16 +265,16 @@ const SellerSideBar_list = [
     ],
   },
   {
-    icon: <IconTags size={25} color="#77787b" />,
-    iconActive: <IconTags size={25} color="lightgray" />,
+    icon: <IconTags size={22} color="#77787b" />,
+    iconActive: <IconTags size={22} color="lightgray" />,
     name: "Discount code",
     disable: false,
     paths: ["discount"],
     subItems: null,
   },
   {
-    icon: <IconMessage size={25} color="#77787b" />,
-    iconActive: <IconMessage size={25} color="lightgray" />,
+    icon: <IconMessage size={22} color="#77787b" />,
+    iconActive: <IconMessage size={22} color="lightgray" />,
     name: "Support",
     disable: false,
     paths: ["support"],

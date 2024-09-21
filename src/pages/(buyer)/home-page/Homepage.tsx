@@ -7,7 +7,7 @@ import Showcase from "./components/Showcase";
 
 const Homepage = () => {
   return (
-    <div className="w-full max-w-[1430px] p-3  mx-auto bg-white">
+    <div className="w-full max-w-[1200px] p-3  mx-auto bg-white">
       <Banners />
       <Categories />
       <Populars />

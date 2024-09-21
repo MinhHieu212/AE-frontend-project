@@ -69,7 +69,7 @@ const ProdBranchFeature = () => {
             <label>
               <span
                 aria-label="haveVariants"
-                className="cursor-pointer text-[#aca4a4]"
+                className="cursor-pointer text-[#aca4a4] text-sm"
               >
                 Have variants <span className="text-red-600"> *</span>
               </span>
@@ -95,7 +95,7 @@ const ProdBranchFeature = () => {
           <div className="w-1/2 flex items-center justify-end">
             <span
               aria-label="isFeatured"
-              className="cursor-pointer text-[#aca4a4]"
+              className="cursor-pointer text-[#aca4a4] text-sm"
             >
               Featured product
             </span>

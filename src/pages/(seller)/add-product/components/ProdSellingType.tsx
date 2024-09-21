@@ -18,7 +18,7 @@ const ProdSellingType = () => {
       <p className="font-medium text-lg">
         Selling Type <span className="text-red-600"> *</span>
       </p>
-      <div className="border-2 border-solid border-gray-200 rounded-lg p-5 py-2 h-full flex gap-3">
+      <div className="border-2 border-solid border-gray-200 rounded-lg p-5 py-2 h-full flex gap-3 text-sm">
         <FormGroup>
           <FormControlLabel
             control={
@@ -29,7 +29,7 @@ const ProdSellingType = () => {
                 value="In-store selling only"
               />
             }
-            label="In-store selling only"
+            label={<span className="text-sm">In-store selling only</span>}
           />
           <FormControlLabel
             control={
@@ -40,7 +40,7 @@ const ProdSellingType = () => {
                 size="small"
               />
             }
-            label="Online selling only"
+            label={<span className="text-sm">Online selling only</span>}
           />
           <FormControlLabel
             control={
@@ -51,7 +51,11 @@ const ProdSellingType = () => {
                 value="Available both online and in-store"
               />
             }
-            label="Available both online and in-store"
+            label={
+              <span className="text-sm">
+                Available both online and in-store
+              </span>
+            }   
           />
         </FormGroup>
       </div>

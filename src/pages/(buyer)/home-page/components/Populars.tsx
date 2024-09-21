@@ -44,21 +44,21 @@ const Populars = () => {
   return (
     <div className="w-full my-[20px] mt-[40px] mb-10 transition-all">
       <div className="w-full flex item-center justify-between">
-        <h2> Popular Products 2023</h2>
+        <h2 className="text-[22px]"> Popular Products 2023</h2>
         <div className="flex items-center justify-center gap-3">
           <Button
             className="w-[40px] h-[40px] bg-slate-100 flex items-center justify-center rounded-full text-[20px] font-bold"
             onClick={() => handleChangeIndex("previous")}
             style={{ minWidth: "40px", minHeight: "40px", borderRadius: "50%" }}
           >
-            <IconChevronLeft color={"black"} />
+            <IconChevronLeft color={"black"} size={22} />
           </Button>
           <Button
             className="w-[40px] h-[40px] bg-slate-100 flex items-center justify-center rounded-full text-[20px] font-bold"
             onClick={() => handleChangeIndex("next")}
             style={{ minWidth: "40px", minHeight: "40px", borderRadius: "50%" }}
           >
-            <IconChevronRight color={"black"} />
+            <IconChevronRight color={"black"} size={22} />
           </Button>
         </div>
       </div>

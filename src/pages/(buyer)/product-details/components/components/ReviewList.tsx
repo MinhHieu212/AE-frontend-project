@@ -19,10 +19,10 @@ const ReviewList = () => {
 
   return (
     <Box className="h-[85vh] w-[100%] scrollBar">
-      <Box className="flex items-center justify-between font-medium rounded-md border-2 border-solid p-3 border-stone-200">
+      <Box className="flex items-center justify-between font-medium h-[40px] text-gray-700 rounded-md border-[1px] border-solid p-3 border-stone-200 text-[14px]">
         <span>Overall rating</span>
         <Box className="flex items-center gap-2">
-          4.5 <IconStarFilled size={23} color="orange" />
+          4.5 <IconStarFilled size={20} color="orange" />
         </Box>
       </Box>
       <Grid2 className="w-full mt-4" container spacing={1}>
@@ -43,7 +43,7 @@ const ReviewList = () => {
                     gap: 0.5,
                   }}
                 >
-                  <Box className="flex items-center justify-start gap-2 text-sm font-medium mt-1">
+                  <Box className="flex items-center justify-start gap-2 text-sm font-medium">
                     {ratingOption !== 0
                       ? Array.from({ length: ratingOption }).map((_, index) => (
                           <IconStarFilled key={index} size={15} color="gray" />

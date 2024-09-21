@@ -46,11 +46,11 @@ const ProductDetails = () => {
   }, []);
 
   return (
-    <div className="w-full h-full max-w-[1430px] mx-auto my-5 py-10">
+    <div className="w-full h-full max-w-[1200px] mx-auto my-5">
       <Grid2 className="w-full" container spacing={2}>
         <Grid2 size={7}>
           <ImageGallery />
-          <Box className="mt-5 min-h-[500px] w-full border-2 border-solid border-gray-100 rounded-lg p-5 py-3 shadow-lg">
+          <Box className="mt-5 min-h-[500px] text-sm w-full border-2 border-solid border-gray-100 rounded-lg p-5 py-3 shadow-lg">
             <div
               dangerouslySetInnerHTML={{
                 __html: DOMPurify.sanitize(description),

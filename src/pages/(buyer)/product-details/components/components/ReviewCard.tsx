@@ -23,11 +23,11 @@ const ReviewCard = () => {
               <IconStarFilled size={15} color="orange" />
             ))}
         </Box>
-        <Typography variant="body2" color="textSecondary">
+        <Typography variant="body2" color="textSecondary" className="text-sm">
           {review.date}
         </Typography>
       </Grid2>
-      <Typography variant="h6" className="mt-[8px] font-medium">
+      <Typography variant="h6" className="mt-[8px] font-medium text-[15px]">
         {review.title}
       </Typography>
       <Typography variant="body2" className="mt-[8px]">

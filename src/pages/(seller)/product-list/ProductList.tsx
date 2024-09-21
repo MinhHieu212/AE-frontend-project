@@ -9,6 +9,96 @@ import { fakeProductList } from "../../../fake_data/fake_data_products";
 
 const MAX_ITEM_PER_PAGE = 12;
 
+interface ProductItemProps {
+  item?: ProductProps;
+  loading?: boolean;
+}
+
+const ProductItem: React.FC<ProductItemProps> = ({ item, loading }) => {
+  const navigate = useNavigate();
+  const fallbackImageURL =
+    "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=";
+
+  return (
+    <div className="w-full mx-auto mb-2 p-3 rounded-xl flex items-start justify-start gap-3 border-2 border-solid border-gray-100 bg-[#fbfdff] shadow-lg">
+      <div className="w-[280px] h-[180px] rounded-md overflow-hidden">
+        {loading ? (
+          <Skeleton animation="wave" className="w-[280px] h-full" />
+        ) : (
+          <img
+            src={
+              item?.primaryImageURL ? item?.primaryImageURL : fallbackImageURL
+            }
+            alt={`Product: ${item?.name}`}
+            className="h-full w-full object-cover cursor-pointer"
+            onClick={() =>
+              navigate(`/products/${item?.name.split(" ").join("_")}`)
+            }
+          />
+        )}
+      </div>
+
+      <div className="flex h-full items-start w-full justify-start flex-col p-2">
+        {loading ? (
+          <Skeleton
+            animation="wave"
+            className="text-md my-1 font-medium w-[100px] h-full"
+          />
+        ) : (
+          <p className="text-lg my-1 font-medium">{item?.name}</p>
+        )}
+        {loading ? (
+          <Skeleton
+            animation="wave"
+            className="text-md text-blue-400 my-0 font-medium w-[100px]"
+          />
+        ) : (
+          <p className="text-md text-blue-400 my-0 font-medium">
+            Sale Price: $ {item?.salePrice.toFixed(2)}
+          </p>
+        )}
+        {loading ? (
+          <Skeleton
+            animation="wave"
+            className="text-[14px] my-1 font-medium w-[100px]"
+          />
+        ) : (
+          <p className="text-sm my-1 font-medium text-[gray]">
+            Price: ${item?.price.toFixed(2)}
+          </p>
+        )}
+
+        {loading ? (
+          <Skeleton
+            animation="wave"
+            className="text-lg my-1 font-medium w-[150px]"
+          />
+        ) : (
+          <p className="text-sm my-1">
+            {item?.categories.map(
+              (sub_item, index) =>
+                `${sub_item.name} ${
+                  index !== item?.categories.length - 1 ? " & " : ""
+                }`
+            )}
+          </p>
+        )}
+
+        {loading ? (
+          <Skeleton
+            animation="wave"
+            className="text-lg my-1 font-medium w-[100px]"
+          />
+        ) : (
+          <p className="text-sm my-1 font-medium text-[gray]">
+            Sell on: {item?.sellingTypes}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+};
+
 const ProductList: React.FC = () => {
   const navigate = useNavigate();
   const [productList, setProductList] =
@@ -40,11 +130,10 @@ const ProductList: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full max-w-[1430px] p-3 mx-auto h-full">
+    <div className="w-full max-w-[1200px] p-3 mx-auto h-full">
       <div className="flex h-12 items-center justify-between px-5">
-        <h2 className="font-bold text-[lighgray]">All Products</h2>
+        <h2 className="font-bold text-[lighgray] text-[22px]">All Products</h2>
         <Button
-          size="large"
           variant="contained"
           className="capitalize bg-darkGreen text-myGray"
           onClick={() => navigate("/products/add-product")}
@@ -88,93 +177,3 @@ const ProductList: React.FC = () => {
 };
 
 export default ProductList;
-
-interface ProductItemProps {
-  item?: ProductProps;
-  loading?: boolean;
-}
-
-const ProductItem: React.FC<ProductItemProps> = ({ item, loading }) => {
-  const navigate = useNavigate();
-  const fallbackImageURL =
-    "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=";
-
-  return (
-    <div className="w-full mx-auto mb-2 p-3 rounded-xl flex items-center justify-start gap-3 border-2 border-solid border-myGray bg-[#fbfdff] shadow-lg">
-      <div className="w-[320px] h-[220px] rounded-lg overflow-hidden">
-        {loading ? (
-          <Skeleton animation="wave" className="w-[320px] h-[220px]" />
-        ) : (
-          <img
-            src={
-              item?.primaryImageURL ? item?.primaryImageURL : fallbackImageURL
-            }
-            alt={`Product: ${item?.name}`}
-            className="h-full w-full object-cover cursor-pointer"
-            onClick={() =>
-              navigate(`/products/${item?.name.split(" ").join("_")}`)
-            }
-          />
-        )}
-      </div>
-
-      <div className="flex h-full items-start w-full justify-start flex-col p-2">
-        {loading ? (
-          <Skeleton
-            animation="wave"
-            className="text-lg my-1 font-medium w-[100px] h-full"
-          />
-        ) : (
-          <p className="text-lg my-1 font-medium">{item?.name}</p>
-        )}
-        {loading ? (
-          <Skeleton
-            animation="wave"
-            className="text-lg text-blue-400 my-0 font-medium w-[100px]"
-          />
-        ) : (
-          <p className="text-lg text-blue-400 my-0 font-medium">
-            Sale Price: $ {item?.salePrice.toFixed(2)}
-          </p>
-        )}
-        {loading ? (
-          <Skeleton
-            animation="wave"
-            className="text-lg my-1 font-medium w-[100px]"
-          />
-        ) : (
-          <p className="text-sm my-1 font-medium text-[gray]">
-            Price: ${item?.price.toFixed(2)}
-          </p>
-        )}
-
-        {loading ? (
-          <Skeleton
-            animation="wave"
-            className="text-lg my-1 font-medium w-[150px]"
-          />
-        ) : (
-          <p className="text-sm my-1">
-            {item?.categories.map(
-              (sub_item, index) =>
-                `${sub_item.name} ${
-                  index !== item?.categories.length - 1 ? " & " : ""
-                }`
-            )}
-          </p>
-        )}
-
-        {loading ? (
-          <Skeleton
-            animation="wave"
-            className="text-lg my-1 font-medium w-[100px]"
-          />
-        ) : (
-          <p className="text-sm my-1 font-medium text-[gray]">
-            Sell on: {item?.sellingTypes}
-          </p>
-        )}
-      </div>
-    </div>
-  );
-};

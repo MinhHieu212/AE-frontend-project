@@ -32,9 +32,9 @@ const CategoryItem = (props: CategoryProps) => {
   return (
     <Box className="rounded-lg w-[300px] flex items-center justify-center flex-col">
       <div className="flex items-center justify-center p-3 rounded-full bg-slate-200">
-        <DynamicIcon iconName="Smartphone" size="large" />
+        <DynamicIcon iconName="Smartphone" size="medium" />
       </div>
-      <p className="text-sm my-1 font-medium text-[gray] capitalize">
+      <p className="text-sm my-1 font-medium text-[gray] capitalize truncate">
         {props.name || "no name"}
       </p>
     </Box>
@@ -58,7 +58,7 @@ const Categories = () => {
 
   return (
     <div className="w-full my-[20px] mt-10 mb-10">
-      <h2 className="mx-[auto]"> Our Top Categories </h2>
+      <h2 className="mx-[auto] text-[22px]"> Our Top Categories </h2>
       <div className="overflow-x-scroll flex items-start justify-start gap-8 mx-[auto]">
         {fake_data_categorys.length > 0 ? (
           fake_data_categorys.map((item) => (

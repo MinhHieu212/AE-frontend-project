@@ -24,7 +24,7 @@ const ProductItem = ({ item, loading }: ProductItemProps) => {
       <div className="relative overflow-hidden rounded-lg">
         {loading ? (
           <Skeleton
-            className="w-[300px] h-[300px] "
+            className="w-[250px] h-[250px]"
             animation="wave"
             variant="rectangular"
           />
@@ -34,15 +34,15 @@ const ProductItem = ({ item, loading }: ProductItemProps) => {
               item?.primaryImageURL ? item?.primaryImageURL : fallbackImageURL
             }
             alt={`Product: ${item?.name}`}
-            className="w-[300px] h-[300px] object-cover cursor-pointer mt-2"
+            className="w-[250px] h-[250px] object-cover cursor-pointer mt-2"
             onClick={() => navigate(`/${item?.name.split(" ").join("_")}`)}
           />
         )}
         <div
           onClick={() => setLike((prev) => !prev)}
-          className="flex items-center justify-center p-2 bg-slate-100 absolute top-5 left-5 z-100 rounded-full bg-opacity-80 cursor-pointer"
+          className="flex items-center justify-center p-1 bg-slate-100 absolute top-3 left-3 z-100 rounded-full bg-opacity-80 cursor-pointer"
         >
-          {like ? <IconHeart /> : <IconHeartFilled />}
+          {like ? <IconHeart size={20} /> : <IconHeartFilled size={20} />}
         </div>
       </div>
       <Divider className="my-3" />
@@ -53,7 +53,7 @@ const ProductItem = ({ item, loading }: ProductItemProps) => {
             className="text-[23px] my-1 font-bold truncate"
           />
         ) : (
-          <p className="text-[23px] my-1 font-bold truncate">
+          <p className="text-[18px] my-1 font-bold truncate">
             {item?.name || "Product name here"}
           </p>
         )}
@@ -70,14 +70,14 @@ const ProductItem = ({ item, loading }: ProductItemProps) => {
 
         <div className="flex items-center justify-between w-full">
           <div>
-            <div className="flex items-center justify-center gap-3 text-xl mt-2 my-1 font-medium text-[gray] mr-auto">
+            <div className="flex items-center justify-center gap-3 text-lg mt-2 my-1 font-medium text-[gray] mr-auto">
               {loading ? (
                 <Skeleton
                   animation="wave"
-                  className="text-gray-300 my-0 line-through w-[100px]"
+                  className="text-gray-300 my-0 line-through w-[50px]"
                 />
               ) : (
-                <p className="text-gray-300 my-0 line-through">
+                <p className="text-gray-300  my-0 line-through truncate">
                   $ {item?.price.toFixed(2)}
                 </p>
               )}
@@ -90,10 +90,10 @@ const ProductItem = ({ item, loading }: ProductItemProps) => {
               {loading ? (
                 <Skeleton
                   animation="wave"
-                  className="text-black my-0 w-[100px]"
+                  className="text-black my-0 w-[50px]"
                 />
               ) : (
-                <p className="text-black my-0">
+                <p className="text-black my-0 truncate">
                   $ {item?.salePrice.toFixed(2)}
                 </p>
               )}
@@ -128,7 +128,7 @@ const ProductItem = ({ item, loading }: ProductItemProps) => {
               )}
             </div>
           </div>
-          <Box className="w-[40px] h-[40px] text-white bg-black flex items-center justify-center rounded-full text-[20px] font-bold cursor-pointer">
+          <Box className="w-[35px] h-[35px] text-white bg-black flex items-center justify-center rounded-full text-[20px] font-bold cursor-pointer">
             +
           </Box>
         </div>

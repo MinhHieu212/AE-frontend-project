@@ -30,7 +30,7 @@ const Showcase = () => {
   };
 
   return (
-    <Box className="w-full h-[600px]">
+    <Box className="w-full h-[450px]">
       <Grid2 container spacing={2} className="h-full">
         <Grid2 size={8} className="h-full">
           <Box className="flex h-full items-stretch justify-center">
@@ -39,17 +39,21 @@ const Showcase = () => {
               alt="Samsung galaxy zlip"
               className="w-1/2 rounded-lg h-full object-cover"
             />
-            <Box className="w-1/2 p-5 flex-col flex items-start justify-center bg-slate-100">
-              <Typography variant="h6" color="textSecondary">
+            <Box className="w-1/2 p-5 flex-col flex items-start justify-center bg-gray-100">
+              <Typography
+                variant="h6"
+                color="textSecondary"
+                className="text=[25px]"
+              >
                 Top Selling
               </Typography>
-              <Typography variant="h3" className="font-bold mt-2">
+              <Typography variant="h3" className="font-bold mt-2 text-[33px]">
                 {product.name}
               </Typography>
               <Typography
                 variant="body1"
                 color="textSecondary"
-                className="mt-2 text-black"
+                className="mt-2 text-black text-[14px]"
               >
                 {product.description}
               </Typography>
@@ -76,40 +80,40 @@ const Showcase = () => {
         <Grid2 size={4} className="h-full">
           <Box className="flex w-full flex-col items-center justify-center h-full">
             <Box className="h-1/2 shadow-lg px-3 pb-3 w-full overflow-hidden relative">
-              <Typography variant="h5" className="font-bold">
+              <Typography variant="h5" className="font-bold text-[18px]">
                 Samsung Galaxy Watch6
               </Typography>
               <div className="flex items-center justify-between">
                 <Typography
                   variant="body1"
                   color="textSecondary"
-                  className="mt-4 text-black text-[20px]"
+                  className="mt-3 text-black text-[18px] relative z-100"
                 >
                   $ 20.99
                 </Typography>
                 <img
                   src="https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/s/m/sm-l705_001_front_titanium_silve.png"
                   alt="Samsung galaxy zlip"
-                  className="w-[80%] h-[80%] rounded-lg object-fill absolute bottom-0 right-0"
+                  className="w-[80%] h-[80%] rounded-lg object-contain absolute bottom-0 right-0"
                 />
               </div>
             </Box>
-            <Box className="h-1/2 shadow-lg px-3 pt-3  w-full overflow-hidden relative">
-              <Typography variant="h5" className="font-bold">
+            <Box className="h-1/2 shadow-lg px-3 pt-3 w-full overflow-hidden relative z-0">
+              <Typography variant="h5" className="font-bold text-[18px]">
                 Hyperwork gen 2
               </Typography>
               <div className="flex items-center justify-between">
                 <Typography
                   variant="body1"
                   color="textSecondary"
-                  className="mt-4 text-black text-[20px]"
+                  className="mt-3 text-black text-[18px] relative z-100"
                 >
                   $ 10.99
                 </Typography>
                 <img
                   src="https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/b/a/ban-phim-khong-day-hyperwork-hyperone-gen-2_6_.png"
                   alt="Samsung galaxy zlip"
-                  className="w-[80%] h-[80%] rounded-lg object-fill absolute bottom-0 right-0"
+                  className="w-[80%] h-[80%] rounded-lg object-contain absolute bottom-0 right-0"
                 />
               </div>
             </Box>

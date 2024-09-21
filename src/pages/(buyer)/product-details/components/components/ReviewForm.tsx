@@ -7,7 +7,6 @@ import {
   FormControl,
   FormLabel,
   Button,
-  Slider,
   Rating,
   Typography,
   Box,
@@ -54,21 +53,13 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
     }));
   };
 
-  const handleSliderChange = (event: Event, newValue: number | number[]) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      fitting: newValue as number,
-    }));
-  };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
-    // Here you would typically send the data to your backend
   };
 
   return (
-    <Box className="w-full h-[85vh] mx-auto bg-white px-3 rounded-lg shadow-md">
+    <Box className="w-full h-[85vh] mx-auto bg-white px-3 rounded-lg shadow-md text-sm">
       <Box className="flex items-center mb-4 w-full">
         <Box className="w-[60px] h-[60px] bg-gray-200 rounded-md mr-3 overflow-hidden">
           <img
@@ -78,11 +69,11 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
           />
         </Box>
         <Box>
-          <Typography variant="subtitle1" className="font-semibold text-lg">
+          <Typography variant="subtitle1" className="font-semibold text-base">
             {productName}
           </Typography>
-          <Typography variant="body2" className="text-gray-600">
-            €{productPrice}
+          <Typography variant="body2" className="text-gray-600 text-xs">
+            ${productPrice}
           </Typography>
         </Box>
       </Box>
@@ -90,13 +81,13 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
         <Box>
           <Typography
             component="legend"
-            className="font-medium text-gray-700 mt-5"
+            className="font-medium text-gray-700 mt-5 text-sm"
           >
             Score
           </Typography>
           <Rating
             name="score"
-            size="large"
+            size="medium"
             value={formData.score}
             onChange={(event, newValue) => {
               setFormData((prevState) => ({
@@ -106,7 +97,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
             }}
           />
         </Box>
-        <p className="font-medium text-gray-700 mt-4 mb-2">Title</p>
+        <p className="font-medium text-gray-700 mt-4 mb-2 text-sm">Title</p>
         <TextField
           fullWidth
           size="small"
@@ -115,8 +106,14 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
           variant="outlined"
           value={formData.title}
           onChange={handleInputChange}
+          InputProps={{
+            style: { fontSize: "0.875rem" },
+          }}
+          InputLabelProps={{
+            style: { fontSize: "0.875rem" },
+          }}
         />
-        <p className="font-medium text-gray-700 mt-5 mb-3">Review</p>
+        <p className="font-medium text-gray-700 mt-5 mb-3 text-sm">Review</p>
         <TextField
           fullWidth
           size="small"
@@ -127,9 +124,18 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
           rows={8}
           value={formData.review}
           onChange={handleInputChange}
+          InputProps={{
+            style: { fontSize: "0.875rem" },
+          }}
+          InputLabelProps={{
+            style: { fontSize: "0.875rem" },
+          }}
         />
         <FormControl component="fieldset" className="mb-3 mt-5 w-full">
-          <FormLabel component="legend" className="font-medium text-gray-700">
+          <FormLabel
+            component="legend"
+            className="font-medium text-gray-700 text-sm"
+          >
             Recommended
           </FormLabel>
           <RadioGroup
@@ -138,12 +144,23 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
             value={formData.recommended}
             onChange={handleInputChange}
           >
-            <FormControlLabel value="yes" control={<Radio />} label="Yes" />
-            <FormControlLabel value="no" control={<Radio />} label="No" />
+            <FormControlLabel
+              value="yes"
+              control={<Radio size="small" />}
+              label={<span className="text-sm">Yes</span>}
+            />
+            <FormControlLabel
+              value="no"
+              control={<Radio size="small" />}
+              label={<span className="text-sm">No</span>}
+            />
           </RadioGroup>
         </FormControl>
         <FormControl component="fieldset" className="mb-5 w-full">
-          <FormLabel component="legend" className="font-medium text-gray-700">
+          <FormLabel
+            component="legend"
+            className="font-medium text-gray-700 text-sm"
+          >
             Did your order arrive within the time mentioned?
           </FormLabel>
           <RadioGroup
@@ -152,14 +169,22 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
             value={formData.orderOnTime}
             onChange={handleInputChange}
           >
-            <FormControlLabel value="yes" control={<Radio />} label="Yes" />
-            <FormControlLabel value="no" control={<Radio />} label="No" />
+            <FormControlLabel
+              value="yes"
+              control={<Radio size="small" />}
+              label={<span className="text-sm">Yes</span>}
+            />
+            <FormControlLabel
+              value="no"
+              control={<Radio size="small" />}
+              label={<span className="text-sm">No</span>}
+            />
           </RadioGroup>
         </FormControl>
         <Box className="flex justify-between mt-4 gap-3">
           <Button
             variant="outlined"
-            className="w-1/2 border-darkGreen"
+            className="w-1/2 border-darkGreen text-sm"
             color="inherit"
             onClick={() => setWriteReview(false)}
           >
@@ -167,7 +192,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
           </Button>
           <Button
             type="submit"
-            className="bg-darkGreen text-white w-1/2"
+            className="bg-darkGreen text-white w-1/2 text-sm"
             color="primary"
             onClick={() => {
               setWriteReview(false);

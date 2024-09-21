@@ -46,17 +46,17 @@ const ProdDetails = () => {
             aria-controls="panel1-content"
             id="panel1-header"
           >
-            <Box className="flex items-center justify-start p-2">
+            <Box className="flex items-center justify-start p-1 px-0">
               {category === "specification" ? (
-                <IconId />
+                <IconId size={20} />
               ) : category === "dimension" ? (
-                <IconAugmentedReality />
+                <IconAugmentedReality size={20} />
               ) : category === "camera" ? (
-                <IconCamera />
+                <IconCamera size={20} />
               ) : (
-                <IconNotes />
+                <IconNotes size={20} />
               )}
-              <span className="font-medium text-[16px] px-3 capitalize">
+              <span className="font-medium text-[15px] px-3 capitalize">
                 {category}
               </span>
             </Box>
@@ -66,7 +66,7 @@ const ProdDetails = () => {
               <Box>
                 <Box
                   key={key}
-                  className="py-3 flex text-[16px] items-center justify-start gap-10 capitalize"
+                  className="py-2 flex text-[14px] items-center justify-start gap-10 capitalize"
                 >
                   <span className="font-medium">{key}: </span>
                   <span className="text-gray-500">{value}</span>

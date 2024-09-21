@@ -34,7 +34,7 @@ const NewArrivals = () => {
 
   return (
     <div className="w-full my-[20px] mt-[40px] mb-10">
-      <h2 className="mx-[auto]"> New Arrivals 2023</h2>
+      <h2 className="mx-[auto] text-[22px]"> New Arrivals 2023</h2>
       <Grid2 container spacing={4}>
         {productList.length > 0 ? (
           productList.slice(0, 4 * row).map((item, index) => (

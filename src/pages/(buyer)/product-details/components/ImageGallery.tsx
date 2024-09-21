@@ -8,7 +8,6 @@ interface BannerProp {
   cover_url: string;
   color: string;
   height: string;
-  width: string;
   image_object: string;
   type?: string;
   activeZoom: boolean;
@@ -39,7 +38,6 @@ const Banner: React.FC<BannerProp> = (props) => {
         backgroundImage: `url(${props.cover_url})`,
         backgroundPosition: props.image_object,
         color: props.color,
-        width: props.width,
         height: props.height,
         margin: "0 auto",
         position: "relative",
@@ -105,11 +103,11 @@ const ImageGallery = () => {
             onClick={() => setActiveZoom((prev) => !prev)}
           >
             <IconZoomScan
-              size={30}
+              size={25}
               color={activeZoom ? "black" : "lightgray"}
             />
           </Box>
-          <Box className="w-full px-2 flex flex-col items-center gap-2 overflow-y-scroll max-h-[600px] scrollBar">
+          <Box className="w-full px-2 flex flex-col items-center gap-2 overflow-y-scroll max-h-[500px] scrollBar">
             {image_list.map((item, index) => (
               <Box
                 className={`w-full min-h-[80px] flex items-center justify-center rounded-sm overflow-hidden border-[2px] border-solid border-gray-300 cursor-pointer ${
@@ -156,8 +154,7 @@ const ImageGallery = () => {
                   color={item.color}
                   image_object={item.image_object}
                   handleClickOpen={handleClickOpen}
-                  height="600px"
-                  width="100%"
+                  height="500px"
                 />
               ))}
             </Carousel>
@@ -199,7 +196,6 @@ const ImageGallery = () => {
                   image_object={item.image_object}
                   handleClickOpen={handleClickOpen}
                   height="70vh"
-                  width="80vw"
                   type="fullScreen"
                 />
               ))}

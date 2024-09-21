@@ -60,7 +60,7 @@ const Banner = (props: BannerProp) => {
         backgroundRepeat: "no-repeat",
         backgroundSize: props.size || "cover",
         margin: "0 auto",
-        height: "600px",
+        height: "500px",
         color: props.color,
         width: "100%",
         borderRadius: "15px",
@@ -105,7 +105,7 @@ const Banners = () => {
             alignItems: "center",
           },
         }}
-        className="h-[600px]"
+        className="h-[500px]"
       >
         {bannerList.map((item, i) => (
           <Banner
