@@ -2,8 +2,7 @@ import React, { useRef, useState } from "react";
 import Carousel from "react-material-ui-carousel";
 import { Box, Button, Dialog, Grid2, Paper, Stack } from "@mui/material";
 import { useAppSelector } from "../../../../store/store";
-import ZoomInIcon from "@mui/icons-material/ZoomIn";
-import { IconZoomScan } from "@tabler/icons-react";
+import { IconHeart, IconHeartFilled, IconZoomScan } from "@tabler/icons-react";
 
 interface BannerProp {
   cover_url: string;
@@ -47,6 +46,7 @@ const Banner: React.FC<BannerProp> = (props) => {
         borderRadius: "5px",
         backgroundSize: "contain",
         backgroundRepeat: "no-repeat",
+        cursor: "pointer",
       }}
       className="zoomImage"
       onDoubleClick={() => props.handleClickOpen()}
@@ -99,9 +99,9 @@ const ImageGallery = () => {
   return (
     <div className="mx-auto w-full">
       <Grid2 className="w-full" container spacing={2}>
-        <Grid2 size={1.5} className="relative">
+        <Grid2 size={1.5} className="relative py-3">
           <Box
-            className={`absolute z-50 top-0 -right-12 w-[40px] h-[40px] flex items-center justify-center rounded-full cursor-pointer`}
+            className={`absolute z-50 top-2 -right-10 w-[40px] h-[40px] flex items-center justify-center rounded-full cursor-pointer`}
             onClick={() => setActiveZoom((prev) => !prev)}
           >
             <IconZoomScan
@@ -109,7 +109,7 @@ const ImageGallery = () => {
               color={activeZoom ? "black" : "lightgray"}
             />
           </Box>
-          <Box className="w-full p-2 flex flex-col items-center gap-2 overflow-y-scroll max-h-[600px] scrollBar">
+          <Box className="w-full px-2 flex flex-col items-center gap-2 overflow-y-scroll max-h-[600px] scrollBar">
             {image_list.map((item, index) => (
               <Box
                 className={`w-full min-h-[80px] flex items-center justify-center rounded-sm overflow-hidden border-[2px] border-solid border-gray-300 cursor-pointer ${
@@ -129,8 +129,8 @@ const ImageGallery = () => {
             ))}
           </Box>
         </Grid2>
-        <Grid2 size={10.5} className="px-5">
-          <Box className="rounded-lg p-3">
+        <Grid2 size={10.5}>
+          <Box className="rounded-lg p-3 px-5">
             <Carousel
               index={activeIndex}
               onChange={(index: any) => setActiveIndex(index)}

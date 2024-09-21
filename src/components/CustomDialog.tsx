@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 
-interface DiscardProductDialogProps {
+interface CustomDialogProps {
   children: React.ReactNode;
   onCancel: () => void;
   onAccept: () => void;
@@ -16,13 +16,13 @@ interface DiscardProductDialogProps {
   content: string;
 }
 
-export default function DiscardProductDialog({
+export default function CustomDialog({
   onCancel,
   onAccept,
   children,
   title,
   content,
-}: DiscardProductDialogProps) {
+}: CustomDialogProps) {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {

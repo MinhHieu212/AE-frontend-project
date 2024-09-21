@@ -100,10 +100,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ item, loading }) => {
     "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=";
 
   return (
-    <div
-      className="w-full mx-auto mb-2 p-3 rounded-xl flex items-center justify-start gap-3 border-2 border-solid border-myGray bg-[#fbfdff] shadow-lg cursor-pointer"
-      onClick={() => navigate(`/${item?.name.split(" ").join("_")}`)}
-    >
+    <div className="w-full mx-auto mb-2 p-3 rounded-xl flex items-center justify-start gap-3 border-2 border-solid border-myGray bg-[#fbfdff] shadow-lg">
       <div className="w-[320px] h-[220px] rounded-lg overflow-hidden">
         {loading ? (
           <Skeleton animation="wave" className="w-[320px] h-[220px]" />
@@ -114,6 +111,9 @@ const ProductItem: React.FC<ProductItemProps> = ({ item, loading }) => {
             }
             alt={`Product: ${item?.name}`}
             className="h-full w-full object-cover cursor-pointer"
+            onClick={() =>
+              navigate(`/products/${item?.name.split(" ").join("_")}`)
+            }
           />
         )}
       </div>

@@ -8,6 +8,8 @@ import { RichTextEditor, Link } from "@mantine/tiptap";
 import { BubbleMenu, useEditor } from "@tiptap/react";
 import Highlight from "@tiptap/extension-highlight";
 import StarterKit from "@tiptap/starter-kit";
+import TextStyle from "@tiptap/extension-text-style";
+import { Color } from "@tiptap/extension-color";
 import Underline from "@tiptap/extension-underline";
 import TextAlign from "@tiptap/extension-text-align";
 import Superscript from "@tiptap/extension-superscript";
@@ -32,17 +34,17 @@ const ProdDescription = () => {
   const description = useAppSelector((state) => state.product.description);
   const name = useAppSelector((state) => state.product.name);
 
-  console.log("Check prodcut data");
-
   const fileInputRef = useRef<HTMLInputElement>(null);
   const editor = useEditor({
     extensions: [
       StarterKit,
       Underline,
+      Color,
       Link,
       Superscript,
       SubScript,
       Highlight,
+      TextStyle,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
     ],
     content: description,
@@ -143,6 +145,25 @@ const ProdDescription = () => {
             }}
           >
             <RichTextEditor.Toolbar>
+              <RichTextEditor.ColorPicker
+                colors={[
+                  "#25262b",
+                  "#868e96",
+                  "#fa5252",
+                  "#e64980",
+                  "#be4bdb",
+                  "#7950f2",
+                  "#4c6ef5",
+                  "#228be6",
+                  "#15aabf",
+                  "#12b886",
+                  "#40c057",
+                  "#82c91e",
+                  "#fab005",
+                  "#fd7e14",
+                ]}
+              />
+
               <RichTextEditor.ControlsGroup>
                 <RichTextEditor.Bold />
                 <RichTextEditor.Italic />
@@ -150,7 +171,7 @@ const ProdDescription = () => {
                 <RichTextEditor.Strikethrough />
                 <RichTextEditor.ClearFormatting />
                 <RichTextEditor.Highlight />
-                <RichTextEditor.Code />
+                {/* <RichTextEditor.Code /> */}
               </RichTextEditor.ControlsGroup>
 
               <RichTextEditor.ControlsGroup>
@@ -186,6 +207,7 @@ const ProdDescription = () => {
                 <RichTextEditor.Redo />
               </RichTextEditor.ControlsGroup>
             </RichTextEditor.Toolbar>
+
             {editor && (
               <BubbleMenu editor={editor}>
                 <RichTextEditor.ControlsGroup>
@@ -196,6 +218,7 @@ const ProdDescription = () => {
                 </RichTextEditor.ControlsGroup>
               </BubbleMenu>
             )}
+
             <RichTextEditor.Content />
           </RichTextEditor>
         </div>

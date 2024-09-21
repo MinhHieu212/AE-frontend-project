@@ -13,7 +13,6 @@ import {
 } from "@tabler/icons-react";
 import { Divider, InputAdornment, Stack, TextField } from "@mui/material";
 import nasa_logo from "../assest/images/nasa_gray.png";
-
 interface SubSellerSideBarProps {
   name: string;
   path: string;
@@ -85,7 +84,9 @@ const SellerSideBarItem = ({
                   }`}
                 />
                 <div
-                  onClick={() => navigate(item.path)}
+                  onClick={() => {
+                    navigate(`/${item.path}`);
+                  }}
                   className={`p-2 rounded-lg mb-1 w-[90%] h-[40px] flex items-center font-[400] ${
                     subIsActive ? "bg-teal" : ""
                   } px-2`}
@@ -120,7 +121,7 @@ const SellerSideBar = () => {
         }}
       >
         <img
-          src={nasa_logo}
+          src={`${process.env.PUBLIC_URL}/images/nasa_gray.png` || nasa_logo}
           alt="Company avatar"
           className="w-[70px] h-[60px] object-cover rounded-md"
         />

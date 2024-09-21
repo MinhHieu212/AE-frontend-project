@@ -60,15 +60,15 @@ const ProductVariants = () => {
   return (
     <div>
       <div className="flex items-start justify-between w-full">
-        <div className="w-[70%]">
-          <Typography variant="h4" component="h2">
+        <div className="flex-grow">
+          <Typography variant="h4" component="h2">  
             {product_details?.name || "no name"}
           </Typography>
           <p className="font-semibold text-gray-400 my-0">
             {product_details.categories[0]?.name || "no categories"}
           </p>
         </div>
-        <Stack className="w-[30%]">
+        <Stack className="w-[200px]">
           <p className="font-semibold my-0 text-[25px] text-right text-gray-600 line-through">
             ${selected_variant.sale_price}
           </p>
@@ -95,7 +95,7 @@ const ProductVariants = () => {
       </p>
       <div className="w-full flex items-center justify-center gap-2 ">
         <Button
-          className="bg-black text-white w-full capitalize"
+          className="bg-black text-white w-full capitalize p-2"
           variant="contained"
           size="large"
         >
@@ -103,7 +103,7 @@ const ProductVariants = () => {
         </Button>
         <div
           onClick={() => setLike((prev) => !prev)}
-          className="flex items-center justify-center p-2 bg-slate-100 z-100 border-[0.5px] rounded-md border-solid border-black bg-opacity-80 cursor-pointer"
+          className="flex items-center justify-center p-2 bg-slate-100 z-100 border-[0.5px] rounded-lg border-solid border-black bg-opacity-80 cursor-pointer"
         >
           {like ? <IconHeart /> : <IconHeartFilled />}
         </div>

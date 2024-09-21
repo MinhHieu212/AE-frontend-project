@@ -91,7 +91,7 @@ const seller_route = [
     ),
   },
   {
-    path: "/:slug",
+    path: "/products/:slug",
     element: (
       <MainLayout>
         <ProductDetails />
@@ -120,7 +120,7 @@ const seller_route = [
       <MainLayout>
         <div className="w-full min-h-[80dvh] h-full flex flex-col items-center justify-center">
           <img
-            src="https://admiral.digital/wp-content/uploads/2023/08/404_page-not-found-1024x576.png"
+            src="https://www.vizion.com/wp-content/smush-webp/2018/09/shutterstock_479042983.jpg.webp"
             alt=""
             height={400}
           />

@@ -12,15 +12,15 @@ import ProdVariants from "./components/ProdVariants";
 import ProdImages from "./components/ProdImages";
 import ProdBranchFeature from "./components/ProdBranchFeature";
 import { resetProductData } from "../../../store/slices/productSlice";
-import DiscardProductDialog from "./components/PopupConfirm";
 import { IconArrowLeft } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
+import CustomDialog from "../../../components/CustomDialog";
 
 const SubHeader = () => {
   const navigate = useNavigate();
   return (
     <div className="flex items-center justify-start gap-3 px-5">
-      <DiscardProductDialog
+      <CustomDialog
         onCancel={() => {}}
         onAccept={() => navigate("/products")}
         title="Confirm Action"
@@ -31,7 +31,7 @@ const SubHeader = () => {
             <IconArrowLeft size={25} color="gray" />
           </Box>
         </div>
-      </DiscardProductDialog>
+      </CustomDialog>
       <div>
         <p className="text-[gray] my-1 text-sm">Back to product list</p>
         <p className="font-medium text-xl my-0">Add New Product</p>
@@ -56,7 +56,7 @@ const ActionButtons = () => {
 
   return (
     <div className="w-full items-center justify-end gap-3 flex px-4 my-[30px] mb-[10px]">
-      <DiscardProductDialog
+      <CustomDialog
         onCancel={() => {}}
         onAccept={() => handleDiscardAddProduct()}
         title="Confirm Action"
@@ -65,7 +65,7 @@ const ActionButtons = () => {
         <Button className="rounded-md capitalize" variant="outlined">
           Discard
         </Button>
-      </DiscardProductDialog>
+      </CustomDialog>
       <div className="flex items-center justify-center gap-5">
         <Button
           className="rounded-md capitalize"
@@ -80,11 +80,6 @@ const ActionButtons = () => {
 };
 
 const AddProduct = () => {
-  const cate_level_1 = useAppSelector(
-    (state) => state.product.category.level_1
-  );
-  const haveVariants = useAppSelector((state) => state.product.haveVariants);
-
   return (
     <div className="flex flex-col items-center justify-start w-full max-w-[1430px] h-full p-3 mx-auto">
       <div className="w-full h-full my-2 scrollBar">

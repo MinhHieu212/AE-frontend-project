@@ -1,6 +1,5 @@
 import * as React from "react";
 import AppRoute from "./route/AppRoute";
-import { useAppSelector } from "./store/store";
 
 export default function App() {
   return (
