@@ -4,13 +4,12 @@ import { useDropzone, DropzoneState } from "react-dropzone";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import { updateProductField } from "../../../../store/slices/productSlice";
 import PopupImages from "./PopupImages";
-import { IconTemperature } from "@tabler/icons-react";
 
 const ProdImages = () => {
   const useDispatch = useAppDispatch();
   const images = useAppSelector((state) => state.product.images);
   const primaryImage = useAppSelector((state) => state.product.primaryImage);
-  const haveVariants = useAppSelector((state) => state.product.haveVariants);
+  // const haveVariants = useAppSelector((state) => state.product.haveVariants);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const imageInputRef = useRef<HTMLInputElement>(null);
 
@@ -87,13 +86,13 @@ const ProdImages = () => {
         <PopupImages openModal={openModal} setOpenModal={setOpenModal} />
       </div>
       <div className="flex w-full items-center p-2 px-5 rounded-lg border-2 h-[325px] border-solid border-gray-200 gap-3 relative">
-        <div
+        {/* <div
           className={`absolute top-0 left-0 right-0 bottom-0 bg-slate-100 cursor-not-allowed text-sm text-gray-500 flex items-center justify-center ${
             haveVariants ? "bg-opacity-80" : "hidden"
           }`}
         >
           Upload image with variation option
-        </div>
+        </div> */}
         <div
           {...getRootProps()}
           className={`${
@@ -112,7 +111,8 @@ const ProdImages = () => {
         >
           <input {...getInputProps()} ref={imageInputRef} />
           <p className="text-sm font-medium text-blue-400">
-            {!haveVariants && "Upload or Drag Image"}
+            Upload or Drag Image
+            {/* {!haveVariants && "Upload or Drag Image"} */}
           </p>
         </div>
         <div

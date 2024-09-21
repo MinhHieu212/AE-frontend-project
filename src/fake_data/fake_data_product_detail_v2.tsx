@@ -40,6 +40,7 @@ export const fake_data_product_detail_v2 = {
         "https://cdn2.cellphones.com.vn/x/media/catalog/product/s/a/samsung-galaxy-z-fold-6-xanh_7_.png",
         "https://cdn2.cellphones.com.vn/x/media/catalog/product/s/a/samsung-galaxy-z-fold-6-xanh_3_.png",
         "https://cdn2.cellphones.com.vn/x/media/catalog/product/s/a/samsung-galaxy-z-fold-6-xanh_1_.png",
+        "https://plus.unsplash.com/premium_photo-1674777843441-04dd6cd672ee?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fG1hbiUyMGZhc2hpb258ZW58MHx8MHx8fDA%3D",
       ],
       variantOptions: [
         {
@@ -158,7 +159,7 @@ export const fake_data_product_detail_v2 = {
     {
       id: "66eb862471534a1f9cb1136e",
       productId: "66eb862471534a1f9cb11354",
-      primary: false,
+      primary: true,
       variantTypes: "COLOR",
       value: "titan",
       imageURLs: [
@@ -285,4 +286,81 @@ export const fake_data_product_detail_v2 = {
       ],
     },
   ],
+};
+
+export const other_product_detais = {
+  statusCode: 200,
+  message: "Get Successfully",
+  data: {
+    id: "66e580011c48216994d21ed7",
+    name: "Smartphone xxxx",
+    originalPrice: 799.99,
+    discountedPrice: 999.99,
+    sellingPrice: 7497.99,
+    soldQuantity: 120,
+    quantityAvailable: 500,
+    brandName: "TechBrand",
+    description:
+      "A state-of-the-art smartphone A state-of-the-art A state-of-the-art smartphone fA state-of-the-art smartphone fA state-of-the-art smartphone fA state-of-the-art smartphone fA state-of-the-art smartphone f fA state-of-the-art smartphone fA state-of-the-art smartphone fA state-of-the-art smartphone fA state-of-the-art smartphone ff",
+    sellingType: "ONLINE",
+    rating: 4.5,
+    primaryImage: "https://example.com/images/xyz-primary.jpg",
+    productVariants: [
+      {
+        id: null,
+        rating: null,
+        quantityAvailable: 500,
+        soldQuantity: 0,
+        sellingPrice: 1999,
+        images: ["image_1", "image_2"],
+        variantOptions: [
+          {
+            productType: "COLOR",
+            valueName: "Red",
+          },
+          {
+            productType: "RAM",
+            valueName: "16GB",
+          },
+          {
+            productType: "STORAGE",
+            valueName: "256GB",
+          },
+        ],
+        reviews: null,
+        sku: null,
+      },
+      {
+        id: null,
+        rating: null,
+        quantityAvailable: 1000,
+        soldQuantity: 0,
+        sellingPrice: 9999,
+        images: ["image_3", "image_4"],
+        variantOptions: [
+          {
+            productType: "COLOR",
+            valueName: "Black",
+          },
+          {
+            productType: "RAM",
+            valueName: "32GB",
+          },
+          {
+            productType: "STORAGE",
+            valueName: "64GB",
+          },
+        ],
+        reviews: null,
+        sku: null,
+      },
+    ],
+    options: {
+      COLOR: ["Red", "Black"],
+      RAM: ["16GB", "32GB"],
+      STORAGE: ["256GB", "64GB"],
+    },
+    createdAt: "2024-09-14T12:22:25.847Z",
+    updatedAt: "2024-09-14T12:22:25.847Z",
+  },
 };

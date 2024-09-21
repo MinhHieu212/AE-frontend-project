@@ -85,10 +85,10 @@ const ProdBranchFeature = () => {
                     value: e.target.checked,
                   })
                 );
-                if (e.target.checked)
-                  useDispatch(
-                    updateProductField({ field: "images", value: [] })
-                  );
+                // if (e.target.checked)
+                //   useDispatch(
+                //     updateProductField({ field: "images", value: [] })
+                //   );
               }}
             />
           </div>

@@ -8,9 +8,25 @@ interface BannerProp {
   direct_path: string;
   color: string;
   image_object: string;
+  size?: string;
 }
 
 const bannerList: BannerProp[] = [
+  {
+    cover_url:
+      "https://www.maxis.com.my/content/dam/mxs/images/rebrand/devices/iphone-15/outright-sales/herobanner-mobile.webp",
+    image_object: "center",
+    color: "black",
+    direct_path: "/ai-buildere",
+  },
+  {
+    cover_url:
+      "https://cuahangsamsung.vn/filemanager/userfiles/hinh-san-pham/banner/samsung-banner-watch.png",
+    image_object: "center",
+    color: "black",
+    direct_path: "/ai-buildere",
+  },
+
   {
     cover_url:
       "https://www.vodacombusiness.co.za/sites/vodacombusinesscoza/files/styles/extra_large_landscape/public/2022-11/vb_desktopbanner_1920x720_iphone_14_pro1.jpg?itok=i2n1frC_",
@@ -32,14 +48,6 @@ const bannerList: BannerProp[] = [
     color: "white",
     direct_path: "/outline-generator",
   },
-
-  {
-    cover_url:
-      "https://cuahangsamsung.vn/filemanager/userfiles/hinh-san-pham/banner/samsung-banner-watch.png",
-    image_object: "center",
-    color: "black",
-    direct_path: "/ai-buildere",
-  },
 ];
 
 const Banner = (props: BannerProp) => {
@@ -50,9 +58,9 @@ const Banner = (props: BannerProp) => {
         backgroundImage: `url(${props.cover_url})`,
         backgroundPosition: props.image_object,
         backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
+        backgroundSize: props.size || "cover",
         margin: "0 auto",
-        height: "500px",
+        height: "600px",
         color: props.color,
         width: "100%",
         borderRadius: "15px",
@@ -82,10 +90,11 @@ const Banner = (props: BannerProp) => {
 
 const Banners = () => {
   return (
-    <div className="mx-auto w-full] mb-10">
+    <div className="mx-auto w-full mb-10 max-h-[600px]">
       <Carousel
         next={() => {}}
         prev={() => {}}
+        autoPlay={false}
         indicatorContainerProps={{
           style: {
             position: "absolute",
@@ -96,6 +105,7 @@ const Banners = () => {
             alignItems: "center",
           },
         }}
+        className="h-[600px]"
       >
         {bannerList.map((item, i) => (
           <Banner
@@ -103,6 +113,7 @@ const Banners = () => {
             cover_url={item.cover_url}
             direct_path={item.direct_path}
             color={item.color}
+            size={item.size}
             image_object={item.image_object}
           />
         ))}

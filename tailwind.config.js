@@ -8,6 +8,7 @@ module.exports = {
         myGray: "#c8cad3",
         darkGreen: "#27403E",
         white: "#FFFFFF",
+        lightLime: "#ECDFCC",
       },
     },
   },

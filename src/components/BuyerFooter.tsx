@@ -13,14 +13,14 @@ const BuyerFooter = () => {
           className="flex flex-col items-start justify-start gap-2"
         >
           <Link href="/" underline="none" className="w-full my-2">
-            <div className="w-full flex items-center gap-3">
+            <div className="w-full flex items-center gap-1">
               <img
                 src="https://cdn.worldvectorlogo.com/logos/nasa-2.svg"
                 alt="Company avatar"
                 className="w-[60px] h-[60px] object-cover rounded-md"
               />
 
-              <h2 className="text-[black]">Nasa Store</h2>
+              <h2 className="text-[black]">Nasastore</h2>
             </div>
           </Link>
           <p className="m-2 text-sm">

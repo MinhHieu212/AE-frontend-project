@@ -8,6 +8,7 @@ import {
   MenuItem,
   Box,
   Badge,
+  Button,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import {
@@ -27,16 +28,10 @@ const BuyerHeader = () => {
   const [category, setCategory] = useState<string>("");
   const navigate = useNavigate();
 
-  const handleViewSellerRole = () => {
-    useDispatch(setRole({ user_role: "seller" }));
-    navigate("/products");
-    localStorage.setItem("user_role", "seller");
-  };
-
   return (
-    <div className="w-full h-[70px] flex items-center justify-between px-10 shadow-md mb-5">
+    <div className="w-full h-[60px] flex items-center justify-between px-10 shadow-md mb-5">
       <div
-        className="flex items-center gap-3 my-2 cursor-pointer w-[200px]"
+        className="flex items-center gap-1 my-2 cursor-pointer w-[200px]"
         onClick={() => navigate("/homepage")}
       >
         <img
@@ -44,7 +39,7 @@ const BuyerHeader = () => {
           alt="Company avatar"
           className="w-[60px] h-[60px] object-cover rounded-md"
         />
-        <h2 className="text-[black]">Nasa Store</h2>
+        <h2 className="text-[black]">Nasastore</h2>
       </div>
 
       <Paper
@@ -92,31 +87,38 @@ const BuyerHeader = () => {
         </Box>
       </Paper>
 
-      <div className="flex items-center justify-between gap-5">
-        <div
-          className="flex items-center justify-center gap-3 cursor-pointer"
-          onClick={handleViewSellerRole}
+      <div className="flex items-center justify-between gap-8">
+        <Button
+          variant="outlined"
+          onClick={() => {
+            useDispatch(setRole({ user_role: "seller" }));
+            navigate("/products");
+          }}
         >
-          <IconUser size={25} />
-          <div className="flex flex-col items-start justify-start">
-            <span className="text-gray-400 text-[8px]">Sign in</span>
+          Seller View
+        </Button>
+
+        <div className="flex items-center justify-center gap-3 cursor-pointer">
+          <IconUser size={23} />
+          <div className="flex flex-col items-start justify-start gap-0">
+            <span className="text-gray-400 text-xs">Sign in</span>
             <span className="font-semibold text-sm">Account</span>
           </div>
         </div>
         <div className="flex items-center justify-center cursor-pointer">
           <Badge badgeContent={4} color="primary">
-            <IconMail size={25} />
+            <IconMail size={23} />
           </Badge>
         </div>
         <div className="flex items-center justify-center cursor-pointer">
-          <Badge badgeContent={4} color="primary">
-            <IconHeart size={25} />
+          <Badge badgeContent={2} color="primary">
+            <IconHeart size={23} />
           </Badge>
         </div>
         <div className="flex items-center justify-centern gap-3 cursor-pointer">
-          <IconShoppingCart size={25} />
+          <IconShoppingCart size={23} />
           <div className="flex flex-col items-start justify-start">
-            <span className="text-gray-400 text-[8px]">Total</span>
+            <span className="text-gray-400 text-xs">Total</span>
             <span className="font-semibold text-sm">$ 400.00</span>
           </div>
         </div>

@@ -29,9 +29,15 @@ export const selectedVariantSlice = createSlice({
       };
     },
 
-    resetProductData: () => initialState,
+    resetSeletedVariant: () => initialState,
+
+    initialSeletedVariant: (state, action: PayloadAction<{ value: any }>) =>
+      action.payload.value,
   },
 });
 
-export const { updateSelectedVariantsField, resetProductData } =
-  selectedVariantSlice.actions;
+export const {
+  updateSelectedVariantsField,
+  initialSeletedVariant,
+  resetSeletedVariant,
+} = selectedVariantSlice.actions;

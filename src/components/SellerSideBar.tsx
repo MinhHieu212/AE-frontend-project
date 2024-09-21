@@ -124,7 +124,7 @@ const SellerSideBar = () => {
           alt="Company avatar"
           className="w-[70px] h-[60px] object-cover rounded-md"
         />
-        <h2 className="text-myGray">Nasa Store</h2>
+        <h2 className="text-lightLime">Nasastore</h2>
       </div>
 
       <TextField
@@ -142,7 +142,9 @@ const SellerSideBar = () => {
             style: {
               borderRadius: "5px",
               height: "45px",
-              background: "lightgray  ",
+              background: "#21A691",
+              marginTop: "20px",
+              color: "white",
             },
           },
         }}

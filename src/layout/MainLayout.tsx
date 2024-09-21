@@ -29,7 +29,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             className={`flex-col ${
               userRole === "seller"
                 ? "h-[calc(100dvh-55px)]"
-                : "h-[calc(100dvh-70px)]"
+                : "h-[calc(100dvh-60px)]"
             } w-full overflow-y-scroll flex items-center justify-start`}
           >
             <div className="w-full">{children}</div>

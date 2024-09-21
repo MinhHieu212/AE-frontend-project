@@ -91,6 +91,14 @@ const seller_route = [
     ),
   },
   {
+    path: "/:slug",
+    element: (
+      <MainLayout>
+        <ProductDetails />
+      </MainLayout>
+    ),
+  },
+  {
     path: "/products",
     element: (
       <MainLayout>
