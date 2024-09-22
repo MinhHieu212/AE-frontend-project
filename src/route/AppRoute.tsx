@@ -6,6 +6,7 @@ import MainLayout from "../layout/MainLayout";
 import { Route, Routes } from "react-router-dom";
 import { useAppSelector } from "../store/store";
 import ProductDetails from "../pages/(buyer)/product-details/ProductDetails";
+import ProductDetailsBottom from "../pages/(buyer)/product-details-bottom/ProductDetailsBottom";
 
 const AppRoute = () => {
   const userRole = useAppSelector((state) => state.role.user_role);
@@ -48,6 +49,14 @@ const buyer_route = [
     element: (
       <MainLayout>
         <ProductDetails />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/tuyet-tran",
+    element: (
+      <MainLayout>
+        <ProductDetailsBottom />
       </MainLayout>
     ),
   },

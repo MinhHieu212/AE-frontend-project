@@ -7,18 +7,92 @@ import {
   IconHeartFilled,
   IconInfoHexagon,
 } from "@tabler/icons-react";
+import Modal from 'react-modal';
+
+Modal.setAppElement('#root');
 
 const ProductDetails = () => {
   const { slug } = useParams();
   const [like, setLike] = useState<boolean>(true);
 
+  const [selectedRam, setSelectedRam] = useState<string>("");
+  const [selectedColor, setSelectedColor] = useState<string>("");
+  const [selectedStorage, setSelectedStorage] = useState<string>("");
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [currentImage, setCurrentImage] = useState<string>("");
+
+  const handleOpenModal = (imageUrl: string) => {
+    setCurrentImage(imageUrl);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setCurrentImage("");
+  };
+
   return (
     <div className="w-full h-full max-w-[1430px] mx-auto my-5">
       <Grid2 className="w-full" container spacing={2}>
         <Grid2 size={8}>
-          <ImageGallery imagesList={product_data.imageURL} />
+          <ImageGallery imagesList={product_data.imageURL} onClickImage={handleOpenModal}/>
         </Grid2>
         <Grid2 size={4} className="p-5">
+        <Modal
+        isOpen={isModalOpen}
+        onRequestClose={handleCloseModal}
+        contentLabel="Image Modal"
+        style={{
+          content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+            maxWidth: '90vw',
+            maxHeight: '90vh',
+            padding: 0,
+            border: 'none',
+            background: 'transparent'
+          },
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.75)',
+          },
+        }}
+      >
+        <div className="relative">
+          {/* Nút "X" để đóng modal */}
+          <button
+            onClick={handleCloseModal}
+            style={{
+              position: 'absolute',
+              top: '10px',
+              right: '10px',
+              background: 'rgba(0, 0, 0, 0.5)',
+              color: 'white',
+              border: 'none',
+              padding: '10px',
+              cursor: 'pointer',
+              zIndex: 10
+            }}
+          >
+            X
+          </button>
+
+          {/* Ảnh phóng to */}
+          <img
+            src={currentImage}
+            alt="Phóng to sản phẩm"
+            style={{
+              maxWidth: '100%',
+              maxHeight: '100%',
+              objectFit: 'contain',
+            }}
+          />
+        </div>
+      </Modal>
           <div className="flex items-start justify-between w-full">
             <div className="w-[70%]">
               <Typography variant="h4" component="h2">
@@ -35,18 +109,19 @@ const ProductDetails = () => {
 
           {/* Colors Section */}
           <div className="flex flex-col items-start justify-center my-4">
-            <p className="mb-2 font-semibold">Colors</p>
+            <p className="mb-2 font-semibold">Colors<span className="font-normal text-lg">{selectedColor ? `: ${selectedColor}` : ""}</span></p>
+
             <Grid2 container spacing={2}>
-              {["lightgray", "lightgreen", "white", "lightblue"].map(
+              {["Lightgray", "Lightgreen", "White", "Lightblue"].map(
                 (item, index) => (
                   <Grid2 size={3} key={index}>
                     <Box
-                      className={`min-w-[70px] min-h-[70px] shadow-lg rounded-md flex items-center justify-center`}
-                      style={{ backgroundColor: item }}
+                      className={`min-w-[70px] min-h-[70px] shadow-lg rounded-md flex items-center justify-center cursor-pointer hover:border-gray-600 bg-{item}`}
+                      style={{ backgroundColor: item }} onClick={() => setSelectedColor(item)}
                     >
                       <span
                         className={`text-sm font-medium ${
-                          item === "white" ? "text-black" : "text-white"
+                          item === "White" ? "text-black" : "text-white"
                         }`}
                       >
                         {item}
@@ -60,12 +135,12 @@ const ProductDetails = () => {
 
           {/* RAM Section */}
           <div className="flex flex-col items-start justify-center my-4">
-            <p className="mb-2 font-semibold">RAM</p>
+            <p className="mb-2 font-semibold">RAM<span className="font-normal text-lg">{selectedRam ? `: ${selectedRam}` : ""}</span></p>
             <div className="flex space-x-2">
               {["8GB", "16GB", "32GB"].map((ramOption, index) => (
                 <Box
                   key={index}
-                  className="border-2 border-solid border-gray-300 rounded-lg px-4 py-2 text-sm cursor-pointer hover:border-black"
+                  className="border-2 border-solid border-gray-300 rounded-lg px-4 py-2 text-sm cursor-pointer hover:border-gray-600" onClick={() => setSelectedRam(ramOption)}
                 >
                   {ramOption}
                 </Box>
@@ -75,13 +150,13 @@ const ProductDetails = () => {
 
           {/* Storage Section */}
           <div className="flex flex-col items-start justify-center my-4">
-            <p className="mb-2 font-semibold">Storage</p>
+            <p className="mb-2 font-semibold">Storage<span className="font-normal text-lg">{selectedStorage ? `: ${selectedStorage}` : ""}</span></p>
             <div className="flex space-x-2">
               {["256GB SSD", "512GB SSD", "1TB SSD"].map(
                 (storageOption, index) => (
                   <Box
                     key={index}
-                    className="border-2 border-solid border-gray-300 rounded-lg px-4 py-2 text-sm cursor-pointer hover:border-black"
+                    className="border-2 border-solid border-gray-300 rounded-lg px-4 py-2 text-sm cursor-pointer hover:border-gray-600" onClick={() => setSelectedStorage(storageOption)}
                   >
                     {storageOption}
                   </Box>
@@ -111,7 +186,7 @@ const ProductDetails = () => {
               onClick={() => setLike((prev) => !prev)}
               className="flex items-center justify-center p-2 bg-slate-100 z-100 border-[0.5px] rounded-md border-solid border-black bg-opacity-80 cursor-pointer"
             >
-              {like ? <IconHeart /> : <IconHeartFilled />}
+              {like ? <IconHeart /> : <IconHeartFilled  />}
             </div>
           </div>
         </Grid2>
