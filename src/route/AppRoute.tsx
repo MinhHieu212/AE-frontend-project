@@ -6,13 +6,17 @@ import Homepage from "../pages/(buyer)/home-page/Homepage";
 import AddProduct from "../pages/(seller)/add-product/AddProduct";
 import ProductDetails from "../pages/(buyer)/product-details/ProductDetails";
 import ProductList from "../pages/(seller)/product-list/ProductList";
+import SignIn from "../pages/(auth)/sign-in/SignIn";
+import SignUp from "../pages/(auth)/sign-up/SignUp";
+import SellerSignIn from "../pages/(auth)/sign-in/SellerSignIn";
+import SellerSignUp from "../pages/(auth)/sign-up/SellerSignUp";
 
 const AppRoute = () => {
   const userRole = useAppSelector((state) => state.roles.user_role);
 
   return (
     <Routes>
-      {userRole === "buyer" &&
+      {(userRole === "anonymous" || userRole === "buyer") &&
         buyer_route.map((item, index) => (
           <Route path={item.path} element={item.element} key={index} />
         ))}
@@ -27,6 +31,14 @@ const AppRoute = () => {
 export default AppRoute;
 
 const buyer_route = [
+  {
+    path: "/accessed-ecommerce",
+    element: (
+      <MainLayout>
+        <Homepage />
+      </MainLayout>
+    ),
+  },
   {
     path: "/",
     element: (
@@ -60,6 +72,22 @@ const buyer_route = [
     ),
   },
   {
+    path: "/sign-in",
+    element: <SignIn />,
+  },
+  {
+    path: "/seller/sign-in",
+    element: <SellerSignIn />,
+  },
+  {
+    path: "/seller/sign-up",
+    element: <SellerSignUp />,
+  },
+  {
+    path: "/sign-up",
+    element: <SignUp />,
+  },
+  {
     path: "*",
     element: (
       <div className="w-full h-full flex flex-col items-center justify-center">
@@ -91,18 +119,18 @@ const seller_route = [
     ),
   },
   {
-    path: "/products/:slug",
-    element: (
-      <MainLayout>
-        <ProductDetails />
-      </MainLayout>
-    ),
-  },
-  {
     path: "/products",
     element: (
       <MainLayout>
         <ProductList />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/products/:slug",
+    element: (
+      <MainLayout>
+        <ProductDetails />
       </MainLayout>
     ),
   },

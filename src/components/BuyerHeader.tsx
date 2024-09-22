@@ -19,14 +19,14 @@ import {
   IconUser,
 } from "@tabler/icons-react";
 import React, { useState } from "react";
-import SearchIcon from "@mui/icons-material/Search";
+import { useAppDispatch, useAppSelector } from "../store/store";
 import { setRole } from "../store/slices/roleSlice";
-import { useAppDispatch } from "../store/store";
 
 const BuyerHeader = () => {
-  const useDispatch = useAppDispatch();
   const [category, setCategory] = useState<string>("");
   const navigate = useNavigate();
+  const userRole = useAppSelector((state) => state.roles.user_role);
+  const useDispatch = useAppDispatch();
 
   return (
     <div className="w-full h-[55px] flex items-center justify-between px-10 shadow-md mb-5">
@@ -90,27 +90,26 @@ const BuyerHeader = () => {
       </Paper>
 
       <div className="flex items-center justify-between gap-8">
-        <Button
-          variant="outlined"
-          size="small"
-          onClick={() => {
-            useDispatch(setRole({ user_role: "seller" }));
-            navigate("/products");
-          }}
-        >
-          Seller View
-        </Button>
-
         <div className="flex items-center justify-center gap-3 cursor-pointer">
           <IconUser size={22} />
-          <div className="flex flex-col items-start justify-start gap-0">
+          <div
+            className="flex flex-col items-start justify-start gap-0"
+            onClick={() => {
+              if (userRole === "buyer") {
+                useDispatch(setRole({ user_role: "anonymous" }));
+              }
+              navigate("/sign-in");
+            }}
+          >
             <span
               className="text-gray-400 text-xs"
               style={{ fontSize: "10px" }}
             >
-              Sign in
+              {userRole === "buyer" ? "Logout" : "Sign in"}
             </span>
-            <span className="font-semibold text-sm">Account</span>
+            <span className="font-semibold text-sm">
+              {userRole === "buyer" ? "Hieu Minh" : "Account"}
+            </span>
           </div>
         </div>
         <div className="flex items-center justify-center cursor-pointer">

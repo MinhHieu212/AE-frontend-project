@@ -4,7 +4,6 @@ import SellerSideBar from "../components/SellerSideBar";
 import BuyerFooter from "../components/BuyerFooter";
 import BuyerHeader from "../components/BuyerHeader";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import { setRole } from "../store/slices/roleSlice";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -16,7 +15,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
   return (
     <div className="flex-col flex items-center justify-start w-[100dvw] h-[100dvh] overflow-hidden">
-      {userRole === "buyer" && <BuyerHeader />}
+      {(userRole === "buyer" || userRole === "anonymous") && <BuyerHeader />}
       <div className="flex-row flex items-center justify-start w-full h-full">
         {userRole === "seller" && <SellerSideBar />}
         <div
@@ -33,7 +32,9 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             } w-full overflow-y-scroll flex items-center justify-start`}
           >
             <div className="w-full">{children}</div>
-            {userRole === "buyer" && <BuyerFooter />}
+            {(userRole === "buyer" || userRole === "anonymous") && (
+              <BuyerFooter />
+            )}
           </div>
         </div>
       </div>
