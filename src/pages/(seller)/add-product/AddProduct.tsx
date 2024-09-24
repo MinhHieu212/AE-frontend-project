@@ -46,14 +46,70 @@ const ActionButtons = () => {
   const useDispatch = useAppDispatch();
   const product = useAppSelector((state) => state.product);
   const variants = useAppSelector((state) => state.variants.variants);
-  const combineVariantsTable = useAppSelector(
+  const variants_table = useAppSelector(
     (state) => state.variants.combineVariantsTable
   );
 
+  const variantsPayload = variants_table.map((variant) => {
+    const knownKeys: string[] = [
+      "quantity",
+      "price",
+      "salePrice",
+      "sku",
+      "mrspPrice",
+    ];
+
+    const variantOptions = Object.entries(variant)
+      .filter(
+        ([key]) =>
+          !["quantity", "price", "salePrice", "sku", "mrspPrice"].includes(key)
+      )
+      .map(([variantTypes, value]) => ({
+        id: String(variant.id),
+        variantTypes,
+        value: String(value),
+      }));
+
+    return {
+      quantityAvailable: variant.quantity,
+      price: variant.price,
+      salePrice: variant.salePrice,
+      sku: variant.sku,
+      mrsp: variant.mrspPrice,
+      imageURLs: [],
+      variantOptions,
+    };
+  });
+
+  const optionsPayload = variants.map((item, indez) => {
+    return {
+      [item.type]: item.values,
+    };
+  }, {});
+
+  let payload = {
+    name: product.name,
+    imageURL: product.images.map((image) => image.url),
+    primaryImageURL: product?.primaryImage?.url,
+    description: product.description,
+    rating: 0,
+    noOfReviews: 0,
+    brandName: product.brand,
+    sellingTypes: product.sellingType,
+    categories: product.collections,
+    dimensions: {
+      weight: product.packages_weight,
+      length: product.packages_size.length,
+      width: product.packages_size.width,
+      height: product.packages_size.height,
+    },
+    hasVariants: product.haveVariants,
+    variants: variantsPayload,
+    options: optionsPayload,
+  };
+
   function handleAddNewProduct() {
-    console.log(variants);
-    console.log(product);
-    console.log(combineVariantsTable);
+    console.log(JSON.stringify({ payload }, null, 2));
   }
 
   function handleDiscardAddProduct() {
