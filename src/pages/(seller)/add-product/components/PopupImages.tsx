@@ -15,14 +15,14 @@ import { updateProductField } from "../../../../store/slices/productSlice";
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
-    width: "1200px",
+    width: "1300px",
   },
   "& .MuiDialogActions-root": {
     padding: theme.spacing(1),
   },
   "& .MuiPaper-root": {
     maxWidth: "none",
-    width: "1200px",
+    width: "1300px",
     height: "600px",
   },
 }));

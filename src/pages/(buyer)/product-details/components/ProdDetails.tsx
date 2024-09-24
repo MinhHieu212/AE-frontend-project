@@ -37,10 +37,20 @@ const productDetails = {
 };
 
 const ProdDetails = () => {
+  const [expanded, setExpanded] = React.useState<string | false>(false);
+
+  const handleChange =
+    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+      setExpanded(isExpanded ? panel : false);
+    };
+
   return (
     <div className="w-full flex flex-col mt-10 shadow-md">
       {Object.entries(productDetails).map(([category, details]) => (
-        <Accordion defaultExpanded>
+        <Accordion
+          expanded={expanded === category}
+          onChange={handleChange(category)}
+        >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1-content"
@@ -66,7 +76,7 @@ const ProdDetails = () => {
               <Box>
                 <Box
                   key={key}
-                  className="py-2 flex text-[14px] items-center justify-start gap-10 capitalize"
+                  className="py-3 flex text-[14px] items-center justify-start gap-10 capitalize"
                 >
                   <span className="font-medium">{key}: </span>
                   <span className="text-gray-500">{value}</span>

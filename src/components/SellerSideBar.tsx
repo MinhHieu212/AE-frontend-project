@@ -53,7 +53,7 @@ const SellerSideBarItem = ({
       >
         <div>{isActive ? iconActive : icon}</div>
         <p
-          className={`w-[80%] font-[400] text-[14px] ${
+          className={`w-[80%] font-[500] text-[15px] ${
             isActive ? "text-[lightgray]" : "text-[#77787b]"
           }`}
         >
@@ -92,7 +92,7 @@ const SellerSideBarItem = ({
                   } px-2`}
                 >
                   <p
-                    className={`text-[14px] ${
+                    className={`text-[15px] font-[500] ${
                       subIsActive ? "text-[lightgray]" : "text-[#77787b]"
                     } my-0`}
                   >

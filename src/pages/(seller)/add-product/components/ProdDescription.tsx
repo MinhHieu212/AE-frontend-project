@@ -91,7 +91,7 @@ const ProdDescription = () => {
       <p className="font-medium text-lg">
         Description <span className="text-red-600"> *</span>
       </p>
-      <div className="border-2 border-solid border-gray-200 rounded-lg p-5 h-full flex flex-col gap-3">
+      <div className="border-2 border-solid border-gray-200 shadow-sm rounded-lg p-5 h-full flex flex-col gap-3">
         <div>
           <p className="my-0 mb-1 text-[#aca4a4] text-sm">
             Product name <span className="text-red-600"> *</span>
@@ -136,7 +136,7 @@ const ProdDescription = () => {
             w="100%"
             styles={{
               content: {
-                height: "224px",
+                height: "320px",
                 overflowY: "scroll",
                 whiteSpace: "pre-wrap",
                 wordBreak: "break-word",
@@ -169,7 +169,7 @@ const ProdDescription = () => {
                 <RichTextEditor.Italic />
                 <RichTextEditor.Underline />
                 <RichTextEditor.Strikethrough />
-                <RichTextEditor.ClearFormatting />
+                {/* <RichTextEditor.ClearFormatting /> */}
                 <RichTextEditor.Highlight />
                 {/* <RichTextEditor.Code /> */}
               </RichTextEditor.ControlsGroup>
@@ -198,14 +198,14 @@ const ProdDescription = () => {
               <RichTextEditor.ControlsGroup>
                 <RichTextEditor.AlignLeft />
                 <RichTextEditor.AlignCenter />
-                <RichTextEditor.AlignJustify />
+                {/* <RichTextEditor.AlignJustify /> */}
                 <RichTextEditor.AlignRight />
               </RichTextEditor.ControlsGroup>
 
-              <RichTextEditor.ControlsGroup>
+              {/* <RichTextEditor.ControlsGroup>
                 <RichTextEditor.Undo />
                 <RichTextEditor.Redo />
-              </RichTextEditor.ControlsGroup>
+              </RichTextEditor.ControlsGroup> */}
             </RichTextEditor.Toolbar>
 
             {editor && (

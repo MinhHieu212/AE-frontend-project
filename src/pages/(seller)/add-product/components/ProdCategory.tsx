@@ -17,6 +17,7 @@ import {
   setPrimaryVariants,
   updateVariantImages,
 } from "../../../../store/slices/productVariantSlice";
+import ProdCollections from "./ProdCollections";
 
 interface CategoryProps {
   id: number;
@@ -105,7 +106,7 @@ const ProdCategory = () => {
       <p className="font-medium text-lg">
         Category <span className="text-red-600"> *</span>
       </p>
-      <div className="border-2 border-solid border-gray-200 rounded-lg p-5 h-full flex flex-col gap-3">
+      <div className="border-2 border-solid border-gray-200 shadow-sm rounded-lg p-5 h-full flex flex-col gap-3">
         <div>
           <p className="my-0 mb-1 text-[#aca4a4] text-sm">
             Product category
@@ -118,7 +119,7 @@ const ProdCategory = () => {
               value={category.level_1 || ""}
               onChange={(e) => handleChange(String(e.target.value), "level_1")}
               input={<OutlinedInput id="select-multiple-chip" />}
-              className="h-[42px] w-full cursor-pointer"
+              className="h-[40px] w-full cursor-pointer"
               renderValue={() => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                   <span className="text-sm font-medium">
@@ -145,7 +146,7 @@ const ProdCategory = () => {
           </FormControl>
         </div>
 
-        <div className="mt-3">
+        <div className="mt-2">
           <p className="my-0 mb-1 text-[#aca4a4] text-sm">
             {category.level_1.name || "Product"} sub-category
           </p>
@@ -162,7 +163,7 @@ const ProdCategory = () => {
               value={category.level_2 || ""}
               onChange={(e) => handleChange(String(e.target.value), "level_2")}
               input={<OutlinedInput id="select-multiple-chip" />}
-              className="h-[42px] w-full cursor-pointer"
+              className="h-[40px] w-full cursor-pointer"
               renderValue={() => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                   <span className="text-sm font-medium">

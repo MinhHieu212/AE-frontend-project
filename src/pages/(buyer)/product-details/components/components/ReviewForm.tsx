@@ -181,10 +181,10 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
             />
           </RadioGroup>
         </FormControl>
-        <Box className="flex justify-between mt-4 gap-3">
+        <Box className="flex justify-between mt-auto gap-3">
           <Button
             variant="outlined"
-            className="w-1/2 border-darkGreen text-sm"
+            className="w-1/2 h-[40px] border-darkGreen text-sm"
             color="inherit"
             onClick={() => setWriteReview(false)}
           >
@@ -192,7 +192,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
           </Button>
           <Button
             type="submit"
-            className="bg-darkGreen text-white w-1/2 text-sm"
+            className="bg-darkGreen h-[40px] text-white w-1/2 text-sm"
             color="primary"
             onClick={() => {
               setWriteReview(false);

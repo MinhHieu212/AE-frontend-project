@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import { updateProductField } from "../../../../store/slices/productSlice";
+import ProdCollections from "./ProdCollections";
 
 const ProdBranchFeature = () => {
   const useDispatch = useAppDispatch();
@@ -20,7 +21,7 @@ const ProdBranchFeature = () => {
   return (
     <div className="w-full rounded-lg mb-2 p-3">
       <p className="font-medium text-lg">Brand and Featured</p>
-      <div className="border-2 border-solid border-gray-200 rounded-lg p-5 h-full flex flex-col gap-3">
+      <div className="border-2 border-solid border-gray-200 shadow-sm rounded-lg p-5 h-full flex flex-col gap-3">
         <div>
           <p className="my-0 mb-1 text-[#aca4a4] text-sm">
             Product brand
@@ -40,7 +41,7 @@ const ProdBranchFeature = () => {
                 )
               }
               input={<OutlinedInput id="select-multiple-chip" />}
-              className="h-[42px] w-full cursor-pointer"
+              className="h-[40px] w-full cursor-pointer"
               renderValue={() => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                   <span className="text-sm font-medium">{brand}</span>
@@ -64,14 +65,17 @@ const ProdBranchFeature = () => {
             </Select>
           </FormControl>
         </div>
-        <div className="flex items-start justify-between mt-4">
+
+        <ProdCollections />
+
+        <div className="flex items-start justify-between mt-3">
           <div className="flex items-center justify-start gap-3 w-1/2">
             <label>
               <span
                 aria-label="haveVariants"
-                className="cursor-pointer text-[#aca4a4] text-sm"
+                className="cursor-pointer font-medium text-sm"
               >
-                Have variants <span className="text-red-600"> *</span>
+                Have variants?
               </span>
             </label>
             <Switch

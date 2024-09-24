@@ -1,11 +1,5 @@
 import React from "react";
 import { Box, Button, Divider, Grid2, Typography } from "@mui/material";
-import {
-  IconTruckDelivery,
-  IconRefresh,
-  IconShieldCheck,
-  IconHeadset,
-} from "@tabler/icons-react";
 
 const Showcase = () => {
   const product = {

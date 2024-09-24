@@ -18,7 +18,7 @@ const SellerSignIn = () => {
   const navigate = useNavigate();
 
   return (
-    <Box className="w-full h-[80vh] flex items-start justify-center mt-10">
+    <Box className="w-full flex items-start justify-center pt-10">
       <Box className="flex flex-col items-center max-w-[370px] p-3">
         <Box className="flex items-center justify-center gap-1 my-2 cursor-pointer w-full mb-2 pr-4">
           <img
@@ -28,7 +28,7 @@ const SellerSignIn = () => {
           />
           <h2 className="text-[#4e6e9c] text-[25px] ">Nasastore Business</h2>
         </Box>
-        <Box className="border-2 border-solid border-gray-200 p-4 rounded-lg flex flex-col justify-center">
+        <Box className="border-2 border-solid border-gray-200 p-4 rounded-lg flex flex-col justify-center shadow-sm">
           <p className="font-bold text-[24px] my-0 mb-1 text-[#4e6e9c]">
             Sign in with business credentials
           </p>
@@ -53,8 +53,13 @@ const SellerSignIn = () => {
           </Button>
           <p className="my-0 text-[12px] mb-3">
             By continuing, you agree to Nasastore's{" "}
-            <Link to="">Conditions of Use</Link> and{" "}
-            <Link to="">Privacy Notice.</Link>
+            <Link className="text-blue-300" to="">
+              Conditions of Use
+            </Link>{" "}
+            and{" "}
+            <Link className="text-blue-300" to="">
+              Privacy Notice.
+            </Link>
           </p>
           <Box
             className="flex items-center justify-start gap-2"
@@ -65,23 +70,27 @@ const SellerSignIn = () => {
             ) : (
               <IconChevronDown size={18} color="#cca7f2" />
             )}
-            <Link to="" className="text-sm">
+            <Link className="text-blue-300 text-sm" to="">
               Need help
             </Link>
           </Box>
           {needHelp && (
             <p className="my-0 mt-1 ml-7 text-sm">
-              <Link to="">Fogot your password</Link>
+              <Link className="text-blue-300" to="">
+                Fogot your password
+              </Link>
             </p>
           )}
           {needHelp && (
             <p className="my-0 mt-1 ml-7 text-sm">
-              <Link to="">Other issue with sign in</Link>
+              <Link className="text-blue-300" to="">
+                Other issue with sign in
+              </Link>
             </p>
           )}
           <Divider className="my-5" />
           <p className="my-0 py-1 text-sm font-medium">Are you customer?</p>
-          <Link to="/sign-in" className="text-[12px]">
+          <Link to="/sign-in" className="text-[12px] text-blue-300">
             Go to shop
           </Link>
         </Box>

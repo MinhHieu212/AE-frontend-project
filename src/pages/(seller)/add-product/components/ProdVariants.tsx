@@ -286,7 +286,7 @@ const ProdVariants = () => {
         Product Variants <span className="text-red-600"> *</span>
       </p>
       <div
-        className={`border-2 border-solid border-gray-200 rounded-lg p-5 h-full flex flex-col gap-3`}
+        className={`border-2 border-solid border-gray-200 shadow-sm rounded-lg p-5 h-full flex flex-col gap-3`}
       >
         <div className="flex items-center w-full">
           <p className="w-[150px] my-1 font-medium">Primary</p>

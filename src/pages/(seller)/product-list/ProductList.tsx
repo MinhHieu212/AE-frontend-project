@@ -101,8 +101,10 @@ const ProductItem: React.FC<ProductItemProps> = ({ item, loading }) => {
 
 const ProductList: React.FC = () => {
   const navigate = useNavigate();
-  const [productList, setProductList] =
-    useState<ProductProps[]>(fakeProductList);
+  const [productList, setProductList] = useState<ProductProps[]>([
+    ...fakeProductList,
+    ...fakeProductList,
+  ]);
   const [page, setPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -130,7 +132,7 @@ const ProductList: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full max-w-[1200px] p-3 mx-auto h-full">
+    <div className="w-full max-w-[1300px] p-3 mx-auto h-full">
       <div className="flex h-12 items-center justify-between px-5">
         <h2 className="font-bold text-[lighgray] text-[22px]">All Products</h2>
         <Button
@@ -145,7 +147,7 @@ const ProductList: React.FC = () => {
         container
         spacing={2}
         columns={12}
-        className="max-h-[calc(100dvh-195px)] items-start overflow-y-scroll scrollBar px-5 mt-5"
+        className="max-h-[calc(100dvh-155px)] items-start overflow-y-scroll scrollBar px-5 mt-5"
       >
         {productList.length > 0 ? (
           productList
@@ -160,18 +162,18 @@ const ProductList: React.FC = () => {
             <p className="font-bold text-lg">No Products</p>
           </div>
         )}
+        <Stack
+          spacing={2}
+          className="flex items-center justify-center pt-2 w-full mt-auto mb-2"
+        >
+          <Pagination
+            count={Math.ceil(productList.length / MAX_ITEM_PER_PAGE)}
+            page={page}
+            size="large"
+            onChange={handleChangePage}
+          />
+        </Stack>
       </Grid>
-      <Stack
-        spacing={2}
-        className="flex items-center justify-center pt-2 w-full mt-auto mb-2"
-      >
-        <Pagination
-          count={Math.ceil(productList.length / MAX_ITEM_PER_PAGE)}
-          page={page}
-          size="large"
-          onChange={handleChangePage}
-        />
-      </Stack>
     </div>
   );
 };

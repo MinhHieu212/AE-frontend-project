@@ -15,6 +15,8 @@ import { resetProductData } from "../../../store/slices/productSlice";
 import { IconArrowLeft } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import CustomDialog from "../../../components/CustomDialog";
+import ProdSpecification from "./components/ProdSpecification";
+import ProdPricing from "./components/ProdPricing";
 
 const SubHeader = () => {
   const navigate = useNavigate();
@@ -81,7 +83,7 @@ const ActionButtons = () => {
 
 const AddProduct = () => {
   return (
-    <div className="flex flex-col items-center justify-start w-full max-w-[1200px] h-full p-3 mx-auto">
+    <div className="flex flex-col items-center justify-start w-full max-w-[1300px] h-full p-3 mx-auto">
       <div className="w-full h-full my-2 scrollBar">
         <SubHeader />
         <div className="w-full flex items-start justify-center p-2 gap-3">
@@ -91,12 +93,14 @@ const AddProduct = () => {
               <ProdDescription />
             </MantineProvider>
             <ProdPackages />
+            <ProdPricing />
           </div>
           <div className="w-1/2 flex flex-col items-center justify-start">
             <ProdBranchFeature />
             <ProdInventory />
             <ProdSellingType />
             <ProdImages />
+            <ProdSpecification />
           </div>
         </div>
         <ProdVariants />

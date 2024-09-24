@@ -1,6 +1,6 @@
 import { Box, Grid2 } from "@mui/material";
 import DOMPurify from "dompurify";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import ImageGallery from "./components/ImageGallery";
 import ProductVariants from "./components/ProductVariants";
@@ -46,11 +46,11 @@ const ProductDetails = () => {
   }, []);
 
   return (
-    <div className="w-full h-full max-w-[1200px] mx-auto my-5">
-      <Grid2 className="w-full" container spacing={2}>
+    <div className={`w-full h-full max-w-[1300px] mx-auto my-5 sidebar`}>
+      <Grid2 className={`w-full`} container spacing={2} alignItems="flex-start">
         <Grid2 size={7}>
           <ImageGallery />
-          <Box className="mt-5 min-h-[500px] text-sm w-full border-2 border-solid border-gray-100 rounded-lg p-5 py-3 shadow-lg">
+          <Box className="mt-5 min-h-[200px] text-sm w-full border-2 border-solid border-gray-100 rounded-lg p-5 py-3 shadow-lg">
             <div
               dangerouslySetInnerHTML={{
                 __html: DOMPurify.sanitize(description),
@@ -58,11 +58,13 @@ const ProductDetails = () => {
             />
           </Box>
         </Grid2>
-        <Grid2 size={5} className="px-5">
+        <Grid2 size={5} className="px-5 sticky top-5">
           <ProductVariants />
           <ProdDetails />
           <ProdReviews />
         </Grid2>
+      </Grid2>
+      <Grid2 className={`w-full`} container spacing={2} alignItems="flex-start">
         <Grid2 size={12} className="px-5">
           <RelatedProducts />
         </Grid2>

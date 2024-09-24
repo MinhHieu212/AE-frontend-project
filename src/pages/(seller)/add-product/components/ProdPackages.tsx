@@ -44,15 +44,15 @@ const ProdPackages = () => {
   return (
     <div className="w-full rounded-lg mb-2 p-3">
       <p className="font-medium text-lg"> Shiping and Delivery </p>
-      <div className="border-2 border-solid border-gray-200 rounded-lg p-5 h-full flex flex-col gap-3 mt-5">
+      <div className="border-2 border-solid border-gray-200 shadow-sm rounded-lg p-5 h-full flex flex-col gap-3 mt-5">
         <div>
           <p className="my-0 pb-1 text-[#aca4a4] text-sm">Item weight</p>
-          <div className="w-full flex items-center justify-between px-1 border-2 h-[42px] border-solid border-[#c8c3c3] rounded-md">
+          <div className="w-full flex items-center justify-between px-1 border-2 h-[40px] border-solid border-[#c8c3c3] rounded-md">
             <InputBase
               sx={{ ml: 1, flex: 1 }}
               placeholder="00.00"
               type="number"
-              className="h-[42px]"
+              className="h-[40px]"
               value={packages_weight || ""}
               onChange={handleWeightChange}
               onKeyDown={(e) => {

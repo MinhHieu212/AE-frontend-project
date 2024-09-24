@@ -18,7 +18,7 @@ const ProdSellingType = () => {
       <p className="font-medium text-lg">
         Selling Type <span className="text-red-600"> *</span>
       </p>
-      <div className="border-2 border-solid border-gray-200 rounded-lg p-5 py-2 h-full flex gap-3 text-sm">
+      <div className="border-2 border-solid border-gray-200 shadow-sm rounded-lg p-5 py-2 h-full flex gap-3 text-sm">
         <FormGroup>
           <FormControlLabel
             control={
@@ -55,7 +55,7 @@ const ProdSellingType = () => {
               <span className="text-sm">
                 Available both online and in-store
               </span>
-            }   
+            }
           />
         </FormGroup>
       </div>

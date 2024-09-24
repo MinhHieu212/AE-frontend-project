@@ -34,7 +34,7 @@ const ReviewList = () => {
               value={ratingOption}
               onChange={(e) => setRatingOption(e.target.value as number)}
               input={<OutlinedInput id="select-multiple-chip" />}
-              className="h-[42px] w-full cursor-pointer rounded-lg"
+              className="h-[40px] w-full cursor-pointer rounded-lg"
               renderValue={() => (
                 <Box
                   sx={{
@@ -85,7 +85,7 @@ const ReviewList = () => {
               value={sort}
               onChange={(e) => setSort(e.target.value as string)}
               input={<OutlinedInput id="select-multiple-chip" />}
-              className="h-[42px] w-full cursor-pointer rounded-lg"
+              className="h-[40px] w-full cursor-pointer rounded-lg"
               renderValue={() => (
                 <Box
                   sx={{

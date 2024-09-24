@@ -9,11 +9,11 @@ import { useAppSelector } from "../../../store/store";
 const Homepage = () => {
   const userRole = useAppSelector((state) => state.roles.user_role);
   return (
-    <div className="w-full max-w-[1200px] p-3  mx-auto bg-white">
+    <div className="w-full max-w-[1300px] p-3  mx-auto bg-white">
       <Banners />
       <Categories />
       <Populars />
-      <NewArrivals />
+      {userRole === "buyer" && <NewArrivals />}
       {userRole === "buyer" && <Showcase />}
     </div>
   );
