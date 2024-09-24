@@ -103,9 +103,9 @@ const ProdImages = () => {
               : "w-1/3"
           } ${
             isDragActive
-              ? "border-blue-500 bg-blue-50"
+              ? "border-blue-500 bg-gray-50"
               : "border-gray-300 bg-slate-100"
-          } h-[calc(100%-14px)] my-2 flex items-center justify-center border-2 border-dashed rounded-lg transition-colors ${
+          } h-[calc(100%-14px)] my-2 flex items-center justify-center border-[1px] border-dashed rounded-md transition-colors ${
             images.length >= 10 ? "hidden" : ""
           }`}
         >

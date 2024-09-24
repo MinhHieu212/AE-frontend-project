@@ -3,27 +3,27 @@ import React, { useEffect } from "react";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import { TextField } from "@mui/material";
-import {
-  initializeCombinations,
-  updateCombination,
-} from "../../../../store/slices/productVariantSlice";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import {
+  initializeCombinations,
+  updateCombinationFieldValue,
+} from "../../../../store/slices/variantsSlice";
 
 const ProdVariantTable: React.FC = () => {
   const dispatch = useAppDispatch();
   const variants = useAppSelector((state) => state.variants.variants);
   const haveVariants = useAppSelector((state) => state.product.haveVariants);
-  const combineVariantWithPricing = useAppSelector(
-    (state) => state.variants.combineVariantWithPricing
+  const combineVariantsTable = useAppSelector(
+    (state) => state.variants.combineVariantsTable
   );
 
   const handleInputChange = (index: number, field: string, value: string) => {
-    dispatch(updateCombination({ index, field, value }));
+    dispatch(updateCombinationFieldValue({ index, field, value }));
   };
 
   useEffect(() => {
@@ -69,11 +69,14 @@ const ProdVariantTable: React.FC = () => {
               <StyledTableCell className="uppercase" align="center">
                 Quantity
               </StyledTableCell>
+              <StyledTableCell className="uppercase" align="center">
+                Quantity
+              </StyledTableCell>
             </TableRow>
           </TableHead>
 
           <TableBody>
-            {combineVariantWithPricing.map((combination, index) => (
+            {combineVariantsTable.map((combination, index) => (
               <StyledTableRow key={index}>
                 <StyledTableCell align="center">{index + 1}</StyledTableCell>
                 {variants.map((variant, idx) => (
@@ -145,6 +148,24 @@ const ProdVariantTable: React.FC = () => {
                     value={combination.quantity}
                     onChange={(e) =>
                       handleInputChange(index, "quantity", e.target.value)
+                    }
+                    slotProps={{
+                      inputLabel: {
+                        shrink: true,
+                      },
+                    }}
+                  />
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  <TextField
+                    id={`sku-${index}`}
+                    label="sku"
+                    type="number"
+                    size="small"
+                    className="max-w-[150px]"
+                    value={combination.sku}
+                    onChange={(e) =>
+                      handleInputChange(index, "sku", e.target.value)
                     }
                     slotProps={{
                       inputLabel: {

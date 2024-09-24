@@ -6,7 +6,7 @@ import ImageGallery from "./components/ImageGallery";
 import ProductVariants from "./components/ProductVariants";
 import { fake_data_product_detail_v2 } from "../../../fake_data/fake_data_product_detail_v2";
 import { useAppDispatch, useAppSelector } from "../../../store/store";
-import { initialProductDetails } from "../../../store/slices/productDetailsSlice";
+import { initialProductDetail } from "../../../store/slices/productDetailSlice";
 import { initialSeletedVariant } from "../../../store/slices/selectedVariantSlice";
 import ProdDetails from "./components/ProdDetails";
 import ProdReviews from "./components/ProdReviews";
@@ -15,7 +15,7 @@ import RelatedProducts from "./components/RelatedProducts";
 const ProductDetails = () => {
   const { slug } = useParams();
   const useDispatch = useAppDispatch();
-  const description = useAppSelector((state) => state.details).description;
+  const description = useAppSelector((state) => state.detail).description;
 
   useEffect(() => {
     const initialValue = {
@@ -41,7 +41,7 @@ const ProductDetails = () => {
       variant_option: { COLOR: "midnight", RAM: "4GB", STORAGE: "64GB" },
     };
 
-    useDispatch(initialProductDetails({ value: initialValue }));
+    useDispatch(initialProductDetail({ value: initialValue }));
     useDispatch(initialSeletedVariant({ value: initialSeleted }));
   }, []);
 

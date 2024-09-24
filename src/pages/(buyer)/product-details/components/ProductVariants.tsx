@@ -53,7 +53,7 @@ const VariantDisplay: React.FC<{ variants: any; selected_variant: any }> = ({
 };
 
 const ProductVariants = () => {
-  const product_details = useAppSelector((state) => state.details);
+  const product_details = useAppSelector((state) => state.detail);
   const selected_variant = useAppSelector((state) => state.selected_variants);
   const [like, setLike] = useState<boolean>(false);
 

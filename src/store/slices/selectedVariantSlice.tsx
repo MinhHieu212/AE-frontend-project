@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface SelectedVariantState {
+interface variantSelectedState {
   price: number | null;
   sale_price?: number | null;
   quantity?: number | null;
   variant_option: any;
 }
 
-const initialState: SelectedVariantState = {
+const initialState: variantSelectedState = {
   price: null,
   sale_price: null,
   quantity: null,

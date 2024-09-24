@@ -23,7 +23,7 @@ interface ProductDetailsState {
   variants: any;
 }
 
-interface SelectedVariantState {
+interface variantSelectedState {
   price: number;
   sale_price?: number;
   quantity?: number;
@@ -42,15 +42,15 @@ const initialState: ProductDetailsState = {
   variants: [],
 };
 
-export const productDetailsSlice = createSlice({
+export const productDetailSlice = createSlice({
   name: "details",
   initialState,
   reducers: {
-    initialProductDetails: (state, action: PayloadAction<{ value: any }>) => {
+    initialProductDetail: (state, action: PayloadAction<{ value: any }>) => {
       return action.payload.value;
     },
 
-    updateProductDetailsField: (
+    updateProductDetailField: (
       state,
       action: PayloadAction<{ field: string; value: any }>
     ) => {
@@ -66,7 +66,7 @@ export const productDetailsSlice = createSlice({
 });
 
 export const {
-  initialProductDetails,
-  updateProductDetailsField,
+  initialProductDetail,
+  updateProductDetailField,
   resetProductData,
-} = productDetailsSlice.actions;
+} = productDetailSlice.actions;

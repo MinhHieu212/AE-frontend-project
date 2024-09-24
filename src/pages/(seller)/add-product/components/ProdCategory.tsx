@@ -14,9 +14,9 @@ import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import { updateProductField } from "../../../../store/slices/productSlice";
 import {
   initialVariants,
-  setPrimaryVariants,
+  setPrimaryVariant,
   updateVariantImages,
-} from "../../../../store/slices/productVariantSlice";
+} from "../../../../store/slices/variantsSlice";
 import ProdCollections from "./ProdCollections";
 
 interface CategoryProps {
@@ -96,7 +96,7 @@ const ProdCategory = () => {
       const variants = getCategoryVariants(categoryName);
       if (variants.length > 0) {
         useDispatch(initialVariants({ variants }));
-        useDispatch(setPrimaryVariants({ variant: variants[0].type }));
+        useDispatch(setPrimaryVariant({ variant: variants[0].type }));
       }
     }
   }, [category]);

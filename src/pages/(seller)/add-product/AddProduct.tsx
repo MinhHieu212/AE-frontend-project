@@ -46,10 +46,14 @@ const ActionButtons = () => {
   const useDispatch = useAppDispatch();
   const product = useAppSelector((state) => state.product);
   const variants = useAppSelector((state) => state.variants.variants);
+  const combineVariantsTable = useAppSelector(
+    (state) => state.variants.combineVariantsTable
+  );
 
   function handleAddNewProduct() {
-    console.log(JSON.stringify(variants, null, 2));
-    console.log(JSON.stringify(product, null, 2));
+    console.log(variants);
+    console.log(product);
+    console.log(combineVariantsTable);
   }
 
   function handleDiscardAddProduct() {

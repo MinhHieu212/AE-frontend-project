@@ -4,8 +4,8 @@ import {
   setVariantType,
   setVariantValue,
   removeVariantValue,
-  setPrimaryVariants,
-} from "../../../../store/slices/productVariantSlice";
+  setPrimaryVariant,
+} from "../../../../store/slices/variantsSlice";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import {
@@ -128,7 +128,7 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
           <Checkbox
             checked={primaryVariant === type}
             onChange={(e) => {
-              useDispatch(setPrimaryVariants({ variant: type }));
+              useDispatch(setPrimaryVariant({ variant: type }));
             }}
           />
         </Box>

@@ -5,7 +5,9 @@ export interface RoleState {
 }
 
 const initialState: RoleState = {
-  user_role: "anonymous",
+  user_role: "seller",
+  // user_role: "buyer",
+  // user_role: "anonymous",
 };
 
 export const roleSlice = createSlice({

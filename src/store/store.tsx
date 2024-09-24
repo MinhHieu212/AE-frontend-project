@@ -3,16 +3,16 @@ import { configureStore } from "@reduxjs/toolkit";
 import { roleSlice } from "./slices/roleSlice";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { productSlice } from "./slices/productSlice";
-import { productDetailsSlice } from "./slices/productDetailsSlice";
-import { productVariantSlice } from "./slices/productVariantSlice";
 import { selectedVariantSlice } from "./slices/selectedVariantSlice";
+import { variantsSlice } from "./slices/variantsSlice";
+import { productDetailSlice } from "./slices/productDetailSlice";
 
 export const store = configureStore({
   reducer: {
     roles: roleSlice.reducer,
     product: productSlice.reducer,
-    variants: productVariantSlice.reducer,
-    details: productDetailsSlice.reducer,
+    variants: variantsSlice.reducer,
+    detail: productDetailSlice.reducer,
     selected_variants: selectedVariantSlice.reducer,
   },
 });

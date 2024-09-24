@@ -2,14 +2,16 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface VariantObjProps {
   id: number;
-  unit?: string;
   type: string;
   values: string[];
+  unit?: string;
 }
+
 interface FileImageProps {
   file: File;
   url: string;
 }
+
 interface VariantWithImageProps {
   type: string;
   value: string;
@@ -18,29 +20,32 @@ interface VariantWithImageProps {
 
 interface VariantCombinationProps {
   [key: string]: string;
+  sku: string;
   price: string;
   salePrice: string;
   mrspPrice: string;
   quantity: string;
 }
-interface ProductVariantProps {
-  variants: VariantObjProps[];
-  combineVariantWithPricing: VariantCombinationProps[];
+
+interface VariantProps {
+  combineVariantsTable: VariantCombinationProps[];
   variantWithImages: VariantWithImageProps[];
+  variants: VariantObjProps[];
   primaryVariant: string;
 }
 
-const initialState: ProductVariantProps = {
-  variants: [],
-  combineVariantWithPricing: [],
+const initialState: VariantProps = {
+  combineVariantsTable: [],
   variantWithImages: [],
+  variants: [],
   primaryVariant: "",
 };
 
-export const productVariantSlice = createSlice({
-  name: "variant",
+export const variantsSlice = createSlice({
+  name: "variants",
   initialState,
   reducers: {
+    // add new variant
     addVariant: (state) => {
       state.variants = [
         ...state.variants,
@@ -52,6 +57,7 @@ export const productVariantSlice = createSlice({
       ];
     },
 
+    // set variant type
     setVariantType: (
       state,
       action: PayloadAction<{ id: number; new_type: string }>
@@ -63,37 +69,7 @@ export const productVariantSlice = createSlice({
       );
     },
 
-    initialVariants: (
-      state,
-      action: PayloadAction<{ variants: VariantObjProps[] }>
-    ) => {
-      state.variants = action.payload.variants;
-    },
-
-    setPrimaryVariants: (state, action: PayloadAction<{ variant: string }>) => {
-      state.primaryVariant = action.payload.variant;
-    },
-
-    removeVariant: (state, action: PayloadAction<{ id: number }>) => {
-      state.variants = state.variants
-        .filter((item) => item.id !== action.payload.id)
-        .map((item, index) => ({ ...item, id: index }));
-    },
-
-    updateVariantImages: (
-      state,
-      action: PayloadAction<{ id: number; images: FileImageProps[] }>
-    ) => {
-      state.variants = state.variants.map((item) =>
-        item.id === action.payload.id
-          ? {
-              ...item,
-              images: action.payload.images,
-            }
-          : item
-      );
-    },
-
+    // add new_values into currently variant's values
     setVariantValue: (
       state,
       action: PayloadAction<{ id: number; new_value: string }>
@@ -105,6 +81,7 @@ export const productVariantSlice = createSlice({
       );
     },
 
+    // remove value in variant_values
     removeVariantValue: (
       state,
       action: PayloadAction<{ id: number; remove_value: string }>
@@ -121,6 +98,42 @@ export const productVariantSlice = createSlice({
       );
     },
 
+    // choose category -> suggest product variants -> set new variants with this method
+    initialVariants: (
+      state,
+      action: PayloadAction<{ variants: VariantObjProps[] }>
+    ) => {
+      state.variants = action.payload.variants;
+    },
+
+    // set primary for product variants
+    setPrimaryVariant: (state, action: PayloadAction<{ variant: string }>) => {
+      state.primaryVariant = action.payload.variant;
+    },
+
+    // remove variant out variants list
+    removeVariant: (state, action: PayloadAction<{ id: number }>) => {
+      state.variants = state.variants
+        .filter((item) => item.id !== action.payload.id)
+        .map((item, index) => ({ ...item, id: index }));
+    },
+
+    // update list images for specify value of one variant
+    updateVariantImages: (
+      state,
+      action: PayloadAction<{ id: number; images: FileImageProps[] }>
+    ) => {
+      state.variants = state.variants.map((item) =>
+        item.id === action.payload.id
+          ? {
+              ...item,
+              images: action.payload.images,
+            }
+          : item
+      );
+    },
+
+    // generate table variant with pricing, quantity, sku
     initializeCombinations: (
       state,
       action: PayloadAction<VariantObjProps[]>
@@ -150,12 +163,14 @@ export const productVariantSlice = createSlice({
       };
 
       const allCombinations = generateCombinations(Object.values(variants));
-      state.combineVariantWithPricing = allCombinations.map((combination) => {
+
+      state.combineVariantsTable = allCombinations.map((combination) => {
         const combinationObject: VariantCombinationProps = {
           price: "",
           salePrice: "",
           quantity: "",
           mrspPrice: "",
+          sku: "",
         };
         Object.keys(variants).forEach((key, index) => {
           combinationObject[key] = combination[index];
@@ -164,19 +179,12 @@ export const productVariantSlice = createSlice({
       });
     },
 
-    updateCombination: (
+    updateCombinationFieldValue: (
       state,
       action: PayloadAction<{ index: number; field: string; value: string }>
     ) => {
       const { index, field, value } = action.payload;
-      state.combineVariantWithPricing[index][field] = value;
-    },
-
-    saveCombinations: (state) => {
-      console.log(
-        "Saving combineVariantWithPricing:",
-        state.combineVariantWithPricing
-      );
+      state.combineVariantsTable[index][field] = value;
     },
   },
 });
@@ -185,12 +193,11 @@ export const {
   addVariant,
   removeVariant,
   setVariantType,
-  setPrimaryVariants,
+  setPrimaryVariant,
   setVariantValue,
   removeVariantValue,
   initializeCombinations,
-  updateCombination,
+  updateCombinationFieldValue,
   initialVariants,
-  saveCombinations,
   updateVariantImages,
-} = productVariantSlice.actions;
+} = variantsSlice.actions;

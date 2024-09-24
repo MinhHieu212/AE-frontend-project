@@ -5,6 +5,8 @@ import Autocomplete from "@mui/material/Autocomplete";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { Box } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "../../../../store/store";
+import { updateProductField } from "../../../../store/slices/productSlice";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -18,6 +20,20 @@ const productCollections = [
 ];
 
 function ProdCollections() {
+  const dispatch = useAppDispatch();
+  const selectedCollections = useAppSelector(
+    (state) => state.product.collections
+  );
+
+  const handleCollectionsChange = (event: any, newValue: any) => {
+    const selectedTitles = newValue.map(
+      (item: { title: string }) => item.title
+    );
+    dispatch(
+      updateProductField({ field: "collections", value: selectedTitles })
+    );
+  };
+
   return (
     <Box className="mt-2">
       <span className="my-0 mb-1 text-[#aca4a4] text-sm">
@@ -30,6 +46,10 @@ function ProdCollections() {
         size="small"
         className="w-full min-h-[40px] mb-1"
         disableCloseOnSelect
+        value={productCollections.filter((option) =>
+          selectedCollections.includes(option.title)
+        )}
+        onChange={handleCollectionsChange}
         getOptionLabel={(option) => option.title}
         renderOption={(props, option, { selected }) => {
           const { key, ...optionProps } = props;

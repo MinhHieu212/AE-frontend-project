@@ -136,7 +136,7 @@ const ProdDescription = () => {
             w="100%"
             styles={{
               content: {
-                height: "320px",
+                height: "310px",
                 overflowY: "scroll",
                 whiteSpace: "pre-wrap",
                 wordBreak: "break-word",
