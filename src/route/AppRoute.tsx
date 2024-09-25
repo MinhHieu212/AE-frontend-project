@@ -13,7 +13,7 @@ import SellerSignUp from "../pages/(auth)/sign-up/SellerSignUp";
 
 const AppRoute = () => {
   const userRole = useAppSelector((state) => state.roles.user_role);
-
+  console.log(userRole);
   return (
     <Routes>
       {(userRole === "anonymous" || userRole === "buyer") &&

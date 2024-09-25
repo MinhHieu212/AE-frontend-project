@@ -30,8 +30,15 @@ const Populars = () => {
     const callApi = async () => {
       setLoading(true);
       try {
-        const response_data = await getProductList();
-        setProductList(response_data);
+        const params = {
+          limit: 10,
+          page: 0,
+          size: 100,
+        };
+        const response_data = await getProductList(params);
+        const productsData = response_data.content;
+        console.log("Populars", productsData);
+        setProductList(productsData);
       } catch (error: any) {
         toast.error(error.message);
       } finally {

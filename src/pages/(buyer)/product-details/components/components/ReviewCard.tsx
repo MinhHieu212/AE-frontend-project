@@ -1,18 +1,8 @@
 import { Box, Divider, Grid2, Typography } from "@mui/material";
-import { IconStarFilled, IconX } from "@tabler/icons-react";
+import { IconStarFilled } from "@tabler/icons-react";
 import React from "react";
 
-const ReviewCard = () => {
-  const review = {
-    rating: 5,
-    date: "Sep 16, 2024",
-    title: "Beautiful!",
-    content:
-      "I got the hoop medium and I really love them. Thinking about ordering the small ones too.",
-    shipping: "Yes",
-    recommended: "10 - I'll recommend to everyone",
-  };
-
+const ReviewCard = ({ review }: any) => {
   return (
     <Box className="border-2 border-solid border-[#e0e0e0] rounded-md p-4 bg-gray-100 w-full shadow-lg mt-4">
       <Grid2 container justifyContent="space-between" alignItems="center">
@@ -31,7 +21,7 @@ const ReviewCard = () => {
         {review.title}
       </Typography>
       <Typography variant="body2" className="mt-[8px]">
-        {review.content}
+        {review.description}
       </Typography>
       <Divider sx={{ marginY: "16px" }} />
       <Grid2 container spacing={1}>
@@ -41,7 +31,9 @@ const ReviewCard = () => {
           </Typography>
         </Grid2>
         <Grid2 size={6} textAlign="right">
-          <Typography variant="body2">{review.shipping}</Typography>
+          <Typography variant="body2">
+            {review.shipping ? "yes" : "no"}{" "}
+          </Typography>
         </Grid2>
         <Grid2 size={6}>
           <Typography variant="body2" fontWeight="bold">
@@ -49,7 +41,9 @@ const ReviewCard = () => {
           </Typography>
         </Grid2>
         <Grid2 size={6} textAlign="right">
-          <Typography variant="body2">{review.recommended}</Typography>
+          <Typography variant="body2">
+            {review.recommended ? "10 I'll share this product" : ""}
+          </Typography>
         </Grid2>
       </Grid2>
     </Box>

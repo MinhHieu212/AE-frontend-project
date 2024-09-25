@@ -51,21 +51,12 @@ const ActionButtons = () => {
   );
 
   const variantsPayload = variants_table.map((variant) => {
-    const knownKeys: string[] = [
-      "quantity",
-      "price",
-      "salePrice",
-      "sku",
-      "mrspPrice",
-    ];
-
     const variantOptions = Object.entries(variant)
       .filter(
         ([key]) =>
           !["quantity", "price", "salePrice", "sku", "mrspPrice"].includes(key)
       )
       .map(([variantTypes, value]) => ({
-        id: String(variant.id),
         variantTypes,
         value: String(value),
       }));
@@ -92,11 +83,14 @@ const ActionButtons = () => {
     imageURL: product.images.map((image) => image.url),
     primaryImageURL: product?.primaryImage?.url,
     description: product.description,
-    rating: 0,
-    noOfReviews: 0,
     brandName: product.brand,
     sellingTypes: product.sellingType,
-    categories: product.collections,
+    inventory: product.inventory,
+    collections: product.collections,
+    categories: [
+      product.category.level_1.index,
+      product.category.level_2.index,
+    ],
     dimensions: {
       weight: product.packages_weight,
       length: product.packages_size.length,
@@ -109,7 +103,7 @@ const ActionButtons = () => {
   };
 
   function handleAddNewProduct() {
-    console.log(JSON.stringify({ payload }, null, 2));
+    console.log(JSON.stringify(payload, null, 2));
   }
 
   function handleDiscardAddProduct() {

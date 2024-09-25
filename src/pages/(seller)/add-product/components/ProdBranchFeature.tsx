@@ -79,7 +79,6 @@ const ProdBranchFeature = () => {
               </span>
             </label>
             <Switch
-              defaultChecked
               checked={haveVariants}
               id="haveVariants"
               onChange={(e) => {

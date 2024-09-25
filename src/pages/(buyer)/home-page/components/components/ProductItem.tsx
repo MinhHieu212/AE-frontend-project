@@ -15,7 +15,7 @@ interface ProductItemProps {
 
 const ProductItem = ({ item, loading }: ProductItemProps) => {
   const fallbackImageURL =
-    "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=";
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWz9tftw9qculFH1gxieWkxL6rbRk_hrXTSg&s";
   const navigate = useNavigate();
   const [like, setLike] = useState<boolean>(true);
 
@@ -35,12 +35,12 @@ const ProductItem = ({ item, loading }: ProductItemProps) => {
             }
             alt={`Product: ${item?.name}`}
             className="w-[250px] h-[250px] object-cover cursor-pointer mt-2"
-            onClick={() => navigate(`/${item?.name.split(" ").join("_")}`)}
+            onClick={() => navigate(`/${item?.id}`)}
           />
         )}
         <div
           onClick={() => setLike((prev) => !prev)}
-          className="flex items-center justify-center p-1 bg-slate-100 absolute top-3 left-3 z-100 rounded-full bg-opacity-80 cursor-pointer"
+          className="flex items-center justify-center p-1 bg-slate-100 absolute top-3 left-3 z-100 rounded-full bg-opacity-80 cursor-pointer border-[2px] border-solid border-gray-300"
         >
           {like ? <IconHeart size={20} /> : <IconHeartFilled size={20} />}
         </div>
@@ -78,7 +78,7 @@ const ProductItem = ({ item, loading }: ProductItemProps) => {
                 />
               ) : (
                 <p className="text-gray-300  my-0 line-through truncate">
-                  $ {item?.price.toFixed(2)}
+                  $ {item?.price?.toFixed(2) || 0}
                 </p>
               )}
               <Divider
@@ -94,7 +94,7 @@ const ProductItem = ({ item, loading }: ProductItemProps) => {
                 />
               ) : (
                 <p className="text-black my-0 truncate">
-                  $ {item?.salePrice.toFixed(2)}
+                  $ {item?.salePrice?.toFixed(2) || 0}
                 </p>
               )}
             </div>
@@ -128,7 +128,7 @@ const ProductItem = ({ item, loading }: ProductItemProps) => {
               )}
             </div>
           </div>
-          <Box className="w-[35px] h-[35px] text-white bg-black flex items-center justify-center rounded-full text-[20px] font-bold cursor-pointer">
+          <Box className="w-[35px] h-[35px] text-white bg-black pb-1 flex items-center justify-center rounded-full text-[20px] font-bold cursor-pointer">
             +
           </Box>
         </div>

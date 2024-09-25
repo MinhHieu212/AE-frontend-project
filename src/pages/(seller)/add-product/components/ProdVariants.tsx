@@ -1,11 +1,3 @@
-import {
-  addVariant,
-  removeVariant,
-  setVariantType,
-  setVariantValue,
-  removeVariantValue,
-  setPrimaryVariant,
-} from "../../../../store/slices/variantsSlice";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import {
@@ -21,6 +13,12 @@ import {
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import React, { useEffect, useState } from "react";
 import { PlusOne, X } from "@mui/icons-material";
+import {
+  removeVariantValue,
+  setPrimaryVariant,
+  setVariantType,
+  setVariantValue,
+} from "../../../../store/slices/variantsSlice";
 interface FileImageProps {
   file: File;
   url: string;
@@ -120,6 +118,8 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
       )
     );
   };
+
+  useEffect(() => {}, [variantImagesList]);
 
   return (
     <Box>

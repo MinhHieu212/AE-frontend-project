@@ -91,7 +91,7 @@ const ProdVariantTable: React.FC = () => {
                     type="number"
                     size="small"
                     className="max-w-[150px]"
-                    value={combination.price}
+                    value={combination.price === 0 ? null : combination.price}
                     onChange={(e) =>
                       handleInputChange(index, "price", e.target.value)
                     }
@@ -109,7 +109,9 @@ const ProdVariantTable: React.FC = () => {
                     type="number"
                     size="small"
                     className="max-w-[150px]"
-                    value={combination.mrspPrice}
+                    value={
+                      combination.mrspPrice === 0 ? null : combination.mrspPrice
+                    }
                     onChange={(e) =>
                       handleInputChange(index, "mrspPrice", e.target.value)
                     }
@@ -127,7 +129,9 @@ const ProdVariantTable: React.FC = () => {
                     type="number"
                     size="small"
                     className="max-w-[150px]"
-                    value={combination.salePrice}
+                    value={
+                      combination.salePrice === 0 ? null : combination.salePrice
+                    }
                     onChange={(e) =>
                       handleInputChange(index, "salePrice", e.target.value)
                     }
@@ -145,7 +149,9 @@ const ProdVariantTable: React.FC = () => {
                     type="number"
                     size="small"
                     className="max-w-[150px]"
-                    value={combination.quantity}
+                    value={
+                      combination.quantity === 0 ? null : combination.quantity
+                    }
                     onChange={(e) =>
                       handleInputChange(index, "quantity", e.target.value)
                     }
@@ -160,7 +166,7 @@ const ProdVariantTable: React.FC = () => {
                   <TextField
                     id={`sku-${index}`}
                     label="sku"
-                    type="number"
+                    type="text"
                     size="small"
                     className="max-w-[150px]"
                     value={combination.sku}

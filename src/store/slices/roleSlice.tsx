@@ -5,8 +5,8 @@ export interface RoleState {
 }
 
 const initialState: RoleState = {
-  user_role: "seller",
-  // user_role: "buyer",
+  // user_role: "seller",
+  user_role: "buyer",
   // user_role: "anonymous",
 };
 

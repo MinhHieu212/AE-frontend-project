@@ -1,21 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReviewCard from "./ReviewCard";
 import {
   Box,
   FormControl,
   Grid2,
+  LinearProgress,
   MenuItem,
   OutlinedInput,
   Select,
 } from "@mui/material";
 import { IconStarFilled } from "@tabler/icons-react";
+import { getProductReviews } from "../../../../../api/ReviewsApi";
+import { useParams } from "react-router-dom";
+import { toast } from "../../../../../utils/Toastify";
 
 const ratingOptions = [0, 1, 2, 3, 4, 5];
 const sortOptions = ["Most relevant", "Most recent", "By rating"];
 
-const ReviewList = () => {
+const ReviewList = ({}) => {
   const [ratingOption, setRatingOption] = useState(ratingOptions[0]);
   const [sort, setSort] = useState(sortOptions[0]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const { slug: product_id } = useParams();
+  const [reviewList, setReviewList] = useState<any>([]);
+
+  useEffect(() => {
+    const callApi = async () => {
+      setLoading(true);
+      try {
+        const response_data = await getProductReviews(String(product_id));
+        const reviewListData = response_data;
+        console.log("Reviews", reviewListData);
+        setReviewList(reviewListData);
+      } catch (error: any) {
+        toast.error(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    callApi();
+  }, []);
 
   return (
     <Box className="h-[85vh] w-[100%] scrollBar">
@@ -117,9 +141,26 @@ const ReviewList = () => {
         </Grid2>
       </Grid2>
       <Box>
-        {[1, 2, 3, 4, 5].map((_, i) => (
-          <ReviewCard key={i} />
-        ))}
+        {loading ? (
+          <LinearProgress className="mt-6" />
+        ) : reviewList.length > 0 ? (
+          reviewList.map((item: any, i: number) => {
+            const review = {
+              rating: item.rating,
+              date: item.createdAt,
+              title: item.title,
+              description: item.description,
+              shipping: true,
+              recommended: true,
+            };
+
+            return <ReviewCard key={i} review={review} />;
+          })
+        ) : (
+          <Box className="w-full h-[300px] flex items-center justify-center">
+            No reviews
+          </Box>
+        )}
       </Box>
     </Box>
   );

@@ -6,28 +6,22 @@ import {
   OutlinedInput,
   Select,
 } from "@mui/material";
-import { getCategories } from "../../../../api/CategoryApi";
-import { fake_data_categorys } from "../../../../fake_data/fake_data_category";
-import { fake_data_variants } from "../../../../fake_data/fake_data_variants";
-import { toast } from "../../../../utils/Toastify";
-import { useAppDispatch, useAppSelector } from "../../../../store/store";
-import { updateProductField } from "../../../../store/slices/productSlice";
 import {
   initialVariants,
   setPrimaryVariant,
-  updateVariantImages,
 } from "../../../../store/slices/variantsSlice";
-import ProdCollections from "./ProdCollections";
+import { toast } from "../../../../utils/Toastify";
+import { getCategories } from "../../../../api/CategoryApi";
+import { fake_data_categorys } from "../../../../fake_data/fake_data_category";
+import { fake_data_variants } from "../../../../fake_data/fake_data_variants";
+import { useAppDispatch, useAppSelector } from "../../../../store/store";
+import { updateProductField } from "../../../../store/slices/productSlice";
 
-interface CategoryProps {
+export interface CategoryProps {
   id: number;
   name: string;
-  parentID: number | null;
-  createdAt: string | null;
-  updatedAt: string | null;
-  subCategory: CategoryProps[];
-  noOfViews: number;
-  productsSold: number;
+  parentId: number | null;
+  subCategories: CategoryProps[];
 }
 
 const ProdCategory = () => {
@@ -67,7 +61,7 @@ const ProdCategory = () => {
       (item) => item.name === category.level_1.name
     );
     handleChange("", "level_2");
-    setSubCategory(selectedCategory?.subCategory || []);
+    setSubCategory(selectedCategory?.subCategories || []);
   }, [category.level_1]);
 
   useEffect(() => {
