@@ -1,6 +1,6 @@
 import { Box, Grid2 } from "@mui/material";
 import DOMPurify from "dompurify";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ImageGallery from "./components/ImageGallery";
 import ProductVariants from "./components/ProductVariants";

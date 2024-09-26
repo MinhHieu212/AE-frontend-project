@@ -55,7 +55,7 @@ const Categories = () => {
   return (
     <div className="w-full my-[20px] mt-10 mb-10">
       <h2 className="mx-[auto] text-[22px]"> Our Top Categories </h2>
-      <div className="overflow-x-scroll flex items-start justify-start mx-[auto]">
+      <div className="overflow-x-scroll flex items-start justify-start mx-[auto] scrollBar">
         {categories.length > 0 ? (
           categories.map((item) => <CategoryItem key={item.id} {...item} />)
         ) : (

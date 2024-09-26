@@ -17,7 +17,7 @@ interface ProductItemProps {
 const ProductItem: React.FC<ProductItemProps> = ({ item, loading }) => {
   const navigate = useNavigate();
   const fallbackImageURL =
-    "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=";
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWz9tftw9qculFH1gxieWkxL6rbRk_hrXTSg&s";
 
   return (
     <div className="w-full mx-auto mb-2 p-3 rounded-xl flex items-start justify-start gap-3 border-2 border-solid border-gray-100 bg-[#fbfdff] shadow-lg">
@@ -31,9 +31,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ item, loading }) => {
             }
             alt={`Product: ${item?.name}`}
             className="h-full w-full object-cover cursor-pointer"
-            onClick={() =>
-              navigate(`/products/${item?.name.split(" ").join("_")}`)
-            }
+            onClick={() => navigate(`/products/${item?.id}`)}
           />
         )}
       </div>
@@ -54,7 +52,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ item, loading }) => {
           />
         ) : (
           <p className="text-md text-blue-400 my-0 font-medium">
-            Sale Price: $ {item?.salePrice.toFixed(2)}
+            Sale Price: $ {item?.salePrice?.toFixed(2) || 0}
           </p>
         )}
         {loading ? (
@@ -64,7 +62,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ item, loading }) => {
           />
         ) : (
           <p className="text-sm my-1 font-medium text-[gray]">
-            Price: ${item?.price.toFixed(2)}
+            Price: ${item?.price?.toFixed(2) || 0}
           </p>
         )}
 
@@ -79,7 +77,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ item, loading }) => {
               (sub_item, index) =>
                 `${sub_item.name} ${
                   index !== item?.categories.length - 1 ? " & " : ""
-                }`
+                }`  
             )}
           </p>
         )}
@@ -119,9 +117,15 @@ const ProductList: React.FC = () => {
     const callApi = async () => {
       try {
         setLoading(true);
-        const response_data = await getProductList();
-        console.log(response_data);
-        setProductList(response_data);
+        const params = {
+          limit: 10,
+          page: 0,
+          size: 100,
+        };
+        const response_data = await getProductList(params);
+        const productsData = response_data.content;
+        console.log("Product List:", productsData);
+        setProductList(productsData);
       } catch (error: any) {
         toast.error(error.message);
       } finally {

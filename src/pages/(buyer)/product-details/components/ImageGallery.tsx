@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 import Carousel from "react-material-ui-carousel";
-import { Box, Button, Dialog, Grid2, Paper, Stack } from "@mui/material";
+import { Box, Button, Dialog, Grid2, Paper } from "@mui/material";
 import { useAppSelector } from "../../../../store/store";
-import { IconHeart, IconHeartFilled, IconZoomScan } from "@tabler/icons-react";
+import { IconZoomScan } from "@tabler/icons-react";
 
 interface BannerProp {
   cover_url: string;

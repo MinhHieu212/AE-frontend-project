@@ -88,6 +88,8 @@ const ProdCategory = () => {
 
     if (categoryName) {
       const variants = getCategoryVariants(categoryName);
+
+      console.log(variants);
       if (variants.length > 0) {
         useDispatch(initialVariants({ variants }));
         useDispatch(setPrimaryVariant({ variant: variants[0].type }));
@@ -100,9 +102,9 @@ const ProdCategory = () => {
       <p className="font-medium text-lg">
         Category <span className="text-red-600"> *</span>
       </p>
-      <div className="border-2 border-solid border-gray-200 shadow-sm rounded-lg p-5 h-full flex flex-col gap-3">
+      <div className="border-[2px] border-solid border-gray-200 shadow-sm rounded-lg p-5 h-full flex flex-col gap-3">
         <div>
-          <p className="my-0 mb-1 text-[#aca4a4] text-sm">
+          <p className="my-0 mb-1 text-[#797474] text-sm">
             Product category
             <span className="text-red-600"> *</span>
           </p>
@@ -141,7 +143,7 @@ const ProdCategory = () => {
         </div>
 
         <div className="mt-2">
-          <p className="my-0 mb-1 text-[#aca4a4] text-sm">
+          <p className="my-0 mb-1 text-[#797474] text-sm">
             {category.level_1.name || "Product"} sub-category
           </p>
           <FormControl className="w-full relative">

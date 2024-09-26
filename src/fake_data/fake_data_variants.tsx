@@ -1,7 +1,7 @@
 export const fake_data_variants = [
   {
     id: 2,
-    name: "Electronic",
+    name: "Laptop",
     default_variants: [
       {
         id: 0,
@@ -17,7 +17,7 @@ export const fake_data_variants = [
   },
   {
     id: 44,
-    name: "Smart Phone",
+    name: "Phone",
     default_variants: [
       {
         id: 0,
@@ -40,7 +40,7 @@ export const fake_data_variants = [
   },
   {
     id: 3,
-    name: "Book",
+    name: "Books",
     default_variants: [
       {
         id: 0,

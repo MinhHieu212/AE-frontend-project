@@ -19,10 +19,10 @@ const ProdInventory = () => {
       <p className="font-medium text-lg">
         Inventory <span className="text-red-600"> *</span>
       </p>
-      <div className="border-2 border-solid border-gray-200 shadow-sm rounded-lg p-5 h-full">
+      <div className="border-[2px] border-solid border-gray-200 shadow-sm rounded-lg p-5 h-full">
         <div className="flex gap-3">
           <div className="w-1/2">
-            <p className="my-0 pb-1 text-[#aca4a4] text-sm">
+            <p className="my-0 pb-1 text-[#797474] text-sm">
               Quantity <span className="text-red-600"> *</span>
             </p>
             <TextField
@@ -47,7 +47,7 @@ const ProdInventory = () => {
             />
           </div>
           <div className="w-1/2">
-            <p className="my-0 pb-1 text-[#aca4a4] text-sm">SKU (optional)</p>
+            <p className="my-0 pb-1 text-[#797474] text-sm">SKU (optional)</p>
             <TextField
               variant="outlined"
               fullWidth

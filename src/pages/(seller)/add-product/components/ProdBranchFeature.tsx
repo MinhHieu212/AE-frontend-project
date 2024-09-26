@@ -21,9 +21,9 @@ const ProdBranchFeature = () => {
   return (
     <div className="w-full rounded-lg mb-2 p-3">
       <p className="font-medium text-lg">Brand and Featured</p>
-      <div className="border-2 border-solid border-gray-200 shadow-sm rounded-lg p-5 h-full flex flex-col gap-3">
+      <div className="border-[2px] border-solid border-gray-200 shadow-sm rounded-lg p-5 h-full flex flex-col gap-3">
         <div>
-          <p className="my-0 mb-1 text-[#aca4a4] text-sm">
+          <p className="my-0 mb-1 text-[#797474] text-sm">
             Product brand
             <span className="text-red-600"> *</span>
           </p>
@@ -68,7 +68,7 @@ const ProdBranchFeature = () => {
 
         <ProdCollections />
 
-        <div className="flex items-start justify-between mt-3">
+        <div className="flex items-start justify-between mt-1">
           <div className="flex items-center justify-start gap-3 w-1/2">
             <label>
               <span
@@ -98,7 +98,7 @@ const ProdBranchFeature = () => {
           <div className="w-1/2 flex items-center justify-end">
             <span
               aria-label="isFeatured"
-              className="cursor-pointer text-[#aca4a4] text-sm"
+              className="cursor-pointer text-[#797474] text-sm"
             >
               Featured product
             </span>

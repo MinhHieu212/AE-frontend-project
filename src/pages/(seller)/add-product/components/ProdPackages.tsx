@@ -44,9 +44,9 @@ const ProdPackages = () => {
   return (
     <div className="w-full rounded-lg mb-2 p-3">
       <p className="font-medium text-lg"> Shiping and Delivery </p>
-      <div className="border-2 border-solid border-gray-200 shadow-sm rounded-lg p-5 h-full flex flex-col gap-3 mt-5">
+      <div className="border-[2px] border-solid border-gray-200 shadow-sm rounded-lg p-5 h-full flex flex-col gap-3 mt-5">
         <div>
-          <p className="my-0 pb-1 text-[#aca4a4] text-sm">Item weight</p>
+          <p className="my-0 pb-1 text-[#797474] text-sm">Item weight</p>
           <div className="w-full flex items-center justify-between px-1 border-[1px] h-[40px] border-solid border-[#c8c3c3] rounded-md">
             <InputBase
               sx={{ ml: 1, flex: 1 }}
@@ -87,7 +87,7 @@ const ProdPackages = () => {
                 key={dim}
                 className="flex items-start justify-center flex-col w-1/3"
               >
-                <p className="my-0 pb-1 text-[#aca4a4] text-sm">
+                <p className="my-0 pb-1 text-[#797474] text-sm">
                   {dim.charAt(0).toUpperCase() + dim.slice(1)}
                 </p>
                 <TextField

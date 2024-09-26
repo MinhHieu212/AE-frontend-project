@@ -36,7 +36,7 @@ function ProdCollections() {
 
   return (
     <Box className="mt-2">
-      <span className="my-0 mb-1 text-[#aca4a4] text-sm">
+      <span className="my-0 mb-1 text-[#797474] text-sm">
         Collections <span className="text-red-600"> *</span>
       </span>
       <Autocomplete

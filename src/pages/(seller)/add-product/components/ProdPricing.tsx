@@ -15,11 +15,11 @@ const ProdPricing = () => {
       <p className="font-medium text-lg">
         Pricing <span className="text-red-600">*</span>
       </p>
-      <div className="border-2 border-solid border-gray-200 shadow-sm rounded-lg p-5 h-full flex flex-col gap-3">
+      <div className="border-[2px] border-solid border-gray-200 shadow-sm rounded-lg p-5 h-full flex flex-col gap-3">
         <div className="w-full flex items-center justify-between gap-5 mb-2">
           {["MSRP Price", "Sale Price"].map((label) => (
             <div key={label} className="w-full">
-              <p className="my-0 pb-1 text-[#aca4a4] text-sm">
+              <p className="my-0 pb-1 text-[#797474] text-sm">
                 {label}
                 {label === "MSRP Price" && (
                   <span className="text-red-600">*</span>
@@ -58,7 +58,7 @@ const ProdPricing = () => {
           ))}
         </div>
         <div>
-          <p className="my-0 pb-1 text-[#aca4a4] text-sm">
+          <p className="my-0 pb-1 text-[#797474] text-sm">
             Price <span className="text-red-600">*</span>
           </p>
           <TextField
