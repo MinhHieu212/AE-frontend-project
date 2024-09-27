@@ -16,26 +16,25 @@ interface VariantCombinationProps {
   quantity: number;
 }
 
-// interface FileImageProps {
-//   file: File;
-//   url: string;
-// }
-
-// interface VariantWithImageProps {
-//   type: string;
-//   value: string;
-//   images: FileImageProps[];
-// }
+interface FileImageProps {
+  file: File;
+  url: string;
+}
+interface VariantImagesListProps {
+  type: string;
+  value: any;
+  images: FileImageProps[];
+}
 
 interface VariantProps {
-  // variantWithImages: VariantWithImageProps[];
+  variantWithImages: VariantImagesListProps[];
   combineVariantsTable: VariantCombinationProps[];
   variants: VariantObjProps[];
   primaryVariant: string;
 }
 
 const initialState: VariantProps = {
-  // variantWithImages: [],
+  variantWithImages: [],
   combineVariantsTable: [],
   variants: [],
   primaryVariant: "",
@@ -118,21 +117,6 @@ export const variantsSlice = createSlice({
         .map((item, index) => ({ ...item, id: index }));
     },
 
-    // update list images for specify value of one variant
-    // updateVariantImages: (
-    //   state,
-    //   action: PayloadAction<{ id: number; images: FileImageProps[] }>
-    // ) => {
-    //   state.variants = state.variants.map((item) =>
-    //     item.id === action.payload.id
-    //       ? {
-    //           ...item,
-    //           images: action.payload.images,
-    //         }
-    //       : item
-    //   );
-    // },
-
     initializeCombinations: (
       state,
       action: PayloadAction<VariantObjProps[]>
@@ -198,6 +182,15 @@ export const variantsSlice = createSlice({
         state.combineVariantsTable[index][field] = value;
       }
     },
+
+    updateVariantImages: (
+      state,
+      action: PayloadAction<{
+        variantImages: VariantImagesListProps[];
+      }>
+    ) => {
+      state.variantWithImages = action.payload.variantImages;
+    },
   },
 });
 
@@ -208,8 +201,8 @@ export const {
   setPrimaryVariant,
   setVariantValue,
   removeVariantValue,
+  updateVariantImages,
   initializeCombinations,
   updateCombinationFieldValue,
   initialVariants,
-  // updateVariantImages,
 } = variantsSlice.actions;

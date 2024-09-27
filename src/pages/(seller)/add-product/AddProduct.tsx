@@ -46,63 +46,77 @@ const ActionButtons = () => {
   const useDispatch = useAppDispatch();
   const product = useAppSelector((state) => state.product);
   const variants = useAppSelector((state) => state.variants.variants);
+  const primary_variant = useAppSelector(
+    (state) => state.variants.primaryVariant
+  );
   const variants_table = useAppSelector(
     (state) => state.variants.combineVariantsTable
   );
-
-  const variantsPayload = variants_table.map((variant) => {
-    const variantOptions = Object.entries(variant)
-      .filter(
-        ([key]) =>
-          !["quantity", "price", "salePrice", "sku", "mrspPrice"].includes(key)
-      )
-      .map(([variantTypes, value]) => ({
-        variantTypes,
-        value: String(value),
-      }));
-
-    return {
-      quantityAvailable: variant.quantity,
-      price: variant.price,
-      salePrice: variant.salePrice,
-      sku: variant.sku,
-      mrsp: variant.mrspPrice,
-      imageURLs: [],
-      variantOptions,
-    };
-  });
-
-  const optionsPayload = variants.map((item, indez) => {
-    return {
-      [item.type]: item.values,
-    };
-  }, {});
-
-  let payload = {
-    name: product.name,
-    imageURL: product.images.map((image) => image.url),
-    primaryImageURL: product?.primaryImage?.url,
-    description: product.description,
-    brandName: product.brand,
-    sellingTypes: product.sellingType,
-    inventory: product.inventory,
-    collections: product.collections,
-    categories: [
-      product.category.level_1.index,
-      product.category.level_2.index,
-    ],
-    dimensions: {
-      weight: product.packages_weight,
-      length: product.packages_size.length,
-      width: product.packages_size.width,
-      height: product.packages_size.height,
-    },
-    hasVariants: product.haveVariants,
-    variants: variantsPayload,
-    options: optionsPayload,
-  };
+  const variantImages = useAppSelector(
+    (state) => state.variants.variantWithImages
+  );
 
   function handleAddNewProduct() {
+    const variantsPayload = variants_table.map((variant) => {
+      const variantOptions = Object.entries(variant)
+        .filter(
+          ([key]) =>
+            !["quantity", "price", "salePrice", "sku", "mrspPrice"].includes(
+              key
+            )
+        )
+        .map(([variantTypes, value]) => {
+          return {
+            variantTypes,
+            value: String(value),
+          };
+        });
+
+      const imageUrls = variantImages
+        .filter((item) => item.value === variant[primary_variant])[0]
+        .images.map((it) => it.url);
+
+      return {
+        quantityAvailable: variant.quantity,
+        price: variant.price,
+        salePrice: variant.salePrice,
+        sku: variant.sku,
+        mrsp: variant.mrspPrice,
+        imageURLs: imageUrls,
+        variantOptions,
+      };
+    });
+
+    const optionsPayload = variants.map((item, index) => {
+      return {
+        [item.type]: item.values,
+      };
+    }, {});
+
+    let payload = {
+      name: product.name,
+      imageURL: product.images.map((image) => image.url),
+      primaryImageURL: product?.primaryImage?.url,
+      description: product.description,
+      brandName: product.brand,
+      sellingTypes: product.sellingType,
+      inventory: product.inventory,
+      collections: product.collections,
+      categories: [
+        product.category.level_1.index,
+        product.category.level_2.index,
+      ],
+      dimensions: {
+        weight: product.packages_weight,
+        length: product.packages_size.length,
+        width: product.packages_size.width,
+        height: product.packages_size.height,
+      },
+      hasVariants: product.haveVariants,
+      options: optionsPayload,
+      variants: variantsPayload,
+    };
+
     console.log(JSON.stringify(payload, null, 2));
   }
 

@@ -3,7 +3,7 @@ import { getProductList } from "../../../../api/ProductApi";
 import { toast } from "../../../../utils/Toastify";
 import { Button, Grid2 } from "@mui/material";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
-import { fakeProductList } from "../../../../fake_data/fake_data_products";
+import { fakeProductList } from "../../../../constants/constant_product_list";
 import { ProductProps } from "../../../../types/product_types";
 import ProductItem from "../../home-page/components/components/ProductItem";
 

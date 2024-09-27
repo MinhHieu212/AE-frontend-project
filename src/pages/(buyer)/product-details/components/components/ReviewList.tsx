@@ -18,11 +18,13 @@ const ratingOptions = [0, 1, 2, 3, 4, 5];
 const sortOptions = ["Most relevant", "Most recent", "By rating"];
 
 const ReviewList = ({}) => {
-  const [ratingOption, setRatingOption] = useState(ratingOptions[0]);
-  const [sort, setSort] = useState(sortOptions[0]);
-  const [loading, setLoading] = useState<boolean>(false);
   const { slug: product_id } = useParams();
+  const [sort, setSort] = useState(sortOptions[0]);
   const [reviewList, setReviewList] = useState<any>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [ratingOption, setRatingOption] = useState(ratingOptions[0]);
+
+  console.log(ratingOption, sort);
 
   useEffect(() => {
     const callApi = async () => {

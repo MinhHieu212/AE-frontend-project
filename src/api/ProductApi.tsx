@@ -29,3 +29,15 @@ export const uploadImageProduct = async (prod_id: number, body: any) => {
     throw error;
   }
 };
+
+export const uploadVariantImages = async (body: any) => {
+  try {
+    const response = await api_form_data_body.post(
+      `/api/v1/variant/upload/image`,
+      body
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

@@ -12,10 +12,10 @@ import {
 } from "../../../../store/slices/variantsSlice";
 import { toast } from "../../../../utils/Toastify";
 import { getCategories } from "../../../../api/CategoryApi";
-import { fake_data_categorys } from "../../../../fake_data/fake_data_category";
-import { fake_data_variants } from "../../../../fake_data/fake_data_variants";
+import { constant_category } from "../../../../constants/constant_category";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import { updateProductField } from "../../../../store/slices/productSlice";
+import { constant_variants } from "../../../../constants/constant_variants";
 
 export interface CategoryProps {
   id: number;
@@ -29,7 +29,7 @@ const ProdCategory = () => {
   const category = useAppSelector((state) => state.product.category);
   const [subCategory, setSubCategory] = useState<any>([]);
   const [categories, setCategories] =
-    useState<CategoryProps[]>(fake_data_categorys);
+    useState<CategoryProps[]>(constant_category);
 
   const handleChange = (value: string, level: string) => {
     if (value === "") {
@@ -78,8 +78,8 @@ const ProdCategory = () => {
 
   useEffect(() => {
     const getCategoryVariants = (categoryName: string) => {
-      const selectedCategory = fake_data_variants.find(
-        (item) => item.name === categoryName
+      const selectedCategory = constant_variants.find(
+        (item: any) => item.name === categoryName
       );
       return selectedCategory?.default_variants || [];
     };
@@ -89,7 +89,6 @@ const ProdCategory = () => {
     if (categoryName) {
       const variants = getCategoryVariants(categoryName);
 
-      console.log(variants);
       if (variants.length > 0) {
         useDispatch(initialVariants({ variants }));
         useDispatch(setPrimaryVariant({ variant: variants[0].type }));

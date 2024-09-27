@@ -70,7 +70,7 @@ const ProdVariantTable: React.FC = () => {
                 Quantity
               </StyledTableCell>
               <StyledTableCell className="uppercase" align="center">
-                Quantity
+                Sku
               </StyledTableCell>
             </TableRow>
           </TableHead>

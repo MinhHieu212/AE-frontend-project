@@ -7,7 +7,7 @@ interface ProductState {
   name: string;
   description: string;
   brand: string;
-  collections: string[];
+  collections: { name: string; id: number }[];
   haveVariants: boolean;
   isFeatured: boolean;
   sellingType: string;

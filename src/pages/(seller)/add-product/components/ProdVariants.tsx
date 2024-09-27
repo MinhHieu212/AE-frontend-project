@@ -18,14 +18,17 @@ import {
   setPrimaryVariant,
   setVariantType,
   setVariantValue,
+  updateVariantImages,
 } from "../../../../store/slices/variantsSlice";
+import { uploadVariantImages } from "../../../../api/ProductApi";
+import { ClearFormattingControl } from "@mantine/tiptap";
 interface FileImageProps {
   file: File;
   url: string;
 }
 interface VariantImagesListProps {
   type: string;
-  value: string;
+  value: any;
   images: FileImageProps[];
 }
 interface Variant {
@@ -35,15 +38,15 @@ interface Variant {
 }
 
 const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
-  const useDispatch = useAppDispatch();
-  const primaryVariant = useAppSelector(
-    (state) => state.variants.primaryVariant
-  );
   const [show, setShow] = useState<boolean>(false);
+  const useDispatch = useAppDispatch();
   const [inputValue, setInputValue] = useState<string>("");
   const [variantImagesList, setVariantImagesList] = useState<
     VariantImagesListProps[]
   >([]);
+  const primaryVariant = useAppSelector(
+    (state) => state.variants.primaryVariant
+  );
 
   useEffect(() => {
     setVariantImagesList(
@@ -54,6 +57,10 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
       }))
     );
   }, [values]);
+
+  useEffect(() => {
+    useDispatch(updateVariantImages({ variantImages: variantImagesList }));
+  }, [variantImagesList]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -89,20 +96,41 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
   };
 
   const handleFileChange =
-    (value: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    (value: string) => async (event: React.ChangeEvent<HTMLInputElement>) => {
       if (event.target.files) {
-        const newImages = Array.from(event.target.files).map((file) => ({
-          url: URL.createObjectURL(file),
-          file: file,
-        }));
+        const form_data = new FormData();
+        const filesArray = Array.from(event.target.files);
 
-        setVariantImagesList((prev) =>
-          prev.map((item) =>
-            item.value === value
-              ? { ...item, images: [...item.images, ...newImages] }
-              : item
-          )
-        );
+        filesArray.forEach((file) => {
+          form_data.append("files", file);
+        });
+
+        try {
+          const response = await uploadVariantImages(form_data);
+
+          if (
+            response &&
+            Array.isArray(response) &&
+            response.length === filesArray.length
+          ) {
+            const newImages = filesArray.map((file, index) => ({
+              url: response[index],
+              file: file,
+            }));
+
+            setVariantImagesList((prev) =>
+              prev.map((item) =>
+                item.value === value
+                  ? { ...item, images: [...item.images, ...newImages] }
+                  : item
+              )
+            );
+          } else {
+            console.error("Mismatch between files and response URLs");
+          }
+        } catch (error) {
+          console.error("Error uploading images:", error);
+        }
       }
     };
 
@@ -118,8 +146,6 @@ const VariantOption: React.FC<Variant> = ({ id, type, values }) => {
       )
     );
   };
-
-  useEffect(() => {}, [variantImagesList]);
 
   return (
     <Box>

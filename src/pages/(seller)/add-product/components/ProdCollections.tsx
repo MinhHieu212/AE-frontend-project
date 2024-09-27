@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import Checkbox from "@mui/material/Checkbox";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -7,31 +7,36 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { Box } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import { updateProductField } from "../../../../store/slices/productSlice";
+import { getCollections } from "../../../../api/CollectionApi";
+import { toast } from "../../../../utils/Toastify";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-const productCollections = [
-  { title: "Furniture Collection" },
-  { title: "Shoes Collection" },
-  { title: "Autumn Collection" },
-  { title: "Winter Collection" },
-  { title: "Electronics" },
-];
-
 function ProdCollections() {
   const dispatch = useAppDispatch();
+  const [productCollections, setProductCollections] = useState([]);
   const selectedCollections = useAppSelector(
     (state) => state.product.collections
   );
 
+  useEffect(() => {
+    const fetchCollections = async () => {
+      try {
+        const response_data = await getCollections();
+        console.log("Collections", response_data);
+        setProductCollections(
+          response_data.map((item: any) => ({ name: item.name, id: item.id }))
+        );
+      } catch (error: any) {
+        toast.error(error?.message);
+      }
+    };
+    fetchCollections();
+  }, []);
+
   const handleCollectionsChange = (event: any, newValue: any) => {
-    const selectedTitles = newValue.map(
-      (item: { title: string }) => item.title
-    );
-    dispatch(
-      updateProductField({ field: "collections", value: selectedTitles })
-    );
+    dispatch(updateProductField({ field: "collections", value: newValue }));
   };
 
   return (
@@ -46,25 +51,21 @@ function ProdCollections() {
         size="small"
         className="w-full min-h-[40px] mb-1"
         disableCloseOnSelect
-        value={productCollections.filter((option) =>
-          selectedCollections.includes(option.title)
-        )}
+        value={selectedCollections}
         onChange={handleCollectionsChange}
-        getOptionLabel={(option) => option.title}
-        renderOption={(props, option, { selected }) => {
-          const { key, ...optionProps } = props;
-          return (
-            <li key={key} {...optionProps}>
-              <Checkbox
-                icon={icon}
-                checkedIcon={checkedIcon}
-                style={{ marginRight: 8 }}
-                checked={selected}
-              />
-              {option.title}
-            </li>
-          );
-        }}
+        getOptionLabel={(option) => option.name}
+        isOptionEqualToValue={(option, value) => option.id === value.id}
+        renderOption={(props, option, { selected }) => (
+          <li {...props}>
+            <Checkbox
+              icon={icon}
+              checkedIcon={checkedIcon}
+              style={{ marginRight: 8 }}
+              checked={selected}
+            />
+            {option.name}
+          </li>
+        )}
         renderInput={(params) => (
           <TextField
             {...params}

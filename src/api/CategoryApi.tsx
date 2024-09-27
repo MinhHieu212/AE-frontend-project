@@ -9,3 +9,5 @@ export const getCategories = async () => {
     throw error;
   }
 };
+
+// http://103.75.182.16:8080/api/v1/category

@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ImageGallery from "./components/ImageGallery";
 import ProductVariants from "./components/ProductVariants";
-import { fake_data_product_detail_v2 } from "../../../fake_data/fake_data_product_detail_v2";
+import { constant_product_detail } from "../../../constants/constant_product_detail";
 import { useAppDispatch, useAppSelector } from "../../../store/store";
 import { initialProductDetail } from "../../../store/slices/productDetailSlice";
 import { initialSeletedVariant } from "../../../store/slices/selectedVariantSlice";
@@ -19,19 +19,19 @@ const ProductDetails = () => {
 
   useEffect(() => {
     const initialValue = {
-      name: fake_data_product_detail_v2?.name,
-      description: fake_data_product_detail_v2?.description,
-      brandName: fake_data_product_detail_v2?.brandName,
-      sellingTypes: fake_data_product_detail_v2?.sellingTypes,
-      imageURLs: fake_data_product_detail_v2?.variants[1].imageURLs,
+      name: constant_product_detail?.name,
+      description: constant_product_detail?.description,
+      brandName: constant_product_detail?.brandName,
+      sellingTypes: constant_product_detail?.sellingTypes,
+      imageURLs: constant_product_detail?.variants[1].imageURLs,
       packages_size: {
-        length: fake_data_product_detail_v2?.dimensions.length,
-        width: fake_data_product_detail_v2?.dimensions.width,
-        height: fake_data_product_detail_v2?.dimensions.height,
+        length: constant_product_detail?.dimensions.length,
+        width: constant_product_detail?.dimensions.width,
+        height: constant_product_detail?.dimensions.height,
       },
-      categories: fake_data_product_detail_v2?.categories,
-      haveVariants: fake_data_product_detail_v2?.hasVariants,
-      variants: fake_data_product_detail_v2?.variants,
+      categories: constant_product_detail?.categories,
+      haveVariants: constant_product_detail?.hasVariants,
+      variants: constant_product_detail?.variants,
     };
 
     const initialSeleted = {

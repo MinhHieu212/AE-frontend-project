@@ -5,7 +5,7 @@ import { getProductList } from "../../../api/ProductApi";
 import { toast } from "../../../utils/Toastify";
 import { ProductProps } from "../../../types/product_types";
 import Grid from "@mui/material/Grid2";
-import { fakeProductList } from "../../../fake_data/fake_data_products";
+import { fakeProductList } from "../../../constants/constant_product_list";
 
 const MAX_ITEM_PER_PAGE = 12;
 
@@ -77,7 +77,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ item, loading }) => {
               (sub_item, index) =>
                 `${sub_item.name} ${
                   index !== item?.categories.length - 1 ? " & " : ""
-                }`  
+                }`
             )}
           </p>
         )}

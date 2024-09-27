@@ -1,4 +1,4 @@
-export const fake_data_categorys = [
+export const constant_category = [
   {
     id: 2,
     name: "Electronic",

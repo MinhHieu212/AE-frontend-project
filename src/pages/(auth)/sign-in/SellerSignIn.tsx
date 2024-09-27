@@ -8,7 +8,7 @@ import {
 import { IconChevronDown, IconChevronRight } from "@tabler/icons-react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import nasa_logo from "../../../assest/images/nasa_gray.png";
+import nasa_logo from "../../../assests/images/nasa_gray.png";
 import { useAppDispatch } from "../../../store/store";
 import { setRole } from "../../../store/slices/roleSlice";
 

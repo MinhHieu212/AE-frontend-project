@@ -4,7 +4,7 @@ import { toast } from "../../../../utils/Toastify";
 import ProductItem from "./components/ProductItem";
 import { Button, Grid2 } from "@mui/material";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
-import { fakeProductList } from "../../../../fake_data/fake_data_products";
+import { fakeProductList } from "../../../../constants/constant_product_list";
 import { ProductProps } from "../../../../types/product_types";
 
 const Populars = () => {

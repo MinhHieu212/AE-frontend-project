@@ -1,4 +1,4 @@
-export const fake_data_product_detail_v2 = {
+export const constant_product_detail = {
   id: "66eb862471534a1f9cb11354",
   name: "Samsung Galaxy S24 Ultra Chính hãng VN/A",
   imageURL: null,

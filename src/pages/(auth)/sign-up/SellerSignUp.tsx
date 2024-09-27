@@ -13,7 +13,7 @@ import {
   InputLabel,
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import nasa_logo from "../../../assest/images/nasa_gray.png";
+import nasa_logo from "../../../assests/images/nasa_gray.png";
 import { useAppDispatch } from "../../../store/store";
 import { setRole } from "../../../store/slices/roleSlice";
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { toast } from "../../../../utils/Toastify";
-import { fake_data_categorys } from "../../../../fake_data/fake_data_category";
+import { constant_category } from "../../../../constants/constant_category";
 import DynamicIcon from "../../../../components/DynamicIcon";
 import { getCategories } from "../../../../api/CategoryApi";
 
@@ -28,7 +28,7 @@ const CategoryItem = (props: CategoryProps) => {
 
 const Categories = () => {
   const [categories, setCategories] =
-    useState<CategoryProps[]>(fake_data_categorys);
+    useState<CategoryProps[]>(constant_category);
 
   useEffect(() => {
     const callApi = async () => {

@@ -4,7 +4,7 @@ import { getProductList } from "../../../../api/ProductApi";
 import { toast } from "../../../../utils/Toastify";
 import ProductItem from "./components/ProductItem";
 import Grid2 from "@mui/material/Grid2";
-import { fakeProductList } from "../../../../fake_data/fake_data_products";
+import { fakeProductList } from "../../../../constants/constant_product_list";
 import { ProductProps } from "../../../../types/product_types";
 
 const NewArrivals = () => {
