@@ -10,12 +10,11 @@ import {
   initialVariants,
   setPrimaryVariant,
 } from "../../../../store/slices/variantsSlice";
-import { toast } from "../../../../utils/Toastify";
 import { getCategories, getCategoryById } from "../../../../api/CategoryApi";
 import { constant_category } from "../../../../constants/constant_category";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import { updateProductField } from "../../../../store/slices/productSlice";
-import { constant_variants } from "../../../../constants/constant_variants";
+import { toast } from "../../../../utils/Toastify";
 
 export interface CategoryProps {
   id: number;
@@ -77,48 +76,45 @@ const ProdCategory = () => {
   }, []);
 
   useEffect(() => {
-    const getCategoryVariants = (categoryName: string, id: string) => {
+    const getCategoryVariants = async (categoryName: string, id: string) => {
       const callApi = async () => {
         try {
           const response = await getCategoryById(id);
-          console.log(
-            "specification type:",
-            response.specificationTypes.map(
-              (item: any) => item.specificationType
-            ),
-            "variant type:",
-            response.variantTypes.map((item: any) => item.type)
+          const variants = response.variantTypes.map(
+            (item: any, index: number) => ({
+              id: index,
+              type: item.type,
+              values: [],
+            })
           );
-          console.log("getCategoryVariants", response);
+
+          const specification: any = {};
+          response.specificationTypes.forEach((item: any) => {
+            specification[item.specificationType] = "";
+          });
+
+          console.log(specification, variants);
+          useDispatch(initialVariants({ variants }));
+
+          useDispatch(setPrimaryVariant({ variant: variants[0].type }));
+          useDispatch(
+            updateProductField({
+              field: "specification",
+              value: specification,
+            })
+          );
         } catch (error: any) {
           console.log(error?.message);
         }
       };
-
       callApi();
-
-      const selectedCategory = constant_variants.find(
-        (item: any) => item.name === categoryName
-      );
-      return selectedCategory?.default_variants || [];
     };
 
     const categoryName = category.level_2.name || category.level_1.name;
     const categoryId = category.level_2.index || category.level_1.index;
 
-    if (categoryName) {
-      const variants = getCategoryVariants(
-        categoryName,
-        categoryId ? categoryId : ""
-      );
-
-      if (variants.length > 0) {
-        // intial Variant
-        // inital specification
-
-        useDispatch(initialVariants({ variants }));
-        useDispatch(setPrimaryVariant({ variant: variants[0].type }));
-      }
+    if (categoryName && categoryId) {
+      getCategoryVariants(categoryName, categoryId ? categoryId : "");
     }
   }, [category]);
 

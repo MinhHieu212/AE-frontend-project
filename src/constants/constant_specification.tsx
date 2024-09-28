@@ -1,4 +1,4 @@
-export const constant_variants = {
+export const constant_specifications = {
   IPHONE: {
     SPECIFICATION: [
       "Display",
@@ -10,7 +10,7 @@ export const constant_variants = {
     CAMERA: ["Front Camera", "Rear Camera"],
     DIMENSION: ["Height", "Width", "Depth", "Weight"],
   },
-  LAPTOP: {
+  BANNERS: {
     SPECIFICATION: [
       "display",
       "processor",
@@ -24,7 +24,7 @@ export const constant_variants = {
     CAMERA: ["Front"],
     DIMENSION: ["Height", "Width", "Depth", "Weight"],
   },
-  SMARTWATCH: {
+  ELECTRONIC: {
     SPECIFICATION: [
       "display",
       "battery",
@@ -37,7 +37,7 @@ export const constant_variants = {
     CAMERA: [],
     DIMENSION: ["height", "width", "depth", "weight"],
   },
-  TABLET: {
+  PHONE: {
     SPECIFICATION: [
       "display",
       "processor",
@@ -51,7 +51,7 @@ export const constant_variants = {
     CAMERA: ["front", "rear"],
     DIMENSION: ["height", "width", "depth", "weight"],
   },
-  TELEVISION: {
+  LAPTOP: {
     SPECIFICATION: [
       "screenSize",
       "resolution",
@@ -65,7 +65,7 @@ export const constant_variants = {
     CAMERA: [],
     DIMENSION: ["height", "width", "depth", "weight"],
   },
-  HEADPHONES: {
+  SPORTS: {
     SPECIFICATION: [
       "type",
       "battery",
@@ -78,20 +78,59 @@ export const constant_variants = {
     CAMERA: [],
     DIMENSION: ["weight"],
   },
-  CLOTHING: {
-    // Quần áo
+  WATCHES: {
     SPECIFICATION: [
-      "material",
-      "size",
-      "color",
-      "fit",
-      "fabricType",
-      "careInstructions",
-      "season",
+      "type",
+      "battery",
+      "connectivity",
+      "noiseCancellation",
+      "frequencyResponse",
+      "impedance",
+      "waterResistance",
     ],
-    DIMENSION: ["length", "width", "height", "weight"],
+    CAMERA: [],
+    DIMENSION: ["weight"],
   },
-  BOOK: {
+  GAMES: {
+    SPECIFICATION: [
+      "type",
+      "battery",
+      "connectivity",
+      "noiseCancellation",
+      "frequencyResponse",
+      "impedance",
+      "waterResistance",
+    ],
+    CAMERA: [],
+    DIMENSION: ["weight"],
+  },
+  FURNITURE: {
+    SPECIFICATION: [
+      "type",
+      "battery",
+      "connectivity",
+      "noiseCancellation",
+      "frequencyResponse",
+      "impedance",
+      "waterResistance",
+    ],
+    CAMERA: [],
+    DIMENSION: ["weight"],
+  },
+  SAMSUNG: {
+    SPECIFICATION: [
+      "type",
+      "battery",
+      "connectivity",
+      "noiseCancellation",
+      "frequencyResponse",
+      "impedance",
+      "waterResistance",
+    ],
+    CAMERA: [],
+    DIMENSION: ["weight"],
+  },
+  BOOKS: {
     // Sách
     SPECIFICATION: [
       "author",

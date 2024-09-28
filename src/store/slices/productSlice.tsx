@@ -32,25 +32,7 @@ interface ProductState {
   };
   images: ImageFile[];
   primaryImage: ImageFile | null;
-  specification: {
-    common: {
-      display: string | null;
-      processor: string | null;
-      battery: string | null;
-      operatingSystem: string | null;
-      waterResistance: string | null;
-    };
-    camera: {
-      front: string | null;
-      rear: string | null;
-    };
-    dimension: {
-      height: string | null;
-      weight: string | null;
-      width: string | null;
-      depth: string | null;
-    };
-  };
+  specification: any;
 }
 
 const initialState: ProductState = {
@@ -82,25 +64,7 @@ const initialState: ProductState = {
   },
   images: [],
   primaryImage: null,
-  specification: {
-    common: {
-      display: null,
-      processor: null,
-      battery: null,
-      operatingSystem: null,
-      waterResistance: null,
-    },
-    camera: {
-      front: null,
-      rear: null,
-    },
-    dimension: {
-      height: null,
-      width: null,
-      depth: null,
-      weight: null,
-    },
-  },
+  specification: {},
 };
 
 export const productSlice = createSlice({
@@ -128,41 +92,9 @@ export const productSlice = createSlice({
       };
     },
 
-    updateProductSpecification: (
-      state,
-      action: PayloadAction<{
-        parentField: keyof ProductState["specification"];
-        field: string;
-        value: any;
-      }>
-    ) => {
-      const { parentField, field, value } = action.payload;
-
-      if (parentField === "common") {
-        state.specification.common = {
-          ...state.specification.common,
-          [field]: value,
-        };
-      } else if (parentField === "camera") {
-        state.specification.camera = {
-          ...state.specification.camera,
-          [field]: value,
-        };
-      } else if (parentField === "dimension") {
-        state.specification.dimension = {
-          ...state.specification.dimension,
-          [field]: value,
-        };
-      }
-    },
-
     resetProductData: () => initialState,
   },
 });
 
-export const {
-  updateProductField,
-  resetProductData,
-  updateProductPricing,
-  updateProductSpecification,
-} = productSlice.actions;
+export const { updateProductField, resetProductData, updateProductPricing } =
+  productSlice.actions;
