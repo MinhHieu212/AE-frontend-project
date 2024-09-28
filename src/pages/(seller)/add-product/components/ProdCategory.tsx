@@ -70,7 +70,7 @@ const ProdCategory = () => {
         const response_data = await getCategories();
         setCategories(response_data);
       } catch (error: any) {
-        toast.error(error.message);
+        // toast.error(error.message);
       }
     };
     callApi();

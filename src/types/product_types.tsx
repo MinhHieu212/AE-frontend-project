@@ -82,8 +82,8 @@ interface Dimensions {
 export interface ProductProps {
   id: number;
   name: string;
-  imageURL: string[];
-  primaryImageURL: string;
+  imageURL: string[] | null;
+  primaryImageURL: string | null;
   description: string;
   msrp: number;
   salePrice: number;

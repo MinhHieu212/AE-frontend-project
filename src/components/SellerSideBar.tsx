@@ -115,17 +115,17 @@ const SellerSideBar = () => {
   return (
     <div className="w-[350px] h-[100dvh] bg-darkGreen flex flex-col justify-start items-center px-5">
       <div
-        className="w-full flex items-center gap-3 cursor-pointer"
+        className="w-full flex items-center gap-2 cursor-pointer"
         onClick={() => {
           navigate("/products");
         }}
       >
         <img
-          src={`${process.env.PUBLIC_URL}/images/nasa_gray.png` || nasa_logo}
+          src={`${process.env.PUBLIC_URL}/images/accessed_logo.png`}
           alt="Company avatar"
-          className="w-[55px] h-[55px] object-cover rounded-md"
+          className="w-[45px] h-[45px] object-cover rounded-md"
         />
-        <h2 className="text-lightLime text-[20px]">Nasastore</h2>
+        <h2 className="text-gray-400 text-[20px]">Accessed</h2>
       </div>
 
       <TextField

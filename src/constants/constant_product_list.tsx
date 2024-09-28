@@ -4,11 +4,8 @@ export const fakeProductList: ProductProps[] = [
   {
     id: 101,
     name: "Ultra HD 4K TV",
-    imageURL: [
-      "https://fakeimage.com/uhd4ktv/front.jpg",
-      "https://fakeimage.com/uhd4ktv/back.jpg",
-    ],
-    primaryImageURL: "https://fakeimage.com/uhd4ktv/front.jpg",
+    imageURL: [],
+    primaryImageURL: null,
     description:
       "A 55-inch Ultra HD 4K television with vibrant color and smart features.",
     msrp: 899.99,
@@ -41,11 +38,8 @@ export const fakeProductList: ProductProps[] = [
   {
     id: 102,
     name: "Gaming Laptop X",
-    imageURL: [
-      "https://fakeimage.com/gaminglaptopx/front.jpg",
-      "https://fakeimage.com/gaminglaptopx/side.jpg",
-    ],
-    primaryImageURL: "https://fakeimage.com/gaminglaptopx/front.jpg",
+    imageURL: [],
+    primaryImageURL: null,
     description:
       "A high-performance gaming laptop with 16GB RAM and NVIDIA graphics.",
     msrp: 1999.99,
@@ -78,11 +72,8 @@ export const fakeProductList: ProductProps[] = [
   {
     id: 103,
     name: "Wireless Earbuds Pro",
-    imageURL: [
-      "https://fakeimage.com/earbudspro/front.jpg",
-      "https://fakeimage.com/earbudspro/case.jpg",
-    ],
-    primaryImageURL: "https://fakeimage.com/earbudspro/front.jpg",
+    imageURL: [],
+    primaryImageURL: null,
     description: "Premium wireless earbuds with noise-cancelling technology.",
     msrp: 249.99,
     salePrice: 199.99,
@@ -114,11 +105,8 @@ export const fakeProductList: ProductProps[] = [
   {
     id: 104,
     name: "Smartwatch Series 7",
-    imageURL: [
-      "https://fakeimage.com/smartwatch7/front.jpg",
-      "https://fakeimage.com/smartwatch7/back.jpg",
-    ],
-    primaryImageURL: "https://fakeimage.com/smartwatch7/front.jpg",
+    imageURL: [],
+    primaryImageURL: null,
     description:
       "A modern smartwatch with health monitoring features and customizable faces.",
     msrp: 499.99,

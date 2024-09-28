@@ -8,7 +8,6 @@ import {
 import { IconChevronDown, IconChevronRight } from "@tabler/icons-react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import nasa_logo from "../../../assests/images/nasa_gray.png";
 import { useAppDispatch } from "../../../store/store";
 import { updateUserField } from "../../../store/slices/userSlice";
 
@@ -22,19 +21,17 @@ const SellerSignIn = () => {
       <Box className="flex flex-col items-center max-w-[370px] p-3">
         <Box className="flex items-center justify-center gap-1 my-2 cursor-pointer w-full mb-2 pr-4">
           <img
-            src={`${process.env.PUBLIC_URL}/images/nasa_gray.png` || nasa_logo}
+            src={`${process.env.PUBLIC_URL}/images/accessed_logo.png`}
             alt="Company avatar"
-            className="w-[65px] h-[65px] object-contain rounded-md"
+            className="w-[55px] h-[55px] object-cover rounded-md"
           />
-          <h2 className="text-[#4e6e9c] text-[25px] ">Nasastore Business</h2>
+          <h2 className="text-[#4e6e9c] text-[25px] ">Accessed Business</h2>
         </Box>
         <Box className="border-2 border-solid border-gray-200 p-4 rounded-lg flex flex-col justify-center shadow-sm">
           <p className="font-bold text-[24px] my-0 mb-1 text-[#4e6e9c]">
             Sign in with business credentials
           </p>
-          <p className="font-nomal text-sm my-0 mt-2">
-            Emails or mobile phone number
-          </p>
+          <p className="font-nomal text-sm my-0 mt-2">Emails</p>
           <FormControl className="w-full my-0 mt-1 mb-3">
             <OutlinedInput size="small" />
           </FormControl>
@@ -52,7 +49,7 @@ const SellerSignIn = () => {
             Continue
           </Button>
           <p className="my-0 text-[12px] mb-3">
-            By continuing, you agree to Nasastore's{" "}
+            By continuing, you agree to Accessed's{" "}
             <Link className="text-blue-300" to="">
               Conditions of Use
             </Link>{" "}
@@ -96,7 +93,7 @@ const SellerSignIn = () => {
         </Box>
         <Box className="flex items-center justify-center my-5 gap-3">
           <Divider className="w-[80px]" />
-          <span className="text-[12px]">New to Nasastore</span>
+          <span className="text-[12px]">New to Accessed</span>
           <Divider className="w-[80px]" />
         </Box>
         <Button
@@ -104,7 +101,7 @@ const SellerSignIn = () => {
           className="capitalize w-full border-[#4e6e9c] text-[#4e6e9c] h-[40px]"
           onClick={() => navigate("/seller/sign-up")}
         >
-          Create your Nasastore account
+          Create your Accessed account
         </Button>
       </Box>
     </Box>

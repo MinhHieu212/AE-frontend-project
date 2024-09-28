@@ -22,17 +22,15 @@ const SignIn = () => {
       <Box className="flex flex-col items-center max-w-[370px] p-3">
         <Box className="flex items-center justify-center gap-1 my-2 cursor-pointer w-[150px] mb-2 mr-4">
           <img
-            src="https://cdn.worldvectorlogo.com/logos/nasa-2.svg"
+            src={`${process.env.PUBLIC_URL}/images/accessed_logo.png`}
             alt="Company avatar"
-            className="w-[65px] h-[65px] object-cover rounded-md"
+            className="w-[55px] h-[55px] object-cover rounded-md"
           />
-          <h2 className="text-[black] text-[25px]">Nasastore</h2>
+          <h2 className="text-[black] text-[25px]">Accessed</h2>
         </Box>
         <Box className="border-2 border-solid border-gray-200 p-4 rounded-lg flex flex-col justify-center shadow-sm">
           <p className="font-bold text-[24px] my-0 mb-1">Sign in</p>
-          <p className="font-nomal text-sm my-0 mt-2">
-            Emails or mobile phone number
-          </p>
+          <p className="font-nomal text-sm my-0 mt-2">Emails</p>
           <FormControl className="w-full my-0 mb-3">
             <OutlinedInput size="small" />
           </FormControl>
@@ -51,7 +49,7 @@ const SignIn = () => {
             Continue
           </Button>
           <p className="my-0 text-[12px] mb-3">
-            By continuing, you agree to Nasastore's{" "}
+            By continuing, you agree to Accessed's{" "}
             <Link className="text-blue-300" to="">
               Conditions of Use
             </Link>{" "}
@@ -90,12 +88,12 @@ const SignIn = () => {
           <Divider className="my-5" />
           <p className="text-sm my-1 font-medium">Are you seller?</p>
           <Link className="text-blue-300 text-[12px]" to="/seller/sign-in">
-            Shop on Nasastore Business
+            Shop on Accessed Business
           </Link>
         </Box>
         <Box className="flex items-center justify-center my-5 gap-3">
           <Divider className="w-[80px]" />
-          <span className="text-[12px]">New to Nasastore</span>
+          <span className="text-[12px]">New to Accessed</span>
           <Divider className="w-[80px]" />
         </Box>
         <Button
@@ -103,7 +101,7 @@ const SignIn = () => {
           className="capitalize w-full border-black text-black h-[40px]"
           onClick={() => navigate("/sign-up")}
         >
-          Create your Nasastore account
+          Create your Accessed account
         </Button>
       </Box>
     </Box>

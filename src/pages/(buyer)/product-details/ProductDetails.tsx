@@ -11,6 +11,7 @@ import { initialSeletedVariant } from "../../../store/slices/selectedVariantSlic
 import ProdDetails from "./components/ProdDetails";
 import ProdReviews from "./components/ProdReviews";
 import RelatedProducts from "./components/RelatedProducts";
+import ProdBottom from "./components/ProdBottom";
 
 const ProductDetails = () => {
   const { slug } = useParams();
@@ -69,6 +70,7 @@ const ProductDetails = () => {
           <RelatedProducts />
         </Grid2>
       </Grid2>
+      <ProdBottom />
     </div>
   );
 };

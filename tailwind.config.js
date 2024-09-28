@@ -10,10 +10,21 @@ module.exports = {
         white: "#FFFFFF",
         lightLime: "#ECDFCC",
       },
+      theme: {
+        screens: {
+          sm: "340px",
+          // => @media (min-width: 340px) { ... }
+
+          md: "340px",
+          // => @media (min-width: 760px) { ... }
+
+          lg: "760px",
+          // => @media (min-width: 1024px) { ... }
+        },
+      },
     },
   },
   corePlugins: {
-    // Remove the Tailwind CSS preflight styles so it can use Material UI's preflight instead (CssBaseline).
     preflight: false,
   },
   plugins: [],

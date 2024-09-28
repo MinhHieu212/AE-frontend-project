@@ -9,7 +9,7 @@ import { useAppSelector } from "../../../store/store";
 const Homepage = () => {
   const user_role = useAppSelector((state) => state.user.role);
   return (
-    <div className="w-full max-w-[1300px] p-3  mx-auto bg-white">
+    <div className="w-full max-w-[1300px] p-3 mx-auto bg-white">
       <Banners />
       <Categories />
       <Populars />

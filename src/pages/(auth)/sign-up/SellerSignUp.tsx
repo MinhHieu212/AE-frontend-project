@@ -16,15 +16,15 @@ const SellerSignUp = () => {
       <Box className="flex flex-col items-center max-w-[370px] p-3">
         <Box className="flex items-center justify-center gap-1 my-2 cursor-pointer w-full mb-2 pr-4">
           <img
-            src={`${process.env.PUBLIC_URL}/images/nasa_gray.png` || nasa_logo}
+            src={`${process.env.PUBLIC_URL}/images/accessed_logo.png`}
             alt="Company avatar"
-            className="w-[65px] h-[65px] object-contain rounded-md"
+            className="w-[55px] h-[55px] object-cover rounded-md"
           />
-          <h2 className="text-[#4e6e9c] text-[25px] ">Nasastore Business</h2>
+          <h2 className="text-[#4e6e9c] text-[25px] ">Accessed Business</h2>
         </Box>
         <Box className="border-2 border-solid border-gray-200 p-4 rounded-lg flex flex-col justify-center w-full shadow-sm">
           <Typography variant="h5" className="font-bold mb-4 text-[#4e6e9c]">
-            Create your Nasastore Business account
+            Create your Accessed Business account
           </Typography>
           <form onSubmit={() => {}}>
             <p className="font-nomal text-sm my-0 mt-2">Business Name</p>
@@ -68,11 +68,11 @@ const SellerSignUp = () => {
               fullWidth
               className="mt-4 bg-[#4e6e9c] capitalize"
             >
-              Create your Nasastore Business account
+              Create your Accessed Business account
             </Button>
           </form>
           <Typography variant="body2" className="mt-3 text-center">
-            By creating an account, you agree to Nasastore's{" "}
+            By creating an account, you agree to Accessed's{" "}
             <Link className="text-blue-300" to="/conditions">
               Conditions of Use
             </Link>{" "}

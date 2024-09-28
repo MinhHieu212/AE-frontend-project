@@ -127,7 +127,7 @@ const ProductList: React.FC = () => {
         console.log("Product List:", productsData);
         setProductList(productsData);
       } catch (error: any) {
-        toast.error(error.message);
+        // toast.error(error.message);
       } finally {
         setLoading(false);
       }

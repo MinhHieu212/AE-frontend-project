@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { IconChevronDown, IconChevronRight } from "@tabler/icons-react";
 import { Link, useNavigate } from "react-router-dom";
+import accessed_logo from "../../../assests/images/accessed_logo.png";
 
 const SignUp = () => {
   const [needHelp, setNeedHelp] = useState(false);
@@ -20,11 +21,14 @@ const SignUp = () => {
       <Box className="flex flex-col items-center max-w-[370px] p-3">
         <Box className="flex items-center justify-center gap-1 my-2 cursor-pointer w-[150px] mb-2 mr-4">
           <img
-            src="https://cdn.worldvectorlogo.com/logos/nasa-2.svg"
+            src={
+              `${process.env.PUBLIC_URL}/images/accessed_logo.png` ||
+              accessed_logo
+            }
             alt="Company avatar"
-            className="w-[65px] h-[65px] object-cover rounded-md"
+            className="w-[55px] h-[55px] object-cover rounded-md"
           />
-          <h2 className="text-[black] text-[25px]">Nasastore</h2>
+          <h2 className="text-[black] text-[25px]">Accessed</h2>
         </Box>
         <Box className="border-2 border-solid border-gray-200 p-4 rounded-lg flex flex-col justify-center shadow-sm">
           <Typography variant="h5" className="font-bold mb-1">
@@ -34,9 +38,13 @@ const SignUp = () => {
           <FormControl className="w-full mb-3">
             <OutlinedInput size="small" />
           </FormControl>
-          <p className="font-nomal text-sm my-0 mt-2">Mobile number or email</p>
+          <p className="font-nomal text-sm my-0 mt-2">Email</p>
           <FormControl className="w-full mb-3">
             <OutlinedInput size="small" />
+          </FormControl>{" "}
+          <p className="font-nomal text-sm my-0 mt-2">Phone</p>
+          <FormControl className="w-full my-0 mb-3">
+            <OutlinedInput size="small" type="number" />
           </FormControl>
           <p className="font-nomal text-sm my-0 mt-2">Password</p>
           <FormControl className="w-full mb-3">
@@ -50,10 +58,10 @@ const SignUp = () => {
             className="w-full bg-darkGreen text-white rounded-md p-3 h-[40px] mb-5 capitalize"
             onClick={() => navigate("/")}
           >
-            Create your Nasastore account
+            Create your Accessed account
           </Button>
           <Typography variant="body2" className="my-0 text-[12px] mb-3">
-            By creating an account, you agree to Nasastore's{" "}
+            By creating an account, you agree to Accessed's{" "}
             <MuiLink component={Link} to="" className="text-blue-300">
               Conditions of Use
             </MuiLink>{" "}
