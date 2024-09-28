@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "https://minhhieu212.github.io/accessed-ecommerce/static/css/main.d92acdaa.css",
-    "main.js": "https://minhhieu212.github.io/accessed-ecommerce/static/js/main.5d0d5fae.js",
-    "static/media/nasa_gray.png": "https://minhhieu212.github.io/accessed-ecommerce/static/media/nasa_gray.945d1732da5c997c7f17.png",
+    "main.css": "https://minhhieu212.github.io/accessed-ecommerce/static/css/main.f707b191.css",
+    "main.js": "https://minhhieu212.github.io/accessed-ecommerce/static/js/main.aca9f2a0.js",
+    "static/media/accessed_logo.png": "https://minhhieu212.github.io/accessed-ecommerce/static/media/accessed_logo.93c23e9a59ee0bc494c3.png",
     "index.html": "https://minhhieu212.github.io/accessed-ecommerce/index.html",
-    "main.d92acdaa.css.map": "https://minhhieu212.github.io/accessed-ecommerce/static/css/main.d92acdaa.css.map",
-    "main.5d0d5fae.js.map": "https://minhhieu212.github.io/accessed-ecommerce/static/js/main.5d0d5fae.js.map"
+    "main.f707b191.css.map": "https://minhhieu212.github.io/accessed-ecommerce/static/css/main.f707b191.css.map",
+    "main.aca9f2a0.js.map": "https://minhhieu212.github.io/accessed-ecommerce/static/js/main.aca9f2a0.js.map"
   },
   "entrypoints": [
-    "static/css/main.d92acdaa.css",
-    "static/js/main.5d0d5fae.js"
+    "static/css/main.f707b191.css",
+    "static/js/main.aca9f2a0.js"
   ]
 }
