@@ -7,11 +7,11 @@ import {
 } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import { setRole } from "../store/slices/roleSlice";
+import { updateUserField } from "../store/slices/userSlice";
 
 const SellerHeader = () => {
   const navigate = useNavigate();
-  const userRole = useAppSelector((state) => state.roles.user_role);
+  const user_role = useAppSelector((state) => state.user.role);
   const useDispatch = useAppDispatch();
 
   return (
@@ -26,8 +26,8 @@ const SellerHeader = () => {
           <div
             className="flex flex-col items-start justify-start gap-0"
             onClick={() => {
-              if (userRole === "seller") {
-                useDispatch(setRole({ user_role: "anonymous" }));
+              if (user_role === "seller") {
+                useDispatch(updateUserField({ role: "anonymous" }));
               }
               navigate("/seller/sign-in");
             }}
@@ -36,10 +36,10 @@ const SellerHeader = () => {
               className="text-gray-400 text-xs"
               style={{ fontSize: "10px" }}
             >
-              {userRole === "seller" ? "Logout" : "Sign in"}
+              {user_role === "seller" ? "Logout" : "Sign in"}
             </span>
             <span className="font-semibold text-sm">
-              {userRole === "seller" ? "Hieu Minh" : "Account"}
+              {user_role === "seller" ? "Hieu Minh" : "Account"}
             </span>
           </div>
         </div>

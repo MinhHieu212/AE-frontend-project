@@ -5,17 +5,10 @@ import {
   Divider,
   FormControl,
   OutlinedInput,
-  TextField,
   Typography,
-  Select,
-  MenuItem,
-  FormHelperText,
-  InputLabel,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import nasa_logo from "../../../assests/images/nasa_gray.png";
-import { useAppDispatch } from "../../../store/store";
-import { setRole } from "../../../store/slices/roleSlice";
 
 const SellerSignUp = () => {
   return (

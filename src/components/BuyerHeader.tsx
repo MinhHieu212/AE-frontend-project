@@ -20,12 +20,12 @@ import {
 } from "@tabler/icons-react";
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import { setRole } from "../store/slices/roleSlice";
+import { updateUserField } from "../store/slices/userSlice";
 
 const BuyerHeader = () => {
   const [category, setCategory] = useState<string>("");
   const navigate = useNavigate();
-  const userRole = useAppSelector((state) => state.roles.user_role);
+  const user_role = useAppSelector((state) => state.user.role);
   const useDispatch = useAppDispatch();
 
   return (
@@ -95,8 +95,8 @@ const BuyerHeader = () => {
           <div
             className="flex flex-col items-start justify-start gap-0"
             onClick={() => {
-              if (userRole === "buyer") {
-                useDispatch(setRole({ user_role: "anonymous" }));
+              if (user_role === "buyer") {
+                useDispatch(updateUserField({ role: "anonymous" }));
               }
               navigate("/sign-in");
             }}
@@ -105,10 +105,10 @@ const BuyerHeader = () => {
               className="text-gray-400 text-xs"
               style={{ fontSize: "10px" }}
             >
-              {userRole === "buyer" ? "Logout" : "Sign in"}
+              {user_role === "buyer" ? "Logout" : "Sign in"}
             </span>
             <span className="font-semibold text-sm">
-              {userRole === "buyer" ? "Hieu Minh" : "Account"}
+              {user_role === "buyer" ? "Hieu Minh" : "Account"}
             </span>
           </div>
         </div>

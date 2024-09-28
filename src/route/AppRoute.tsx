@@ -12,15 +12,15 @@ import SellerSignIn from "../pages/(auth)/sign-in/SellerSignIn";
 import SellerSignUp from "../pages/(auth)/sign-up/SellerSignUp";
 
 const AppRoute = () => {
-  const userRole = useAppSelector((state) => state.roles.user_role);
-  console.log(userRole);
+  const user_role = useAppSelector((state) => state.user.role);
+
   return (
     <Routes>
-      {(userRole === "anonymous" || userRole === "buyer") &&
+      {(user_role === "anonymous" || user_role === "buyer") &&
         buyer_route.map((item, index) => (
           <Route path={item.path} element={item.element} key={index} />
         ))}
-      {userRole === "seller" &&
+      {user_role === "seller" &&
         seller_route.map((item, index) => (
           <Route path={item.path} element={item.element} key={index} />
         ))}

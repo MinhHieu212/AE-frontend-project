@@ -20,7 +20,7 @@ const ProductItem = ({ item, loading }: ProductItemProps) => {
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWz9tftw9qculFH1gxieWkxL6rbRk_hrXTSg&s";
   const navigate = useNavigate();
   const [like, setLike] = useState<boolean>(true);
-  const userRole = useAppSelector((state) => state.roles.user_role);
+  const user_role = useAppSelector((state) => state.user.role);
 
   return (
     <Box className="rouned-lg mx-auto my-auto shadow-xl w-full flex flex-col items-center">
@@ -40,7 +40,9 @@ const ProductItem = ({ item, loading }: ProductItemProps) => {
             className="w-[250px] h-[250px] object-cover cursor-pointer mt-2"
             onClick={() =>
               navigate(
-                userRole === "seller" ? `/products/${item?.id}` : `/${item?.id}`
+                user_role === "seller"
+                  ? `/products/${item?.id}`
+                  : `/${item?.id}`
               )
             }
           />

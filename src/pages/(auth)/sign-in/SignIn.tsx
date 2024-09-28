@@ -10,7 +10,7 @@ import { IconChevronDown, IconChevronRight } from "@tabler/icons-react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../../store/store";
-import { setRole } from "../../../store/slices/roleSlice";
+import { updateUserField } from "../../../store/slices/userSlice";
 
 const SignIn = () => {
   const [needHelp, setNeedHelp] = useState<boolean>(false);
@@ -44,7 +44,7 @@ const SignIn = () => {
           <Button
             className="w-full bg-darkGreen text-white rounded-md mt-5 p-3 h-[40px] mb-5 capitalize"
             onClick={() => {
-              useDispatch(setRole({ user_role: "buyer" }));
+              useDispatch(updateUserField({ role: "buyer" }));
               navigate("/");
             }}
           >

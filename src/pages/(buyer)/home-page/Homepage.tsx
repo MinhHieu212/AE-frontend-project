@@ -7,14 +7,14 @@ import Showcase from "./components/Showcase";
 import { useAppSelector } from "../../../store/store";
 
 const Homepage = () => {
-  const userRole = useAppSelector((state) => state.roles.user_role);
+  const user_role = useAppSelector((state) => state.user.role);
   return (
     <div className="w-full max-w-[1300px] p-3  mx-auto bg-white">
       <Banners />
       <Categories />
       <Populars />
-      {userRole === "buyer" && <NewArrivals />}
-      {userRole === "buyer" && <Showcase />}
+      {user_role === "buyer" && <NewArrivals />}
+      {user_role === "buyer" && <Showcase />}
     </div>
   );
 };

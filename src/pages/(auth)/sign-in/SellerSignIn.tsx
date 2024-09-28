@@ -10,7 +10,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import nasa_logo from "../../../assests/images/nasa_gray.png";
 import { useAppDispatch } from "../../../store/store";
-import { setRole } from "../../../store/slices/roleSlice";
+import { updateUserField } from "../../../store/slices/userSlice";
 
 const SellerSignIn = () => {
   const [needHelp, setNeedHelp] = useState<boolean>(false);
@@ -45,7 +45,7 @@ const SellerSignIn = () => {
           <Button
             className="w-full bg-[#4e6e9c] text-white rounded-md p-3 h-[40px] mb-5 capitalize"
             onClick={() => {
-              useDispatch(setRole({ user_role: "seller" }));
+              useDispatch(updateUserField({ role: "seller" }));
               navigate("/products");
             }}
           >
