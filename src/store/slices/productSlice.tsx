@@ -12,8 +12,8 @@ interface ProductState {
   isFeatured: boolean;
   sellingType: string;
   category: {
-    level_1: { name: string | null; index: number | null };
-    level_2: { name: string | null; index: number | null };
+    level_1: { name: string | null; index: string | null };
+    level_2: { name: string | null; index: string | null };
   };
   inventory: {
     quantity: number | null;

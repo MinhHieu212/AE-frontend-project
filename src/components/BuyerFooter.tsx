@@ -70,7 +70,7 @@ const BuyerFooter = () => {
           size={{ xs: 12, sm: 8 }}
           className="flex flex-wrap items-center justify-center md:justify-start gap-3"
         >
-          <div className="flex items-center justify-center gap-3 xs:w-full">
+          <div className="flex min-w-[240px] items-center justify-center gap-3 xs:w-full">
             <Select
               className="h-[25px] w-full sm:w-[45%] cursor-pointer"
               value={currency}

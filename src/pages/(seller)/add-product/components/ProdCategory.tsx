@@ -11,7 +11,7 @@ import {
   setPrimaryVariant,
 } from "../../../../store/slices/variantsSlice";
 import { toast } from "../../../../utils/Toastify";
-import { getCategories } from "../../../../api/CategoryApi";
+import { getCategories, getCategoryById } from "../../../../api/CategoryApi";
 import { constant_category } from "../../../../constants/constant_category";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import { updateProductField } from "../../../../store/slices/productSlice";
@@ -49,7 +49,7 @@ const ProdCategory = () => {
           field: "category",
           value: {
             ...category,
-            [level]: { name: values[0], index: Number(values[1]) },
+            [level]: { name: values[0], index: values[1] },
           },
         })
       );
@@ -77,7 +77,26 @@ const ProdCategory = () => {
   }, []);
 
   useEffect(() => {
-    const getCategoryVariants = (categoryName: string) => {
+    const getCategoryVariants = (categoryName: string, id: string) => {
+      const callApi = async () => {
+        try {
+          const response = await getCategoryById(id);
+          console.log(
+            "specification type:",
+            response.specificationTypes.map(
+              (item: any) => item.specificationType
+            ),
+            "variant type:",
+            response.variantTypes.map((item: any) => item.type)
+          );
+          console.log("getCategoryVariants", response);
+        } catch (error: any) {
+          console.log(error?.message);
+        }
+      };
+
+      callApi();
+
       const selectedCategory = constant_variants.find(
         (item: any) => item.name === categoryName
       );
@@ -85,11 +104,18 @@ const ProdCategory = () => {
     };
 
     const categoryName = category.level_2.name || category.level_1.name;
+    const categoryId = category.level_2.index || category.level_1.index;
 
     if (categoryName) {
-      const variants = getCategoryVariants(categoryName);
+      const variants = getCategoryVariants(
+        categoryName,
+        categoryId ? categoryId : ""
+      );
 
       if (variants.length > 0) {
+        // intial Variant
+        // inital specification
+
         useDispatch(initialVariants({ variants }));
         useDispatch(setPrimaryVariant({ variant: variants[0].type }));
       }

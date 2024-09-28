@@ -10,4 +10,14 @@ export const getCategories = async () => {
   }
 };
 
+export const getCategoryById = async (category_id: string) => {
+  if (category_id === "") return;
+  try {
+    const response = await api_json_body.get(`/api/v1/category/${category_id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // http://103.75.182.16:8080/api/v1/category

@@ -17,7 +17,7 @@ interface ProductItemProps {
 const ProductItem: React.FC<ProductItemProps> = ({ item, loading }) => {
   const navigate = useNavigate();
   const fallbackImageURL =
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWz9tftw9qculFH1gxieWkxL6rbRk_hrXTSg&s";
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU";
 
   return (
     <div className="w-full mx-auto mb-2 p-3 rounded-xl flex items-start justify-start gap-3 border-2 border-solid border-gray-100 bg-[#fbfdff] shadow-lg">

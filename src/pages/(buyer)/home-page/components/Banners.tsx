@@ -139,7 +139,7 @@ const Banner = (props: BannerProp) => {
         minHeight: "300px",
         color: props.color,
         width: "100%",
-        borderRadius: "15px",
+        borderRadius: "10px",
         position: "relative",
       }}
     >
@@ -174,28 +174,28 @@ const Banners = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [banners, setBanners] = useState<BannerProp[]>(bannerList);
 
-  // useEffect(() => {
-  //   const callApi = async () => {
-  //     setLoading(true);
-  //     try {
-  //       const response_data = await getBanner();
-  //       const banner_data = response_data.slice(0, 5).map((item: any) => {
-  //         return {
-  //           cover_url: item.url,
-  //           image_object: "cover",
-  //           color: "black",
-  //         };
-  //       });
-  //       console.log("Banners", banner_data);
-  //       setBanners(banner_data);
-  //     } catch (error: any) {
-  //       // toast.error(error.message);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   callApi();
-  // }, []);
+  useEffect(() => {
+    const callApi = async () => {
+      setLoading(true);
+      try {
+        const response_data = await getBanner();
+        const banner_data = response_data.slice(0, 5).map((item: any) => {
+          return {
+            cover_url: item.url,
+            image_object: "cover",
+            color: "black",
+          };
+        });
+        console.log("Banners", banner_data);
+        setBanners(banner_data);
+      } catch (error: any) {
+        // toast.error(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    callApi();
+  }, []);
 
   return (
     <div className="mx-auto w-full mb-10 h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px]">

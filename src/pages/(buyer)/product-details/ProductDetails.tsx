@@ -1,4 +1,4 @@
-import { Box, Grid2 } from "@mui/material";
+import { Box, Grid2, useMediaQuery } from "@mui/material";
 import DOMPurify from "dompurify";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -17,6 +17,7 @@ const ProductDetails = () => {
   const { slug } = useParams();
   const useDispatch = useAppDispatch();
   const description = useAppSelector((state) => state.detail).description;
+  const isMobile = useMediaQuery("(max-width:800px)");
 
   useEffect(() => {
     const initialValue = {
@@ -49,20 +50,31 @@ const ProductDetails = () => {
   return (
     <div className={`w-full h-full max-w-[1300px] mx-auto my-5 sidebar`}>
       <Grid2 className={`w-full`} container spacing={2} alignItems="flex-start">
-        <Grid2 size={7}>
+        <Grid2 size={{ sm: 12, md: 7 }}>
           <ImageGallery />
-          <Box className="mt-5 min-h-[200px] text-sm w-full border-2 border-solid border-gray-100 rounded-lg p-5 py-3 shadow-lg">
-            <div
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(description),
-              }}
-            />
-          </Box>
+          {!isMobile && (
+            <Box className="mt-5 min-h-[200px] text-sm w-full border-2 border-solid border-gray-100 rounded-lg p-5 py-3 shadow-lg">
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(description),
+                }}
+              />
+            </Box>
+          )}
         </Grid2>
-        <Grid2 size={5} className="px-5 sticky top-5">
+        <Grid2 size={{ sm: 12, md: 5 }} className="px-5 sticky top-5">
           <ProductVariants />
           <ProdDetails />
           <ProdReviews />
+          {isMobile && (
+            <Box className="mt-5 min-h-[200px] text-sm w-full border-2 border-solid border-gray-100 rounded-lg p-5 py-3 shadow-lg">
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(description),
+                }}
+              />
+            </Box>
+          )}
         </Grid2>
       </Grid2>
       <Grid2 className={`w-full`} container spacing={2} alignItems="flex-start">

@@ -16,7 +16,7 @@ interface ProductItemProps {
 
 const ProductItem = ({ item, loading }: ProductItemProps) => {
   const fallbackImageURL =
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWz9tftw9qculFH1gxieWkxL6rbRk_hrXTSg&s";
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU";
   const navigate = useNavigate();
   const [like, setLike] = useState<boolean>(true);
   const user_role = useAppSelector((state) => state.user.role);

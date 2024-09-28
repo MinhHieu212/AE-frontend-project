@@ -1,0 +1,120 @@
+export const constant_variants = {
+  IPHONE: {
+    SPECIFICATION: [
+      "Display",
+      "Processor",
+      "Battery",
+      "Operating System",
+      "Water Resistance",
+    ],
+    CAMERA: ["Front Camera", "Rear Camera"],
+    DIMENSION: ["Height", "Width", "Depth", "Weight"],
+  },
+  LAPTOP: {
+    SPECIFICATION: [
+      "display",
+      "processor",
+      "ram",
+      "storage",
+      "battery",
+      "operatingSystem",
+      "graphicsCard",
+      "ports",
+    ],
+    CAMERA: ["Front"],
+    DIMENSION: ["Height", "Width", "Depth", "Weight"],
+  },
+  SMARTWATCH: {
+    SPECIFICATION: [
+      "display",
+      "battery",
+      "operatingSystem",
+      "waterResistance",
+      "sensors",
+      "connectivity",
+      "healthTracking",
+    ],
+    CAMERA: [],
+    DIMENSION: ["height", "width", "depth", "weight"],
+  },
+  TABLET: {
+    SPECIFICATION: [
+      "display",
+      "processor",
+      "ram",
+      "storage",
+      "battery",
+      "operatingSystem",
+      "connectivity",
+      "stylusSupport",
+    ],
+    CAMERA: ["front", "rear"],
+    DIMENSION: ["height", "width", "depth", "weight"],
+  },
+  TELEVISION: {
+    SPECIFICATION: [
+      "screenSize",
+      "resolution",
+      "refreshRate",
+      "smartTV",
+      "operatingSystem",
+      "ports",
+      "audioOutput",
+      "connectivity",
+    ],
+    CAMERA: [],
+    DIMENSION: ["height", "width", "depth", "weight"],
+  },
+  HEADPHONES: {
+    SPECIFICATION: [
+      "type",
+      "battery",
+      "connectivity",
+      "noiseCancellation",
+      "frequencyResponse",
+      "impedance",
+      "waterResistance",
+    ],
+    CAMERA: [],
+    DIMENSION: ["weight"],
+  },
+  CLOTHING: {
+    // Quần áo
+    SPECIFICATION: [
+      "material",
+      "size",
+      "color",
+      "fit",
+      "fabricType",
+      "careInstructions",
+      "season",
+    ],
+    DIMENSION: ["length", "width", "height", "weight"],
+  },
+  BOOK: {
+    // Sách
+    SPECIFICATION: [
+      "author",
+      "publisher",
+      "publicationYear",
+      "genre",
+      "language",
+      "pageCount",
+      "format",
+      "isbn",
+    ],
+    DIMENSION: ["height", "width", "depth", "weight"],
+  },
+  JEWELRY: {
+    // Trang sức
+    SPECIFICATION: [
+      "material",
+      "stoneType",
+      "weight",
+      "carat",
+      "style",
+      "gender",
+    ],
+    DIMENSION: ["length", "width", "height", "weight"],
+  },
+};
