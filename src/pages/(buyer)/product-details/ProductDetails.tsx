@@ -19,7 +19,7 @@ const ProductDetails = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const { slug: product_id } = useParams();
   const useDispatch = useAppDispatch();
-  const description = useAppSelector((state) => state.product.description);
+  const description = useAppSelector((state) => state.detail.description);
   const product_detail = useAppSelector((state) => state.detail);
   const isMobile = useMediaQuery("(max-width:890px)");
 

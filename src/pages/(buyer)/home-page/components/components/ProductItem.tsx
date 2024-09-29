@@ -37,7 +37,6 @@ const ProductItem = ({ item, loading }: ProductItemProps) => {
         })
       );
 
-      console.log(optionsArray);
       const prod_details = {
         name: productsData?.name,
         description: productsData?.description,
