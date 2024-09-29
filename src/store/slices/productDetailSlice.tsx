@@ -21,6 +21,9 @@ interface ProductDetailsState {
   imageURLs: string[];
   haveVariants: boolean;
   variants: any;
+  rating: number;
+  noOfReviews: number;
+  options: any;
 }
 
 interface variantSelectedState {
@@ -40,6 +43,9 @@ const initialState: ProductDetailsState = {
   categories: [],
   haveVariants: false,
   variants: [],
+  rating: 0,
+  noOfReviews: 0,
+  options: {},
 };
 
 export const productDetailSlice = createSlice({
@@ -61,6 +67,16 @@ export const productDetailSlice = createSlice({
       };
     },
 
+    updateProductDetailState: (
+      state,
+      action: PayloadAction<{ prod_details: any }>
+    ) => {
+      return {
+        ...state,
+        ...action.payload.prod_details,
+      };
+    },
+
     resetProductData: () => initialState,
   },
 });
@@ -69,4 +85,5 @@ export const {
   initialProductDetail,
   updateProductDetailField,
   resetProductData,
+  updateProductDetailState,
 } = productDetailSlice.actions;

@@ -1,6 +1,6 @@
 import { Box, Grid2, useMediaQuery } from "@mui/material";
 import DOMPurify from "dompurify";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ImageGallery from "./components/ImageGallery";
 import ProductVariants from "./components/ProductVariants";
@@ -12,40 +12,57 @@ import ProdDetails from "./components/ProdDetails";
 import ProdReviews from "./components/ProdReviews";
 import RelatedProducts from "./components/RelatedProducts";
 import ProdBottom from "./components/ProdBottom";
+import { getProductById } from "../../../api/ProductApi";
+import { toast } from "../../../utils/Toastify";
 
 const ProductDetails = () => {
-  const { slug } = useParams();
+  const [loading, setLoading] = useState<boolean>(false);
+  const { slug: product_id } = useParams();
   const useDispatch = useAppDispatch();
-  const description = useAppSelector((state) => state.detail).description;
+  const description = useAppSelector((state) => state.product.description);
+  const product_detail = useAppSelector((state) => state.detail);
   const isMobile = useMediaQuery("(max-width:800px)");
 
-  useEffect(() => {
-    const initialValue = {
-      name: constant_product_detail?.name,
-      description: constant_product_detail?.description,
-      brandName: constant_product_detail?.brandName,
-      sellingTypes: constant_product_detail?.sellingTypes,
-      imageURLs: constant_product_detail?.variants[1].imageURLs,
-      packages_size: {
-        length: constant_product_detail?.dimensions.length,
-        width: constant_product_detail?.dimensions.width,
-        height: constant_product_detail?.dimensions.height,
-      },
-      categories: constant_product_detail?.categories,
-      haveVariants: constant_product_detail?.hasVariants,
-      variants: constant_product_detail?.variants,
-    };
+  // useEffect(() => {
+  //   const callApi = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const response_data = await getProductById(product_id);
+  //       const productsData = response_data;
+  //       const prod_details = {
+  //         name: productsData?.name,
+  //         description: productsData?.description,
+  //         brandName: productsData?.brandName,
+  //         sellingTypes: productsData?.sellingTypes,
+  //         imageURLs: productsData?.variants[1].imageURLs,
+  //         packages_size: {
+  //           length: productsData?.dimensions.length,
+  //           width: productsData?.dimensions.width,
+  //           height: productsData?.dimensions.height,
+  //         },
+  //         categories: productsData?.categories,
+  //         haveVariants: productsData?.hasVariants,
+  //         options: productsData.options,
+  //         variants: productsData?.variants,
+  //       };
+  //       const initialSeleted = {
+  //         price: 1231,
+  //         sale_price: 1541,
+  //         quantity: 224,
+  //         variant_option: { COLOR: "midnight", RAM: "4GB", STORAGE: "64GB" },
+  //       };
+  //       useDispatch(initialProductDetail({ value: prod_details }));
+  //       useDispatch(initialSeletedVariant({ value: initialSeleted }));
+  //     } catch (error: any) {
+  //       toast.error(error.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   callApi();
+  // }, [product_id]);
 
-    const initialSeleted = {
-      price: 1231,
-      sale_price: 1541,
-      quantity: 224,
-      variant_option: { COLOR: "midnight", RAM: "4GB", STORAGE: "64GB" },
-    };
-
-    useDispatch(initialProductDetail({ value: initialValue }));
-    useDispatch(initialSeletedVariant({ value: initialSeleted }));
-  }, []);
+  console.log("products", product_detail);
 
   return (
     <div className={`w-full h-full max-w-[1300px] mx-auto my-5 sidebar`}>

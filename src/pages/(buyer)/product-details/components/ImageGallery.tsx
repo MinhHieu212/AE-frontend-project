@@ -74,7 +74,7 @@ const Banner: React.FC<BannerProp> = (props) => {
 };
 
 const ImageGallery = () => {
-  const imageUrls = useAppSelector((state) => state.detail.imageURLs);
+  const imageUrls = useAppSelector((state) => state.detail?.imageURLs);
   const [open, setOpen] = React.useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [activeZoom, setActiveZoom] = useState<boolean>(false);
@@ -88,7 +88,7 @@ const ImageGallery = () => {
     setOpen(false);
   };
 
-  const image_list = imageUrls.map((item) => ({
+  const image_list = imageUrls?.map((item) => ({
     cover_url: item,
     image_object: "center",
     color: "black",

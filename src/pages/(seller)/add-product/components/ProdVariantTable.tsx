@@ -1,8 +1,8 @@
 import { styled } from "@mui/material/styles";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
-import { TextField } from "@mui/material";
+import { Box, Button, Divider, TextField } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
@@ -11,6 +11,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import {
   initializeCombinations,
+  updateCombinationBaseValues,
   updateCombinationFieldValue,
 } from "../../../../store/slices/variantsSlice";
 
@@ -18,6 +19,13 @@ const ProdVariantTable: React.FC = () => {
   const dispatch = useAppDispatch();
   const variants = useAppSelector((state) => state.variants.variants);
   const haveVariants = useAppSelector((state) => state.product.haveVariants);
+  const [baseValues, setBaseValues] = useState<any>({
+    price: null,
+    salePrice: null,
+    quantity: null,
+    mrspPrice: null,
+    sku: "",
+  });
   const combineVariantsTable = useAppSelector(
     (state) => state.variants.combineVariantsTable
   );
@@ -41,6 +49,79 @@ const ProdVariantTable: React.FC = () => {
         </span>
         <span className="text-red-600"> *</span>
       </p>
+      <Box className="flex items-center justify-between mb-5">
+        <Box>
+          <TextField
+            label="Price"
+            type="number"
+            size="small"
+            variant="outlined"
+            className="max-w-[150px]"
+            value={baseValues.price}
+            onChange={(e: any) =>
+              setBaseValues({ ...baseValues, price: e.target.value })
+            }
+          />
+        </Box>
+        <Box>
+          <TextField
+            label="Sale"
+            type="number"
+            size="small"
+            className="max-w-[150px]"
+            value={baseValues.salePrice}
+            onChange={(e: any) =>
+              setBaseValues({ ...baseValues, salePrice: e.target.value })
+            }
+          />
+        </Box>
+        <Box>
+          <TextField
+            label="Mrsp"
+            type="number"
+            size="small"
+            className="max-w-[150px]"
+            value={baseValues.mrspPrice}
+            onChange={(e: any) =>
+              setBaseValues({ ...baseValues, mrspPrice: e.target.value })
+            }
+          />
+        </Box>
+        <Box>
+          <TextField
+            label="Quantity"
+            type="number"
+            size="small"
+            className="max-w-[150px]"
+            value={baseValues.quantity}
+            onChange={(e: any) =>
+              setBaseValues({ ...baseValues, quantity: e.target.value })
+            }
+          />
+        </Box>
+        <Box>
+          <TextField
+            label="Sku"
+            type="text"
+            size="small"
+            className="max-w-[150px]"
+            value={baseValues.sku}
+            onChange={(e: any) =>
+              setBaseValues({ ...baseValues, sku: e.target.value })
+            }
+          />
+        </Box>
+        <Button
+          variant="contained"
+          className="bg-[drakGreen] text-white"
+          onClick={() => {
+            dispatch(updateCombinationBaseValues({ ...baseValues }));
+          }}
+        >
+          Apply all
+        </Button>
+      </Box>
+      <Divider className="my-5" />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>

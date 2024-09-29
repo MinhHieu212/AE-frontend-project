@@ -21,7 +21,6 @@ import {
   updateVariantImages,
 } from "../../../../store/slices/variantsSlice";
 import { uploadVariantImages } from "../../../../api/ProductApi";
-import { ClearFormattingControl } from "@mantine/tiptap";
 interface FileImageProps {
   file: File;
   url: string;

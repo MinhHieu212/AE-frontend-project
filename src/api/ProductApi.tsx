@@ -2,7 +2,7 @@ import { api_form_data_body, api_json_body } from "./MainApi";
 
 export const createProduct = async (body: any) => {
   try {
-    const response = await api_json_body.post("/api/v2/products", body);
+    const response = await api_json_body.post("/api/v1/products", body);
     return response.data;
   } catch (error) {
     throw error;
@@ -21,7 +21,7 @@ export const getProductList = async (params?: any) => {
 export const uploadImageProduct = async (prod_id: number, body: any) => {
   try {
     const response = await api_form_data_body.post(
-      `/api/v2/products/${prod_id}/upload/image`,
+      `/api/v1/products/${prod_id}/upload/image`,
       body
     );
     return response.data;
@@ -35,6 +35,17 @@ export const uploadVariantImages = async (body: any) => {
     const response = await api_form_data_body.post(
       `/api/v1/variant/upload/image`,
       body
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getProductById = async (prod_id: any) => {
+  try {
+    const response = await api_form_data_body.get(
+      `/api/v1/products/${prod_id} `
     );
     return response.data;
   } catch (error) {

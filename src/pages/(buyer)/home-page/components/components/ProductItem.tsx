@@ -7,7 +7,11 @@ import {
 } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { ProductProps } from "../../../../../types/product_types";
-import { useAppSelector } from "../../../../../store/store";
+import { useAppDispatch, useAppSelector } from "../../../../../store/store";
+import { getProductById } from "../../../../../api/ProductApi";
+import { initialProductDetail } from "../../../../../store/slices/productDetailSlice";
+import { initialSeletedVariant } from "../../../../../store/slices/selectedVariantSlice";
+import { toast } from "../../../../../utils/Toastify";
 
 interface ProductItemProps {
   item?: ProductProps;
@@ -20,13 +24,60 @@ const ProductItem = ({ item, loading }: ProductItemProps) => {
   const navigate = useNavigate();
   const [like, setLike] = useState<boolean>(true);
   const user_role = useAppSelector((state) => state.user.role);
+  const useDispatch = useAppDispatch();
+
+  const getProductDetails = async () => {
+    try {
+      const response_data = await getProductById(item?.id);
+      const productsData = response_data;
+      const optionsArray = Object.entries(productsData.options).map(
+        ([item, value]) => ({
+          name: item,
+          values: value,
+        })
+      );
+
+      console.log(optionsArray);
+      const prod_details = {
+        name: productsData?.name,
+        description: productsData?.description,
+        brandName: productsData?.brandName,
+        sellingTypes: productsData?.sellingTypes,
+        imageURLs: productsData?.variants[1]?.imageURLs || [],
+        packages_size: {
+          length: productsData?.dimensions?.length,
+          width: productsData?.dimensions?.width,
+          height: productsData?.dimensions?.height,
+        },
+        categories: productsData?.categories,
+        haveVariants: productsData?.hasVariants,
+        variants: productsData?.variants,
+        options: optionsArray,
+      };
+
+      const initialSeleted = {
+        price: 1231,
+        sale_price: 1541,
+        quantity: 224,
+        variant_option: { COLOR: "midnight", RAM: "4GB", STORAGE: "64GB" },
+      };
+
+      useDispatch(initialProductDetail({ value: prod_details }));
+      useDispatch(initialSeletedVariant({ value: initialSeleted }));
+      navigate(
+        user_role === "seller" ? `/products/${item?.id}` : `/${item?.id}`
+      );
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
 
   return (
     <Box className="rounded-lg mx-auto my-auto shadow-xl w-full flex flex-col items-center pt-3">
       <div className="relative overflow-hidden rounded-lg w-full px-3">
         {loading ? (
           <Skeleton
-            className="w-full aspect-square max-w-[250px] max-h-[270px]"
+            className="w-full aspect-square max-w-[270px] rounded-md mt-3 mx-auto max-h-[270px] h-[40%]"
             animation="wave"
             variant="rectangular"
           />
@@ -35,13 +86,9 @@ const ProductItem = ({ item, loading }: ProductItemProps) => {
             src={item?.primaryImageURL || fallbackImageURL}
             alt={`Product: ${item?.name}`}
             className="w-full aspect-square object-cover cursor-pointer mt-2 max-h-[270px]"
-            onClick={() =>
-              navigate(
-                user_role === "seller"
-                  ? `/products/${item?.id}`
-                  : `/${item?.id}`
-              )
-            }
+            onClick={() => {
+              getProductDetails();
+            }}
           />
         )}
         <div

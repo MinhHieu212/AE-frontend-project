@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Box, Button } from "@mui/material";
 import { MantineProvider } from "@mantine/core";
 import { useAppDispatch, useAppSelector } from "../../../store/store";
+import { resetProductData } from "../../../store/slices/productSlice";
+import { IconArrowLeft } from "@tabler/icons-react";
+import { useNavigate } from "react-router-dom";
+import { createProduct, uploadImageProduct } from "../../../api/ProductApi";
+import { toast } from "../../../utils/Toastify";
+
+import CustomDialog from "../../../components/CustomDialog";
 import ProdDescription from "./components/ProdDescription";
 import ProdCategory from "./components/ProdCategory";
 import ProdPackages from "./components/ProdPackages";
@@ -11,15 +18,12 @@ import ProdVariantTable from "./components/ProdVariantTable";
 import ProdVariants from "./components/ProdVariants";
 import ProdImages from "./components/ProdImages";
 import ProdBranchFeature from "./components/ProdBranchFeature";
-import { resetProductData } from "../../../store/slices/productSlice";
-import { IconArrowLeft } from "@tabler/icons-react";
-import { useNavigate } from "react-router-dom";
-import CustomDialog from "../../../components/CustomDialog";
 import ProdSpecification from "./components/ProdSpecification";
 import ProdPricing from "./components/ProdPricing";
 
 const SubHeader = () => {
   const navigate = useNavigate();
+
   return (
     <div className="flex items-center justify-start gap-3 px-5">
       <CustomDialog
@@ -43,7 +47,8 @@ const SubHeader = () => {
 };
 
 const ActionButtons = () => {
-  const useDispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const product = useAppSelector((state) => state.product);
   const variants = useAppSelector((state) => state.variants.variants);
   const primary_variant = useAppSelector(
@@ -56,7 +61,7 @@ const ActionButtons = () => {
     (state) => state.variants.variantWithImages
   );
 
-  function handleAddNewProduct() {
+  const prepareProductPayload = useCallback(() => {
     const variantsPayload = variants_table.map((variant) => {
       const variantOptions = Object.entries(variant)
         .filter(
@@ -65,16 +70,14 @@ const ActionButtons = () => {
               key
             )
         )
-        .map(([variantTypes, value]) => {
-          return {
-            variantTypes,
-            value: String(value),
-          };
-        });
+        .map(([variantTypes, value]) => ({
+          variantTypes,
+          value: String(value),
+        }));
 
       const imageUrls = variantImages
-        .filter((item) => item.value === variant[primary_variant])[0]
-        .images.map((it) => it.url);
+        .find((item) => item.value === variant[primary_variant])
+        ?.images.map((it) => it.url);
 
       return {
         quantityAvailable: variant.quantity,
@@ -87,48 +90,96 @@ const ActionButtons = () => {
       };
     });
 
-    const optionsPayload = variants.map((item, index) => {
-      return {
-        [item.type]: item.values,
-      };
-    }, {});
+    const optionsPayload = variants.reduce((acc, item) => {
+      acc[item.type] = item.values;
+      return acc;
+    }, {} as Record<string, string[]>);
 
-    let payload = {
+    const collectionsPayload = product.collections.map((item) => item.id);
+
+    return {
       name: product.name,
-      imageURL: product.images.map((image) => image.url),
-      primaryImageURL: product?.primaryImage?.url,
+      imageURL: null,
+      primaryImageURL: null,
       description: product.description,
       brandName: product.brand,
       sellingTypes: product.sellingType,
-      inventory: product.inventory,
-      collections: product.collections,
+      quantityAvailable: product.inventory.quantity,
+      price: product?.pricing.price || 0,
+      salePrice: product?.pricing.sale_price || 0,
+      mrsp: product?.pricing.mrsp || 0,
+      sku: product.inventory.sku,
+      hasCollection: collectionsPayload?.length > 0,
+      collections: collectionsPayload,
       categories: [
-        product.category.level_1.index,
-        product.category.level_2.index,
-      ],
+        product.category.level_1?.index,
+        product.category.level_2?.index,
+      ].filter(Boolean),
       dimensions: {
-        weight: product.packages_weight,
-        length: product.packages_size.length,
-        width: product.packages_size.width,
-        height: product.packages_size.height,
+        weight: product?.packages_weight,
+        length: product?.packages_size.length,
+        width: product?.packages_size.width,
+        height: product?.packages_size.height,
       },
-      hasVariants: product.haveVariants,
+      specification: product?.specification,
+      hasVariants: product?.haveVariants,
       options: optionsPayload,
       variants: variantsPayload,
     };
+  }, [product, variants, primary_variant, variants_table, variantImages]);
 
-    console.log(JSON.stringify(payload, null, 2));
-  }
+  const uploadImages = useCallback(
+    async (productId: any) => {
+      const tempImages = product.primaryImage
+        ? [
+            product.primaryImage,
+            ...product.images.filter((item) => item !== product.primaryImage),
+          ]
+        : product.images;
 
-  function handleDiscardAddProduct() {
-    useDispatch(resetProductData());
-  }
+      const productImages = new FormData();
+      tempImages.forEach((image: any) => {
+        productImages.append("file", image.file);
+        URL.revokeObjectURL(image.url);
+      });
+
+      return await uploadImageProduct(productId, productImages);
+    },
+    [product.primaryImage, product.images]
+  );
+
+  const handleAddNewProduct = useCallback(async () => {
+    try {
+      const payload = prepareProductPayload();
+      const response_data = await createProduct(payload);
+
+      if (response_data.id) {
+        toast.success("New product added successfully");
+        const s3_response_data = await uploadImages(response_data.id);
+
+        if (s3_response_data.id) {
+          toast.success("Image of new product saved successfully");
+          setTimeout(() => navigate("/products"), 1000);
+        }
+      }
+    } catch (error: unknown) {
+      console.error(
+        "Failed to create product:",
+        error instanceof Error ? error.message : String(error)
+      );
+      toast.error("Failed to create product. Please try again.");
+    }
+  }, [prepareProductPayload, uploadImages, navigate]);
+
+  const handleDiscardAddProduct = useCallback(() => {
+    dispatch(resetProductData());
+  }, [dispatch]);
 
   return (
     <div className="w-full items-center justify-end gap-3 flex px-4 my-[30px] mb-[10px]">
       <CustomDialog
         onCancel={() => {}}
-        onAccept={() => handleDiscardAddProduct()}
+        onAccept={handleDiscardAddProduct}
         title="Confirm Action"
         content="Are you sure you want to discard this product?"
       >
@@ -136,15 +187,13 @@ const ActionButtons = () => {
           Discard
         </Button>
       </CustomDialog>
-      <div className="flex items-center justify-center gap-5">
-        <Button
-          className="rounded-md capitalize"
-          variant="contained"
-          onClick={() => handleAddNewProduct()}
-        >
-          Add Product
-        </Button>
-      </div>
+      <Button
+        className="rounded-md capitalize"
+        variant="contained"
+        onClick={handleAddNewProduct}
+      >
+        Add Product
+      </Button>
     </div>
   );
 };

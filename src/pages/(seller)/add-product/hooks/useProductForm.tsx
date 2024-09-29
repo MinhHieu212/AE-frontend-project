@@ -174,6 +174,7 @@ export const useProductForm = () => {
         sku: formData.inventory.sku,
       };
       console.log("Form submitted:", JSON.stringify(convertedData, null, 2));
+      
       try {
         setLoading(true);
         const response_data = await createProduct(convertedData);

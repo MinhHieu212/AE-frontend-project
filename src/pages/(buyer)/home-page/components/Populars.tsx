@@ -52,7 +52,7 @@ const Populars = () => {
         };
         const response_data = await getProductList(params);
         const productsData = response_data.content;
-        console.log("Populars", productsData);
+        // console.log("Populars", productsData);
         setProductList(productsData);
       } catch (error: any) {
         // toast.error(error.message);

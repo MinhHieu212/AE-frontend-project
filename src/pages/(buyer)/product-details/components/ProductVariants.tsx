@@ -4,57 +4,15 @@ import {
   IconHeartFilled,
   IconInfoHexagon,
 } from "@tabler/icons-react";
-import { Box, Button, Grid2, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import { useAppSelector } from "../../../../store/store";
-
-interface Variant {
-  id: string;
-  productId: string;
-  primary: boolean;
-  variantTypes: string;
-  value: string;
-  imageURLs: string[];
-  variantOptions: any;
-}
-
-const VariantDisplay: React.FC<{ variants: any; selected_variant: any }> = ({
-  variants,
-  selected_variant,
-}) => {
-  if (!variants) return <></>;
-
-  const sub_variant = variants.filter(
-    (item: any) =>
-      item.value === selected_variant.variant_option[item.variantTypes]
-  );
-
-  return (
-    <>
-      <Box className="flex flex-wrap items-center justify-center gap-2">
-        {variants.map((item: any) => (
-          <Box
-            key={item.id}
-            className="p-3 py-2 text-sm border-2 border-solid rounded-md flex items-center justify-center"
-          >
-            {item.value}
-          </Box>
-        ))}
-      </Box>
-      <VariantDisplay
-        variants={sub_variant.variantOptions}
-        selected_variant={selected_variant}
-      />
-      <VariantDisplay
-        variants={sub_variant.optionValues}
-        selected_variant={selected_variant}
-      />
-    </>
-  );
-};
 
 const ProductVariants = () => {
   const product_details = useAppSelector((state) => state.detail);
   const selected_variant = useAppSelector((state) => state.selected_variants);
+  const product_details_options = useAppSelector(
+    (state) => state.detail.options
+  );
   const [like, setLike] = useState<boolean>(false);
 
   return (
@@ -83,10 +41,23 @@ const ProductVariants = () => {
       </div>
 
       <div className="flex flex-col item-center justify-start mb-5">
-        <VariantDisplay
-          variants={product_details.variants}
-          selected_variant={selected_variant}
-        />
+        <div className="space-y-4">
+          {product_details_options.map((option: any) => (
+            <div key={option.name} className="flex items-center space-x-4">
+              <span className="font-bold w-24">{option.name}:</span>
+              <div className="flex flex-wrap gap-2">
+                {option.values.map((value: any, index: any) => (
+                  <span
+                    key={index}
+                    className="px-3 py-1 font-normal rounded-full border-[1px] border-gray-400 border-solid"
+                  >
+                    {value}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="w-full flex items-center justify-start gap-1 mt-2">

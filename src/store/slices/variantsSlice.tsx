@@ -182,6 +182,26 @@ export const variantsSlice = createSlice({
         state.combineVariantsTable[index][field] = value;
       }
     },
+    updateCombinationBaseValues: (
+      state,
+      action: PayloadAction<{
+        price: number;
+        salePrice: number;
+        quantity: number;
+        mrspPrice: number;
+        sku: string;
+      }>
+    ) => {
+      const { price, salePrice, quantity, mrspPrice, sku } = action.payload;
+      state.combineVariantsTable = state.combineVariantsTable.map((item) => ({
+        ...item,
+        price,
+        salePrice,
+        quantity,
+        mrspPrice,
+        sku,
+      }));
+    },
 
     updateVariantImages: (
       state,
@@ -202,6 +222,7 @@ export const {
   setVariantValue,
   removeVariantValue,
   updateVariantImages,
+  updateCombinationBaseValues,
   initializeCombinations,
   updateCombinationFieldValue,
   initialVariants,

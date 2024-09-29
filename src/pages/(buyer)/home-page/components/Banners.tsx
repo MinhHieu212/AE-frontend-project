@@ -186,7 +186,7 @@ const Banners = () => {
             color: "black",
           };
         });
-        console.log("Banners", banner_data);
+        // console.log("Banners", banner_data);
         setBanners(banner_data);
       } catch (error: any) {
         // toast.error(error.message);

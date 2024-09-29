@@ -116,7 +116,7 @@ const Categories = () => {
           subCategories: item.subCategories,
           icon: item.icon,
         }));
-        console.log("Categories", categoriesData);
+        // console.log("Categories", categoriesData);
         setCategories(categoriesData);
       } catch (error: any) {
         toast.error(error.message);

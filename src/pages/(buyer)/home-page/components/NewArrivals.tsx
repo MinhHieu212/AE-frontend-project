@@ -42,7 +42,7 @@ const NewArrivals = () => {
         };
         const response_data = await getProductList(params);
         const productsData = response_data.content;
-        console.log("NewArrivals", productsData);
+        // console.log("NewArrivals", productsData);
         setProductList(productsData);
       } catch (error: any) {
         // toast.error(error.message);

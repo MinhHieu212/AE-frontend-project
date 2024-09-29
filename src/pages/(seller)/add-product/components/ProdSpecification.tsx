@@ -122,7 +122,7 @@ const ProdSpecification = () => {
             fullWidth
             required
             size="small"
-            value={specification[field]}
+            value={specification[field] || ""}
             onChange={(e) => handleUpdateValues(field, e.target.value)}
           />
         </div>
@@ -130,7 +130,6 @@ const ProdSpecification = () => {
     </div>
   );
 
-  console.log(specification);
   return (
     <div className="w-full rounded-lg mb-2 p-3">
       <p className="font-medium text-lg">Specifications</p>

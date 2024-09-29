@@ -26,7 +26,10 @@ function ProdCollections() {
         const response_data = await getCollections();
         console.log("Collections", response_data);
         setProductCollections(
-          response_data.map((item: any) => ({ name: item.name, id: item.id }))
+          response_data.map((item: any) => ({
+            name: item.name,
+            id: String(item.id),
+          }))
         );
       } catch (error: any) {
         toast.error(error?.message);

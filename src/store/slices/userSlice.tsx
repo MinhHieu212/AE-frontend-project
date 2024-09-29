@@ -16,7 +16,7 @@ const initialState: UserState = {
   email: "",
   phone: "",
   address: "",
-  role: "buyer",
+  role: "seller",
   token: "",
 };
 

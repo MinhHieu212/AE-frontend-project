@@ -7,7 +7,7 @@ import { fakeProductList } from "../../../../constants/constant_product_list";
 import { ProductProps } from "../../../../types/product_types";
 import ProductItem from "../../home-page/components/components/ProductItem";
 
-const Populars = () => {
+const RelatedProducts = () => {
   const [productList, setProductList] =
     useState<ProductProps[]>(fakeProductList);
   const [index, setIndex] = useState<number>(0);
@@ -52,7 +52,7 @@ const Populars = () => {
         };
         const response_data = await getProductList(params);
         const productsData = response_data.content;
-        console.log("Populars", productsData);
+        // console.log("RelatedProducts", productsData);
         setProductList(productsData);
       } catch (error: any) {
         // toast.error(error.message);
@@ -107,4 +107,4 @@ const Populars = () => {
   );
 };
 
-export default Populars;
+export default RelatedProducts;

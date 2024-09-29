@@ -3,11 +3,11 @@ interface ImageFile {
   file: File;
   url: string;
 }
-interface ProductState {
+export interface ProductState {
   name: string;
   description: string;
   brand: string;
-  collections: { name: string; id: number }[];
+  collections: { name: string; id: string }[];
   haveVariants: boolean;
   isFeatured: boolean;
   sellingType: string;
