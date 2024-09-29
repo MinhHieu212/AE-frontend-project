@@ -53,17 +53,17 @@ export const constant_specifications = {
   },
   LAPTOP: {
     SPECIFICATION: [
-      "screenSize",
-      "resolution",
-      "refreshRate",
-      "smartTV",
-      "operatingSystem",
-      "ports",
-      "audioOutput",
-      "connectivity",
+      "ScreenSize",
+      "Resolution",
+      "RefreshRate",
+      "SmartTV",
+      "OperatingSystem",
+      "Ports",
+      "AudioOutput",
+      "Connectivity",
     ],
     CAMERA: [],
-    DIMENSION: ["height", "width", "depth", "weight"],
+    DIMENSION: ["Height", "Width", "Đepth", "Weight"],
   },
   SPORTS: {
     SPECIFICATION: [

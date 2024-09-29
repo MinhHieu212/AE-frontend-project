@@ -42,21 +42,22 @@ const ProductVariants = () => {
 
       <div className="flex flex-col item-center justify-start mb-5">
         <div className="space-y-4">
-          {product_details_options.map((option: any) => (
-            <div key={option.name} className="flex items-center space-x-4">
-              <span className="font-bold w-24">{option.name}:</span>
-              <div className="flex flex-wrap gap-2">
-                {option.values.map((value: any, index: any) => (
-                  <span
-                    key={index}
-                    className="px-3 py-1 font-normal rounded-full border-[1px] border-gray-400 border-solid"
-                  >
-                    {value}
-                  </span>
-                ))}
+          {product_details_options.length > 0 &&
+            product_details_options?.map((option: any) => (
+              <div key={option.name} className="flex items-center space-x-4">
+                <span className="font-bold w-24">{option.name}:</span>
+                <div className="flex flex-wrap gap-2">
+                  {option?.values?.map((value: any, index: any) => (
+                    <span
+                      key={index}
+                      className="px-3 py-1 font-normal rounded-full border-[1px] border-gray-400 border-solid"
+                    >
+                      {value}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
 
