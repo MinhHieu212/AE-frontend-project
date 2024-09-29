@@ -30,7 +30,7 @@ const Banner = (props: BannerProp) => {
         position: "relative",
       }}
     >
-      <div className="absolute bottom-[30%] left-[5%] sm:bottom-[20%] sm:left-[10%]">
+      <div className="absolute bottom-[10%] left-[5%] sm:bottom-[40%] sm:left-[10%]">
         <div className="flex-col flex items-start justify-center">
           <p className="text-2xl sm:text-3xl md:text-4xl my-0 font-bold">
             New Year Sale
@@ -69,7 +69,8 @@ const Banners = () => {
         const banner_data = response_data.map((item: any) => {
           return {
             cover_url: item.url,
-            image_object: "cover",
+            image_object: "containcenter",
+            size: "cover",
             color: "black",
           };
         });
