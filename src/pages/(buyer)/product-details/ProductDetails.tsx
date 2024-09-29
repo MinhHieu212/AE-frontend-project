@@ -21,7 +21,7 @@ const ProductDetails = () => {
   const useDispatch = useAppDispatch();
   const description = useAppSelector((state) => state.product.description);
   const product_detail = useAppSelector((state) => state.detail);
-  const isMobile = useMediaQuery("(max-width:800px)");
+  const isMobile = useMediaQuery("(max-width:890px)");
 
   // useEffect(() => {
   //   const callApi = async () => {
@@ -66,8 +66,8 @@ const ProductDetails = () => {
 
   return (
     <div className={`w-full h-full max-w-[1300px] mx-auto my-5 sidebar`}>
-      <Grid2 className={`w-full`} container spacing={2} alignItems="flex-start">
-        <Grid2 size={{ sm: 12, md: 7 }}>
+      <Grid2 container spacing={2} alignItems="sm:flex-start">
+        <Grid2 size={{ xs: 12, sm: 12, md: 7 }}>
           <ImageGallery />
           {!isMobile && (
             <Box className="mt-5 min-h-[200px] text-sm w-full border-2 border-solid border-gray-100 rounded-lg p-5 py-3 shadow-lg">
@@ -79,7 +79,10 @@ const ProductDetails = () => {
             </Box>
           )}
         </Grid2>
-        <Grid2 size={{ sm: 12, md: 5 }} className="px-5 sticky top-5">
+        <Grid2
+          size={{ xs: 12, sm: 12, md: 5 }}
+          className="px-3 sm:px-5 sticky top-5"
+        >
           <ProductVariants />
           <ProdDetails />
           <ProdReviews />

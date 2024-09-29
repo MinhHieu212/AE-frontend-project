@@ -1,5 +1,5 @@
 import { toast } from "../utils/Toastify";
-import { api_json_body } from "./MainApi";
+import { api_json_body } from "./MainApi"; 
 
 export const getCategories = async () => {
   try {

@@ -1,6 +1,13 @@
 import React, { useRef, useState } from "react";
 import Carousel from "react-material-ui-carousel";
-import { Box, Button, Dialog, Grid2, Paper } from "@mui/material";
+import {
+  Box,
+  Button,
+  Dialog,
+  Grid2,
+  Paper,
+  useMediaQuery,
+} from "@mui/material";
 import { useAppSelector } from "../../../../store/store";
 import { IconZoomScan } from "@tabler/icons-react";
 
@@ -78,6 +85,7 @@ const ImageGallery = () => {
   const [open, setOpen] = React.useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [activeZoom, setActiveZoom] = useState<boolean>(false);
+  const isMobile = useMediaQuery("(max-width:800px)");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -97,37 +105,39 @@ const ImageGallery = () => {
   return (
     <div className="mx-auto w-full">
       <Grid2 className="w-full" container spacing={2}>
-        <Grid2 size={1.5} className="relative py-3">
-          <Box
-            className={`absolute z-50 top-2 -right-10 w-[40px] h-[40px] flex items-center justify-center rounded-full cursor-pointer`}
-            onClick={() => setActiveZoom((prev) => !prev)}
-          >
-            <IconZoomScan
-              size={25}
-              color={activeZoom ? "black" : "lightgray"}
-            />
-          </Box>
-          <Box className="w-full px-2 flex flex-col items-center gap-2 overflow-y-scroll max-h-[500px] scrollBar">
-            {image_list.map((item, index) => (
-              <Box
-                className={`w-full min-h-[80px] flex items-center justify-center rounded-sm overflow-hidden border-[2px] border-solid border-gray-300 cursor-pointer ${
-                  activeIndex === index
-                    ? "scale-105 border-[black]"
-                    : "opacity-50"
-                }`}
-                key={index}
-                onClick={() => setActiveIndex(index)}
-              >
-                <img
-                  src={item.cover_url}
-                  alt="colum product images"
-                  className="w-full h-full object-contain"
-                />
-              </Box>
-            ))}
-          </Box>
-        </Grid2>
-        <Grid2 size={10.5}>
+        {!isMobile && (
+          <Grid2 size={1.5} className="relative py-3">
+            <Box
+              className={`absolute z-50 top-2 -right-10 w-[40px] h-[40px] flex items-center justify-center rounded-full cursor-pointer`}
+              onClick={() => setActiveZoom((prev) => !prev)}
+            >
+              <IconZoomScan
+                size={25}
+                color={activeZoom ? "black" : "lightgray"}
+              />
+            </Box>
+            <Box className="w-full px-2 flex flex-col items-center gap-2 overflow-y-scroll max-h-[500px] scrollBar">
+              {image_list.map((item, index) => (
+                <Box
+                  className={`w-full max-h-[80px] flex items-center justify-center rounded-sm overflow-hidden border-[2px] border-solid border-gray-300 cursor-pointer ${
+                    activeIndex === index
+                      ? "scale-105 border-[black]"
+                      : "opacity-50"
+                  }`}
+                  key={index}
+                  onClick={() => setActiveIndex(index)}
+                >
+                  <img
+                    src={item.cover_url}
+                    alt="colum product images"
+                    className="w-full h-full object-contain"
+                  />
+                </Box>
+              ))}
+            </Box>
+          </Grid2>
+        )}
+        <Grid2 size={!isMobile ? 10.5 : 12}>
           <Box className="rounded-lg p-3 px-5">
             <Carousel
               index={activeIndex}
