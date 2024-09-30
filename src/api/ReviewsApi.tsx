@@ -10,3 +10,15 @@ export const getProductReviews = async (product_id: string) => {
     throw error;
   }
 };
+
+export const addProductReviews = async (product_id: string, body: any) => {
+  try {
+    const response = await api_json_body.post(
+      `/products/review/${product_id}`,
+      body
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

@@ -168,6 +168,8 @@ const ActionButtons = () => {
         error instanceof Error ? error.message : String(error)
       );
       toast.error("Failed to create product. Please try again.");
+    } finally {
+      dispatch(resetProductData());
     }
   }, [prepareProductPayload, uploadImages, navigate]);
 

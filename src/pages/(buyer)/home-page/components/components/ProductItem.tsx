@@ -131,7 +131,7 @@ const ProductItem = ({ item, loading }: ProductItemProps) => {
                 />
               ) : (
                 <p className="text-gray-300 my-0 line-through truncate">
-                  $ {item?.price?.toFixed(2) || 0}
+                  $ {item?.price?.toFixed(2) || 12300}
                 </p>
               )}
               <Divider
@@ -147,7 +147,7 @@ const ProductItem = ({ item, loading }: ProductItemProps) => {
                 />
               ) : (
                 <p className="text-black my-0 truncate">
-                  $ {item?.salePrice?.toFixed(2) || 0}
+                  $ {item?.salePrice?.toFixed(2) || 10999}
                 </p>
               )}
             </div>

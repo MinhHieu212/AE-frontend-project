@@ -11,6 +11,8 @@ import {
   Typography,
   Box,
 } from "@mui/material";
+import { useParams } from "react-router-dom";
+import { addProductReviews } from "../../../../../api/ReviewsApi";
 
 interface ReviewFormProps {
   productName: string;
@@ -34,6 +36,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
   productPrice,
   setWriteReview,
 }) => {
+  const { slug: product_id } = useParams();
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -194,8 +197,35 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
             type="submit"
             className="bg-darkGreen h-[40px] text-white w-1/2 text-sm"
             color="primary"
-            onClick={() => {
-              setWriteReview(false);
+            onClick={async () => {
+              try {
+                const payload = {
+                  rating: formData.score,
+                  title: formData.score,
+                  description: formData.review,
+                  customer: {
+                    id: "66f2f6341db3961bdb8e2865",
+                  },
+                  product: {
+                    id: product_id,
+                  },
+                  recommended: true,
+                  orderOnTime: true,
+                };
+
+                console.log(JSON.stringify(payload, null, 2));
+
+                const response = await addProductReviews(
+                  String(product_id),
+                  payload
+                );
+
+                console.log(response);
+              } catch (error) {
+                console.error("Failed to submit review:", error);
+              } finally {
+                setWriteReview(false);
+              }
             }}
           >
             Post
