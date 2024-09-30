@@ -181,7 +181,7 @@ const ProductItem = ({ item, loading }: ProductItemProps) => {
               )}
             </div>
           </div>
-          <Box className="min-w-[35px] h-[35px] text-white bg-black pb-1 flex items-center justify-center rounded-full text-[20px] font-bold cursor-pointer mt-2 sm:mt-0">
+          <Box className="min-w-[35px] h-[35px] text-white bg-black flex items-center justify-center rounded-full text-[20px] font-bold cursor-pointer mt-2 sm:mt-0">
             +
           </Box>
         </div>
