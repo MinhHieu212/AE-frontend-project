@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getProductList } from "../../../../api/ProductApi";
+import {
+  getPopularProductList,
+  getProductList,
+} from "../../../../api/ProductApi";
 import { toast } from "../../../../utils/Toastify";
 import ProductItem from "./components/ProductItem";
 import { Button, Grid, Grid2, useMediaQuery, useTheme } from "@mui/material";
@@ -46,13 +49,10 @@ const Populars = () => {
       setLoading(true);
       try {
         const params = {
-          limit: 10,
-          page: 0,
-          size: 100,
+          limit: 20,
         };
-        const response_data = await getProductList(params);
-        const productsData = response_data.content;
-        // console.log("Populars", productsData);
+        const response_data = await getPopularProductList(params);
+        const productsData = response_data;
         setProductList(productsData);
       } catch (error: any) {
         // toast.error(error.message);

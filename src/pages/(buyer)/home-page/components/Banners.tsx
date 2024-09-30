@@ -66,7 +66,7 @@ const Banners = () => {
       setLoading(true);
       try {
         const response_data = await getBanner();
-        const banner_data = response_data.map((item: any) => {
+        const banner_data = response_data.slice(1).map((item: any) => {
           return {
             cover_url: item.url,
             image_object: "containcenter",

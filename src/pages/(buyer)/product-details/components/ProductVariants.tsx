@@ -144,12 +144,12 @@ const ProductVariants: React.FC = () => {
           </p>
         </Stack>
       </div>
-      <div className="flex flex-col item-center justify-start mb-5">
+      <div className="flex flex-col item-center justify-start my-5">
         <div className="space-y-4">
           {options &&
             Object.entries(parseArrayToObject(product_details.options)).map(
               ([optionName, optionValues]) => (
-                <div key={optionName} className="flex items-center space-x-4">
+                <div key={optionName} className="flex items-start space-x-4">
                   <span className="font-bold w-24">{optionName}:</span>
                   <div className="flex flex-wrap gap-2">
                     {Array.isArray(optionValues) &&

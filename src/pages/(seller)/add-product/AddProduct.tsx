@@ -200,7 +200,7 @@ const ActionButtons = () => {
 
 const AddProduct = () => {
   return (
-    <div className="flex flex-col items-center justify-start w-full max-w-[1300px] h-full p-3 mx-auto">
+    <div className="flex flex-col items-center justify-start w-full max-w-[1600px] h-full p-3 mx-auto">
       <div className="w-full h-full my-2 scrollBar">
         <SubHeader />
         <div className="w-full flex items-start justify-center p-2 gap-3">
