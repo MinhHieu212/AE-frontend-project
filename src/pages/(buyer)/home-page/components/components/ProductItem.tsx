@@ -10,7 +10,7 @@ import { ProductProps } from "../../../../../types/product_types";
 import { useAppDispatch, useAppSelector } from "../../../../../store/store";
 import { getProductById } from "../../../../../api/ProductApi";
 import { initialProductDetail } from "../../../../../store/slices/productDetailSlice";
-import { initialSeletedVariant } from "../../../../../store/slices/selectedVariantSlice";
+import { initialCurrentSelected } from "../../../../../store/slices/currentSelectedSlice";
 import { toast } from "../../../../../utils/Toastify";
 
 interface ProductItemProps {
@@ -55,14 +55,15 @@ const ProductItem = ({ item, loading }: ProductItemProps) => {
       };
 
       const initialSeleted = {
-        price: 1231,
-        sale_price: 1541,
-        quantity: 224,
-        variant_option: { COLOR: "midnight", RAM: "4GB", STORAGE: "64GB" },
+        selected_price: 123,
+        selected_sale_price: 111,
+        selected_quantity: 11,
+        selected_images: [],
+        selected_variants: {},
       };
 
       useDispatch(initialProductDetail({ value: prod_details }));
-      useDispatch(initialSeletedVariant({ value: initialSeleted }));
+      useDispatch(initialCurrentSelected({ values: initialSeleted }));
       navigate(
         user_role === "seller" ? `/products/${item?.id}` : `/${item?.id}`
       );

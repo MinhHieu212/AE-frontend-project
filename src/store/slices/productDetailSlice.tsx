@@ -11,7 +11,7 @@ interface PackageSize {
   height: number | null;
 }
 
-interface ProductDetailsState {
+export interface ProductDetailsState {
   name: string;
   description: string;
   brandName: string;
@@ -24,13 +24,6 @@ interface ProductDetailsState {
   rating: number;
   noOfReviews: number;
   options: any;
-}
-
-interface variantSelectedState {
-  price: number;
-  sale_price?: number;
-  quantity?: number;
-  variant_option: any;
 }
 
 const initialState: ProductDetailsState = {

@@ -3,7 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { userSlice } from "./slices/userSlice";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { productSlice } from "./slices/productSlice";
-import { selectedVariantSlice } from "./slices/selectedVariantSlice";
+import { currentSelectedSlice } from "./slices/currentSelectedSlice";
 import { variantsSlice } from "./slices/variantsSlice";
 import { productDetailSlice } from "./slices/productDetailSlice";
 
@@ -13,7 +13,7 @@ export const store = configureStore({
     product: productSlice.reducer,
     variants: variantsSlice.reducer,
     detail: productDetailSlice.reducer,
-    selected_variants: selectedVariantSlice.reducer,
+    current_selected: currentSelectedSlice.reducer,
   },
 });
 

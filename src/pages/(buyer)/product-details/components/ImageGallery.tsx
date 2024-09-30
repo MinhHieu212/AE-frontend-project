@@ -81,7 +81,9 @@ const Banner: React.FC<BannerProp> = (props) => {
 };
 
 const ImageGallery = () => {
-  const imageUrls = useAppSelector((state) => state.detail?.imageURLs);
+  const imageUrls = useAppSelector(
+    (state) => state.current_selected.selected_images
+  );
   const [open, setOpen] = React.useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [activeZoom, setActiveZoom] = useState<boolean>(false);

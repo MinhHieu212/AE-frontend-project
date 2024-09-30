@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Button, Pagination, Skeleton, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { getProductList } from "../../../api/ProductApi";
+import { getProductById, getProductList } from "../../../api/ProductApi";
 import { toast } from "../../../utils/Toastify";
 import { ProductProps } from "../../../types/product_types";
 import Grid from "@mui/material/Grid2";
 import { fakeProductList } from "../../../constants/constant_product_list";
+import { initialProductDetail } from "../../../store/slices/productDetailSlice";
+import { useAppDispatch } from "../../../store/store";
+import { initialCurrentSelected } from "../../../store/slices/currentSelectedSlice";
 
 const MAX_ITEM_PER_PAGE = 12;
 
@@ -18,6 +21,52 @@ const ProductItem: React.FC<ProductItemProps> = ({ item, loading }) => {
   const navigate = useNavigate();
   const fallbackImageURL =
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU";
+  const useDispatch = useAppDispatch();
+
+  const getProductDetails = async () => {
+    try {
+      const response_data = await getProductById(item?.id);
+      const productsData = response_data;
+      const optionsArray = Object.entries(productsData.options).map(
+        ([item, value]) => ({
+          name: item,
+          values: value,
+        })
+      );
+
+      const prod_details = {
+        name: productsData?.name,
+        description: productsData?.description,
+        brandName: productsData?.brandName,
+        sellingTypes: productsData?.sellingTypes,
+        imageURLs: productsData?.variants[1]?.imageURLs || [],
+        packages_size: {
+          length: productsData?.dimensions?.length,
+          width: productsData?.dimensions?.width,
+          height: productsData?.dimensions?.height,
+        },
+        categories: productsData?.categories,
+        haveVariants: productsData?.hasVariants,
+        variants: productsData?.variants,
+        options: optionsArray,
+      };
+
+      const initialSeleted = {
+        selected_price: 123,
+        selected_sale_price: 111,
+        selected_quantity: 11,
+        selected_images: [],
+        selected_variants: {},
+      };
+
+      useDispatch(initialProductDetail({ value: prod_details }));
+      useDispatch(initialCurrentSelected({ values: initialSeleted }));
+
+      navigate(`/products/${item?.id}`);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
 
   return (
     <div className="w-full mx-auto mb-2 p-3 rounded-xl flex items-start justify-start gap-3 border-2 border-solid border-gray-100 bg-[#fbfdff] shadow-lg">
@@ -31,7 +80,9 @@ const ProductItem: React.FC<ProductItemProps> = ({ item, loading }) => {
             }
             alt={`Product: ${item?.name}`}
             className="h-full w-full object-cover cursor-pointer"
-            onClick={() => navigate(`/products/${item?.id}`)}
+            onClick={() => {
+              getProductDetails();
+            }}
           />
         )}
       </div>

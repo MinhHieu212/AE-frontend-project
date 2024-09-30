@@ -7,7 +7,7 @@ import ProductVariants from "./components/ProductVariants";
 import { constant_product_detail } from "../../../constants/constant_product_detail";
 import { useAppDispatch, useAppSelector } from "../../../store/store";
 import { initialProductDetail } from "../../../store/slices/productDetailSlice";
-import { initialSeletedVariant } from "../../../store/slices/selectedVariantSlice";
+import { initialCurrentSelected } from "../../../store/slices/currentSelectedSlice";
 import ProdDetails from "./components/ProdDetails";
 import ProdReviews from "./components/ProdReviews";
 import RelatedProducts from "./components/RelatedProducts";
@@ -52,7 +52,7 @@ const ProductDetails = () => {
   //         variant_option: { COLOR: "midnight", RAM: "4GB", STORAGE: "64GB" },
   //       };
   //       useDispatch(initialProductDetail({ value: prod_details }));
-  //       useDispatch(initialSeletedVariant({ value: initialSeleted }));
+  //       useDispatch(initialCurrentSelected({ value: initialSeleted }));
   //     } catch (error: any) {
   //       toast.error(error.message);
   //     } finally {
