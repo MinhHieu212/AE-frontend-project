@@ -1,19 +1,21 @@
 import React, { useRef } from "react";
 import { Button, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { ProductFormProps } from "../types/ProductFormProps";
 import { IconUpload } from "@tabler/icons-react";
-
 import "@mantine/core/styles.css";
 import "@mantine/tiptap/styles.css";
 import { RichTextEditor, Link } from "@mantine/tiptap";
 import { BubbleMenu, useEditor } from "@tiptap/react";
 import Highlight from "@tiptap/extension-highlight";
 import StarterKit from "@tiptap/starter-kit";
+import TextStyle from "@tiptap/extension-text-style";
+import { Color } from "@tiptap/extension-color";
 import Underline from "@tiptap/extension-underline";
 import TextAlign from "@tiptap/extension-text-align";
 import Superscript from "@tiptap/extension-superscript";
 import SubScript from "@tiptap/extension-subscript";
+import { useAppDispatch, useAppSelector } from "../../../../store/store";
+import { updateProductField } from "../../../../store/slices/productSlice";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -27,26 +29,29 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-const ProdDescription: React.FC<ProductFormProps> = ({
-  formData,
-  updateField,
-  errors,
-  startValidate,
-}) => {
+const ProdDescription = () => {
+  const useDispatch = useAppDispatch();
+  const description = useAppSelector((state) => state.product.description);
+  const name = useAppSelector((state) => state.product.name);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
   const editor = useEditor({
     extensions: [
       StarterKit,
       Underline,
+      Color,
       Link,
       Superscript,
       SubScript,
       Highlight,
+      TextStyle,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
     ],
-    content: formData.description,
+    content: description,
     onUpdate: ({ editor: _editor }) => {
-      updateField("description", _editor.getHTML());
+      useDispatch(
+        updateProductField({ field: "description", value: _editor.getHTML() })
+      );
     },
   });
 
@@ -66,8 +71,9 @@ const ProdDescription: React.FC<ProductFormProps> = ({
           .replace(/\n/g, "<br>")
           .replace(/ {2,}/g, (match) => "&nbsp;".repeat(match.length));
 
-        console.log("HTML content:", htmlContent);
-        updateField("description", htmlContent);
+        useDispatch(
+          updateProductField({ field: "description", value: htmlContent })
+        );
         editor?.commands.setContent(htmlContent);
         if (fileInputRef.current) {
           fileInputRef.current.value = "";
@@ -85,9 +91,9 @@ const ProdDescription: React.FC<ProductFormProps> = ({
       <p className="font-medium text-lg">
         Description <span className="text-red-600"> *</span>
       </p>
-      <div className="border-2 border-solid border-gray-200 rounded-lg p-5 h-full flex flex-col gap-3">
+      <div className="border-[2px] border-solid border-gray-200 shadow-sm rounded-lg p-5 h-full flex flex-col gap-3">
         <div>
-          <p className="my-0 mb-1 text-[#aca4a4] text-sm">
+          <p className="my-0 mb-1 text-[#797474] text-sm">
             Product name <span className="text-red-600"> *</span>
           </p>
           <TextField
@@ -95,18 +101,17 @@ const ProdDescription: React.FC<ProductFormProps> = ({
             fullWidth
             required
             size="small"
-            value={formData.name}
-            onChange={(e) => updateField("name", e.target.value)}
+            value={name}
+            onChange={(e) =>
+              useDispatch(
+                updateProductField({ field: "name", value: e.target.value })
+              )
+            }
           />
-          {startValidate && errors.name && (
-            <p className="my-2 text-[#f12727] text-sm">
-              {startValidate && errors.name}
-            </p>
-          )}
         </div>
         <div>
           <div className="flex items-center justify-between gap-3 ">
-            <p className="my-0 pb-1 text-[#aca4a4] text-sm">
+            <p className="my-0 pb-1 text-[#797474] text-sm">
               Business Description <span className="text-red-600"> *</span>
             </p>
             <Button
@@ -131,8 +136,7 @@ const ProdDescription: React.FC<ProductFormProps> = ({
             w="100%"
             styles={{
               content: {
-                minHeight: "82px",
-                maxHeight: "420px",
+                height: "318px",
                 overflowY: "scroll",
                 whiteSpace: "pre-wrap",
                 wordBreak: "break-word",
@@ -141,14 +145,33 @@ const ProdDescription: React.FC<ProductFormProps> = ({
             }}
           >
             <RichTextEditor.Toolbar>
+              <RichTextEditor.ColorPicker
+                colors={[
+                  "#25262b",
+                  "#868e96",
+                  "#fa5252",
+                  "#e64980",
+                  "#be4bdb",
+                  "#7950f2",
+                  "#4c6ef5",
+                  "#228be6",
+                  "#15aabf",
+                  "#12b886",
+                  "#40c057",
+                  "#82c91e",
+                  "#fab005",
+                  "#fd7e14",
+                ]}
+              />
+
               <RichTextEditor.ControlsGroup>
                 <RichTextEditor.Bold />
                 <RichTextEditor.Italic />
                 <RichTextEditor.Underline />
                 <RichTextEditor.Strikethrough />
-                <RichTextEditor.ClearFormatting />
+                {/* <RichTextEditor.ClearFormatting /> */}
                 <RichTextEditor.Highlight />
-                <RichTextEditor.Code />
+                {/* <RichTextEditor.Code /> */}
               </RichTextEditor.ControlsGroup>
 
               <RichTextEditor.ControlsGroup>
@@ -158,14 +181,14 @@ const ProdDescription: React.FC<ProductFormProps> = ({
                 <RichTextEditor.H4 />
               </RichTextEditor.ControlsGroup>
 
-              <RichTextEditor.ControlsGroup>
+              {/* <RichTextEditor.ControlsGroup>
                 <RichTextEditor.Blockquote />
                 <RichTextEditor.Hr />
                 <RichTextEditor.BulletList />
                 <RichTextEditor.OrderedList />
                 <RichTextEditor.Subscript />
                 <RichTextEditor.Superscript />
-              </RichTextEditor.ControlsGroup>
+              </RichTextEditor.ControlsGroup> */}
 
               <RichTextEditor.ControlsGroup>
                 <RichTextEditor.Link />
@@ -175,15 +198,16 @@ const ProdDescription: React.FC<ProductFormProps> = ({
               <RichTextEditor.ControlsGroup>
                 <RichTextEditor.AlignLeft />
                 <RichTextEditor.AlignCenter />
-                <RichTextEditor.AlignJustify />
+                {/* <RichTextEditor.AlignJustify /> */}
                 <RichTextEditor.AlignRight />
               </RichTextEditor.ControlsGroup>
 
-              <RichTextEditor.ControlsGroup>
+              {/* <RichTextEditor.ControlsGroup>
                 <RichTextEditor.Undo />
                 <RichTextEditor.Redo />
-              </RichTextEditor.ControlsGroup>
+              </RichTextEditor.ControlsGroup> */}
             </RichTextEditor.Toolbar>
+
             {editor && (
               <BubbleMenu editor={editor}>
                 <RichTextEditor.ControlsGroup>
@@ -194,13 +218,9 @@ const ProdDescription: React.FC<ProductFormProps> = ({
                 </RichTextEditor.ControlsGroup>
               </BubbleMenu>
             )}
+
             <RichTextEditor.Content />
           </RichTextEditor>
-          {startValidate && errors.description && (
-            <p className="my-2 text-[#f12727] text-sm">
-              {startValidate && errors.description}
-            </p>
-          )}
         </div>
       </div>
     </div>

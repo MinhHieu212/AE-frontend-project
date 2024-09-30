@@ -1,144 +1,210 @@
 import React from "react";
-import { Instagram, Facebook, Twitter } from "@mui/icons-material";
-import YouTubeIcon from "@mui/icons-material/YouTube";
-
-import { Divider, Grid2, Link } from "@mui/material";
+import {
+  Grid2,
+  Link,
+  Divider,
+  Box,
+  MenuItem,
+  OutlinedInput,
+} from "@mui/material";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { IconCheck } from "@tabler/icons-react";
 
 const BuyerFooter = () => {
+  const [currency, setCurrency] = React.useState("EUR");
+  const [language, setLanguage] = React.useState("English");
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setCurrency(event.target.value as string);
+  };
+
+  const handleChangeLanguage = (event: SelectChangeEvent) => {
+    setLanguage(event.target.value as string);
+  };
+
   return (
-    <div className="w-full text-black p-3 px-10 mt-10">
+    <div className="bg-white w-full text-black p-3 px-4 sm:px-6 md:px-10 mt-5">
       <Grid2 container spacing={2}>
-        <Grid2
-          size={5}
-          className="flex flex-col items-start justify-start gap-2"
-        >
-          <Link href="/" underline="none" className="w-full my-2">
-            <div className="w-full flex items-center gap-3">
+        <Grid2 size={{ sm: 3, md: 4, lg: 3 }} className="mb-6 sm:mb-0">
+          <Link href="/" underline="none" className="w-full my-2 block">
+            <div className="w-full flex items-center gap-1">
               <img
-                src="https://cdn.worldvectorlogo.com/logos/nasa-2.svg"
+                src={`${process.env.PUBLIC_URL}/images/accessed_logo.png`}
                 alt="Company avatar"
-                className="w-[60px] h-[60px] object-cover rounded-md"
+                className="w-[45px] h-[45px] object-cover rounded-md"
               />
-
-              <h2 className="text-[black]">Nasa Store</h2>
+              <h2 className="text-[green] text-[20px]">Accessed</h2>
             </div>
           </Link>
-          <p className="m-2 text-sm">
-            Support all Credit Cards and Payment Methods
-          </p>
-          <div className="flex items-center justify-center gap-3">
-            <img
-              src="https://cdn2.fptshop.com.vn/svg/visa_icon_a6c024d37b.svg?w=48&q=100"
-              alt=""
-              className="w-[60px] h-[40px] object-cover"
-            />
-            <img
-              src="https://cdn2.fptshop.com.vn/svg/mastercard_icon_e336a980d8.svg?w=48&q=100"
-              alt=""
-              className="w-[60px] h-[40px] object-cover"
-            />
-            <img
-              src="https://cdn2.fptshop.com.vn/svg/zalopay_icon_f54e43f9b4.svg?w=48&q=100"
-              alt=""
-              className="w-[60px] h-[40px] object-cover"
-            />
-            <img
-              src="https://cdn2.fptshop.com.vn/svg/Property_1_apple_pay_icon_8ed897d7bb.svg?w=48&q=100"
-              alt=""
-              className="w-[60px] h-[40px] object-cover"
-            />
-            <img
-              src="https://cdn2.fptshop.com.vn/svg/kredivo_icon_9a2c105e72.svg?w=48&q=100"
-              alt=""
-              className="w-[60px] h-[40px] object-cover"
-            />
+        </Grid2>
+
+        {footerColumns.map((column, index) => (
+          <Grid2
+            key={index}
+            size={{ sm: 3, md: 2, lg: 1.5 }}
+            className="mb-4 sm:mb-0"
+          >
+            <h2 className="font-bold mb-2 text-[16px]">{column.title}</h2>
+            {column.links.map((link, linkIndex) => (
+              <Link
+                key={linkIndex}
+                href="/"
+                className="hover:underline decoration-transparent text-gray-600 text-sm font-medium block mb-1"
+              >
+                {link}
+              </Link>
+            ))}
+          </Grid2>
+        ))}
+      </Grid2>
+
+      <Divider className="my-6 mb-3 bg-gray-100" />
+
+      <Grid2
+        container
+        spacing={2}
+        className="w-full mb-6"
+        justifyContent="space-between"
+      >
+        <Grid2
+          size={{ xs: 12, sm: 8 }}
+          className="flex flex-wrap items-center justify-center md:justify-start gap-3"
+        >
+          <div className="flex min-w-[240px] items-center justify-center gap-3 xs:w-full">
+            <Select
+              className="h-[25px] w-full sm:w-[45%] cursor-pointer"
+              value={currency}
+              onChange={handleChange}
+              input={<OutlinedInput />}
+              renderValue={(selected) => (
+                <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                  <span className="text-sm font-medium">{selected}</span>
+                </Box>
+              )}
+            >
+              {currencies.map((option) => (
+                <MenuItem key={option.code} value={option.code}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      width: "100%",
+                    }}
+                  >
+                    {option.label}
+                    {currency === option.code && <IconCheck size={16} />}
+                  </Box>
+                </MenuItem>
+              ))}
+            </Select>
+            <Select
+              className="h-[25px] w-full sm:w-[45%] cursor-pointer"
+              value={language}
+              onChange={handleChangeLanguage}
+              input={<OutlinedInput />}
+              renderValue={(selected) => (
+                <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                  <span className="text-sm font-medium">{selected}</span>
+                </Box>
+              )}
+            >
+              <MenuItem value="English">English</MenuItem>
+              <MenuItem value="Spanish">Spanish</MenuItem>
+            </Select>
+          </div>
+          <div className="flex items-center justify-start gap-2 xs:w-full">
+            {paymentMethods.map((method, index) => (
+              <img
+                key={index}
+                src={method}
+                alt=""
+                className="w-[40px] h-[28px] rounded-md object-cover"
+              />
+            ))}
           </div>
         </Grid2>
         <Grid2
-          size={2}
-          className="flex flex-col items-start justify-start gap-2"
+          size={{ xs: 12, sm: 4 }}
+          className="flex items-center justify-center md:justify-end"
         >
-          <h2 className="font-bold mb-4">Useful Links</h2>
           <Link
-            href="/"
-            className="hover:underline decoration-transparent text-gray-500 text-sm"
+            href=""
+            className="hover:underline decoration-transparent text-gray-400 text-xs"
           >
-            Home
+            Terms of Service
           </Link>
-
+          <span className="hover:underline decoration-transparent text-gray-400 text-sm">
+            .
+          </span>
           <Link
-            href="/"
-            className="hover:underline decoration-transparent text-gray-500 text-sm"
+            href=""
+            className="hover:underline decoration-transparent text-gray-400 text-xs"
           >
-            About
+            Privacy Policy
           </Link>
-
-          <Link
-            href="/"
-            className="hover:underline decoration-transparent text-gray-500 text-sm"
-          >
-            Blog
-          </Link>
-
-          <Link
-            href="/"
-            className="hover:underline decoration-transparent text-gray-500 text-sm"
-          >
-            Contact
-          </Link>
-        </Grid2>
-        <Grid2
-          size={2}
-          className="flex flex-col items-start justify-start gap-2"
-        >
-          <h2 className="font-bold mb-4">My Account</h2>
-          <Link
-            href="/"
-            className="hover:underline decoration-transparent text-gray-500 text-sm"
-          >
-            Orders Tracking
-          </Link>
-
-          <Link
-            href="/"
-            className="hover:underline decoration-transparent text-gray-500 text-sm"
-          >
-            Checkout
-          </Link>
-
-          <Link
-            href="/"
-            className="hover:underline decoration-transparent text-gray-500 text-sm"
-          >
-            Wishlist
-          </Link>
-        </Grid2>
-        <Grid2 size={3} className="flex flex-col items-end gap-2">
-          <h2 className="font-bold mb-4">Contact</h2>
-          <p className="my-0">+01-22-333-22-111-2</p>
-          <p className="my-0">Address here, Usa</p>
-          <div className="flex mt-4 space-x-4">
-            <div className="border-2 border-solid border-black rounded-full p-3 w-[50px] h-[50px]">
-              <Instagram className="text-black" />
-            </div>
-            <div className="border-2 border-solid border-black rounded-full p-3 w-[50px] h-[50px]">
-              <Facebook className="text-black" />
-            </div>
-            <div className="border-2 border-solid border-black rounded-full p-3 w-[50px] h-[50px]">
-              <Twitter className="text-black" />
-            </div>
-            <div className="border-2 border-solid border-black rounded-full p-3 w-[50px] h-[50px]">
-              <YouTubeIcon className="text-black" />
-            </div>
-          </div>
         </Grid2>
       </Grid2>
-      <Divider className="my-6 mb-3 bg-gray-900" />
-      <div className="w-full mb-3 text-center flex items-center justify-center">
-        <p className="my-0">&copy; 2023 Your Company. All rights reserved.</p>
-      </div>
     </div>
   );
 };
+
+const footerColumns = [
+  {
+    title: "Product",
+    links: ["Jewelry", "Swimwear", "Dresses", "Watches"],
+  },
+  {
+    title: "Brand",
+    links: [
+      "About",
+      "Play, win & save",
+      "Design",
+      "Waterproof",
+      "Our Stores",
+      "Shop our Instagram",
+      "Shop our Look",
+    ],
+  },
+  {
+    title: "Resources",
+    links: ["Ring Sizer", "Rewards", "Package"],
+  },
+  {
+    title: "Support",
+    links: ["Color Warranty", "Start a Return", "Contact", "FAQ"],
+  },
+  {
+    title: "Join us",
+    links: ["Careers", "Stockists"],
+  },
+  {
+    title: "Social",
+    links: [
+      "Instagram",
+      "Facebook",
+      "Youtube",
+      "TikTok",
+      "LinkedIn",
+      "Pinterest",
+    ],
+  },
+];
+
+const currencies = [
+  { code: "AUD", symbol: "$", label: "AUD $" },
+  { code: "CAD", symbol: "$", label: "CAD $" },
+  { code: "EUR", symbol: "€", label: "EUR €" },
+  { code: "GBP", symbol: "£", label: "GBP £" },
+  { code: "USD", symbol: "$", label: "USD $" },
+];
+
+const paymentMethods = [
+  "https://cdn2.fptshop.com.vn/svg/visa_icon_a6c024d37b.svg?w=48&q=100",
+  "https://cdn2.fptshop.com.vn/svg/mastercard_icon_e336a980d8.svg?w=48&q=100",
+  "https://cdn2.fptshop.com.vn/svg/zalopay_icon_f54e43f9b4.svg?w=48&q=100",
+  "https://cdn2.fptshop.com.vn/svg/Property_1_apple_pay_icon_8ed897d7bb.svg?w=48&q=100",
+  "https://cdn2.fptshop.com.vn/svg/kredivo_icon_9a2c105e72.svg?w=48&q=100",
+];
 
 export default BuyerFooter;

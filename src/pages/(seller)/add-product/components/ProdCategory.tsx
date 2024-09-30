@@ -6,54 +6,62 @@ import {
   OutlinedInput,
   Select,
 } from "@mui/material";
-import { ProductFormProps } from "../types/ProductFormProps";
-import { getCategories } from "../../../../api/CategoryApi";
-import { fake_data_categorys } from "../../../../fake_data/fake_data_category";
+import {
+  initialVariants,
+  setPrimaryVariant,
+} from "../../../../store/slices/variantsSlice";
+import { getCategories, getCategoryById } from "../../../../api/CategoryApi";
+import { constant_category } from "../../../../constants/constant_category";
+import { useAppDispatch, useAppSelector } from "../../../../store/store";
+import { updateProductField } from "../../../../store/slices/productSlice";
 import { toast } from "../../../../utils/Toastify";
 
-interface CategoryProps {
+export interface CategoryProps {
   id: number;
   name: string;
-  parentID: number | null;
-  createdAt: string | null;
-  updatedAt: string | null;
-  subCategory: CategoryProps[];
-  noOfViews: number;
-  productsSold: number;
+  parentId: number | null;
+  subCategories: CategoryProps[];
 }
 
-const ProdCategory: React.FC<ProductFormProps> = ({
-  formData,
-  updateField,
-  errors,
-  startValidate,
-}) => {
+const ProdCategory = () => {
+  const useDispatch = useAppDispatch();
+  const category = useAppSelector((state) => state.product.category);
   const [subCategory, setSubCategory] = useState<any>([]);
   const [categories, setCategories] =
-    useState<CategoryProps[]>(fake_data_categorys);
+    useState<CategoryProps[]>(constant_category);
 
   const handleChange = (value: string, level: string) => {
     if (value === "") {
-      updateField("category", {
-        ...formData.category,
-        [level]: { name: null, index: null },
-      });
+      useDispatch(
+        updateProductField({
+          field: "category",
+          value: {
+            ...category,
+            [level]: { name: null, index: null },
+          },
+        })
+      );
     } else {
       const values = value.split(" and ");
-      updateField("category", {
-        ...formData.category,
-        [level]: { name: values[0], index: Number(values[1]) },
-      });
+      useDispatch(
+        updateProductField({
+          field: "category",
+          value: {
+            ...category,
+            [level]: { name: values[0], index: values[1] },
+          },
+        })
+      );
     }
   };
 
   useEffect(() => {
     const selectedCategory = categories.find(
-      (item) => item.name === formData.category.level_1.name
+      (item) => item.name === category.level_1.name
     );
     handleChange("", "level_2");
-    setSubCategory(selectedCategory?.subCategory || []);
-  }, [formData.category.level_1]);
+    setSubCategory(selectedCategory?.subCategories || []);
+  }, [category.level_1]);
 
   useEffect(() => {
     const callApi = async () => {
@@ -61,35 +69,78 @@ const ProdCategory: React.FC<ProductFormProps> = ({
         const response_data = await getCategories();
         setCategories(response_data);
       } catch (error: any) {
-        toast.error(error.message);
+        // toast.error(error.message);
       }
     };
     callApi();
   }, []);
+
+  useEffect(() => {
+    const getCategoryVariants = async (categoryName: string, id: string) => {
+      const callApi = async () => {
+        try {
+          const response = await getCategoryById(id);
+          const variants = response.variantTypes.map(
+            (item: any, index: number) => ({
+              id: index,
+              type: item.type,
+              values: [],
+            })
+          );
+
+          const specification: any = {};
+          response.specificationTypes.forEach((item: any) => {
+            specification[item.specificationType] = "";
+          });
+
+          console.log(specification, variants);
+          useDispatch(initialVariants({ variants }));
+
+          useDispatch(setPrimaryVariant({ variant: variants[0].type }));
+          useDispatch(
+            updateProductField({
+              field: "specification",
+              value: specification,
+            })
+          );
+        } catch (error: any) {
+          console.log(error?.message);
+        }
+      };
+      callApi();
+    };
+
+    const categoryName = category.level_2.name || category.level_1.name;
+    const categoryId = category.level_2.index || category.level_1.index;
+
+    if (categoryName && categoryId) {
+      getCategoryVariants(categoryName, categoryId ? categoryId : "");
+    }
+  }, [category]);
 
   return (
     <div className="w-full rounded-lg mb-2 p-3">
       <p className="font-medium text-lg">
         Category <span className="text-red-600"> *</span>
       </p>
-      <div className="border-2 border-solid border-gray-200 rounded-lg p-5 h-full flex flex-col gap-3">
+      <div className="border-[2px] border-solid border-gray-200 shadow-sm rounded-lg p-5 h-full flex flex-col gap-3">
         <div>
-          <p className="my-0 mb-1 text-[#aca4a4] text-sm">
-            Product Category
+          <p className="my-0 mb-1 text-[#797474] text-sm">
+            Product category
             <span className="text-red-600"> *</span>
           </p>
           <FormControl className="w-full">
             <Select
               id="demo-multiple-chip"
               inputProps={{ "aria-label": "Without label" }}
-              value={formData.category.level_1}
+              value={category.level_1 || ""}
               onChange={(e) => handleChange(String(e.target.value), "level_1")}
               input={<OutlinedInput id="select-multiple-chip" />}
-              className="h-[42px] w-full cursor-pointer"
+              className="h-[40px] w-full cursor-pointer"
               renderValue={() => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                   <span className="text-sm font-medium">
-                    {formData.category.level_1.name}
+                    {category.level_1.name}
                   </span>
                 </Box>
               )}
@@ -110,30 +161,30 @@ const ProdCategory: React.FC<ProductFormProps> = ({
               ))}
             </Select>
           </FormControl>
-          {startValidate && errors.category && (
-            <p className="my-2 text-[#f12727] text-sm">
-              {startValidate && errors.category}
-            </p>
-          )}
         </div>
 
-        <div>
-          <p className="my-0 mb-1 text-[#aca4a4] text-sm">
-            Product Sub-category
+        <div className="mt-2">
+          <p className="my-0 mb-1 text-[#797474] text-sm">
+            {category.level_1.name || "Product"} sub-category
           </p>
-          <FormControl className="w-full">
+          <FormControl className="w-full relative">
+            {subCategory.length === 0 && (
+              <div className="absolute z-100 cursor-not-allowed top-0 right-0 left-0 bottom-0 flex items-center justify-center bg-slate-100 text-sm font-light text-gray-300 ">
+                no sub-category
+              </div>
+            )}
             <Select
               disabled={subCategory.length === 0}
               id="demo-multiple-chip"
               inputProps={{ "aria-label": "Without label" }}
-              value={formData.category.level_2}
+              value={category.level_2 || ""}
               onChange={(e) => handleChange(String(e.target.value), "level_2")}
               input={<OutlinedInput id="select-multiple-chip" />}
-              className="h-[42px] w-full cursor-pointer"
+              className="h-[40px] w-full cursor-pointer"
               renderValue={() => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                   <span className="text-sm font-medium">
-                    {formData.category.level_2.name}
+                    {category.level_2.name}
                   </span>
                 </Box>
               )}

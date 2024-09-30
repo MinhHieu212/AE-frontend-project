@@ -4,15 +4,17 @@ import Banners from "./components/Banners";
 import Populars from "./components/Populars";
 import NewArrivals from "./components/NewArrivals";
 import Showcase from "./components/Showcase";
+import { useAppSelector } from "../../../store/store";
 
 const Homepage = () => {
+  const user_role = useAppSelector((state) => state.user.role);
   return (
-    <div className="w-full max-w-[1430px] p-3  mx-auto bg-white">
+    <div className="w-full max-w-[1300px] p-3 mx-auto bg-white">
       <Banners />
       <Categories />
       <Populars />
-      <NewArrivals />
-      <Showcase />
+      {user_role === "buyer" && <NewArrivals />}
+      {user_role === "buyer" && <Showcase />}
     </div>
   );
 };

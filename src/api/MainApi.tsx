@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export const api_json_body = axios.create({
-  // baseURL: "http://springapp.ap-southeast-2.elasticbeanstalk.com",
-  baseURL: "https://springboot-neo4j-ecommerce-project.onrender.com",
+  baseURL: "http://103.75.182.16:8080",
+  // baseURL: "https://springboot-neo4j-ecommerce-project.onrender.com",
   timeout: 100000,
   headers: {
     "Content-Type": "application/json",
@@ -10,10 +10,14 @@ export const api_json_body = axios.create({
 });
 
 export const api_form_data_body = axios.create({
-  // baseURL: "http://springapp.ap-southeast-2.elasticbeanstalk.com",
-  baseURL: "https://springboot-neo4j-ecommerce-project.onrender.com/",
+  baseURL: "http://103.75.182.16:8080",
+  // baseURL: "https://springboot-neo4j-ecommerce-project.onrender.com/",
   timeout: 100000,
   headers: {
     "Content-Type": "multipart/form-data",
   },
 });
+
+
+
+// http://103.75.182.16:8080/api/v1/products

@@ -1,28 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import { Box, Button } from "@mui/material";
+import { MantineProvider } from "@mantine/core";
+import { useAppDispatch, useAppSelector } from "../../../store/store";
+import { resetProductData } from "../../../store/slices/productSlice";
+import { IconArrowLeft } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
+import { createProduct, uploadImageProduct } from "../../../api/ProductApi";
+import { toast } from "../../../utils/Toastify";
+
+import CustomDialog from "../../../components/CustomDialog";
 import ProdDescription from "./components/ProdDescription";
 import ProdCategory from "./components/ProdCategory";
-import ProdPricing from "./components/ProdPricing";
 import ProdPackages from "./components/ProdPackages";
 import ProdSellingType from "./components/ProdSellingType";
 import ProdInventory from "./components/ProdInventory";
-import { MantineProvider } from "@mantine/core";
-import { useProductForm } from "./hooks/useProductForm";
-import { toast } from "../../../utils/Toastify";
-import ConfirmDialogButton from "./components/PopupConfirm";
-import PopupDiscardButton from "./components/PopupDiscard";
-import NewProdimages from "./components/NewProdImages";
+import ProdVariantTable from "./components/ProdVariantTable";
+import ProdVariants from "./components/ProdVariants";
+import ProdImages from "./components/ProdImages";
+import ProdBranchFeature from "./components/ProdBranchFeature";
+import ProdSpecification from "./components/ProdSpecification";
+import ProdPricing from "./components/ProdPricing";
 
-interface SubHeaderProps {
-  unSave: boolean;
-}
-const SubHeader: React.FC<SubHeaderProps> = ({ unSave }) => {
+const SubHeader = () => {
   const navigate = useNavigate();
 
   return (
     <div className="flex items-center justify-start gap-3 px-5">
-      <ConfirmDialogButton />
+      <CustomDialog
+        onCancel={() => {}}
+        onAccept={() => navigate("/products")}
+        title="Confirm Action"
+        content="Are you sure you want to return to the product list?"
+      >
+        <div className="m-0">
+          <Box className="rounded-lg w-[50px] h-[50px] flex items-center justify-center border-[2px] border-solid border-gray-400 px-0">
+            <IconArrowLeft size={25} color="gray" />
+          </Box>
+        </div>
+      </CustomDialog>
       <div>
         <p className="text-[gray] my-1 text-sm">Back to product list</p>
         <p className="font-medium text-xl my-0">Add New Product</p>
@@ -31,149 +46,183 @@ const SubHeader: React.FC<SubHeaderProps> = ({ unSave }) => {
   );
 };
 
-interface ActionButtonsProps {
-  submitForm: () => void;
-  validateForm: () => boolean;
-  resetFormData: () => void;
-  errors: any;
-  isValid: boolean;
-  setStartValidate: any;
-  loading: boolean;
-}
+const ActionButtons = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const product = useAppSelector((state) => state.product);
+  const variants = useAppSelector((state) => state.variants.variants);
+  const primary_variant = useAppSelector(
+    (state) => state.variants.primaryVariant
+  );
+  const variants_table = useAppSelector(
+    (state) => state.variants.combineVariantsTable
+  );
+  const variantImages = useAppSelector(
+    (state) => state.variants.variantWithImages
+  );
 
-const ActionButtons: React.FC<ActionButtonsProps> = ({
-  submitForm,
-  validateForm,
-  resetFormData,
-  errors,
-  isValid = false,
-  setStartValidate,
-  loading,
-}) => {
-  function handleAddNewProduct() {
-    setStartValidate(true);
-    if (validateForm()) {
-      submitForm();
-    } else {
-      console.log(JSON.stringify(errors, null, 2));
+  const prepareProductPayload = useCallback(() => {
+    const variantsPayload = variants_table.map((variant) => {
+      const variantOptions = Object.entries(variant)
+        .filter(
+          ([key]) =>
+            !["quantity", "price", "salePrice", "sku", "mrspPrice"].includes(
+              key
+            )
+        )
+        .map(([variantTypes, value]) => ({
+          variantTypes,
+          value: String(value),
+        }));
+
+      const imageUrls = variantImages
+        .find((item) => item.value === variant[primary_variant])
+        ?.images.map((it) => it.url);
+
+      return {
+        quantityAvailable: variant.quantity,
+        price: variant.price,
+        salePrice: variant.salePrice,
+        sku: variant.sku,
+        mrsp: variant.mrspPrice,
+        imageURLs: imageUrls,
+        variantOptions,
+      };
+    });
+
+    const optionsPayload = variants.reduce((acc, item) => {
+      acc[item.type] = item.values;
+      return acc;
+    }, {} as Record<string, string[]>);
+
+    const collectionsPayload = product.collections.map((item) => item.id);
+
+    return {
+      name: product.name,
+      imageURL: null,
+      primaryImageURL: null,
+      description: product.description,
+      brandName: product.brand,
+      sellingTypes: product.sellingType,
+      quantityAvailable: product.inventory.quantity,
+      price: product?.pricing.price || 0,
+      salePrice: product?.pricing.sale_price || 0,
+      mrsp: product?.pricing.mrsp || 0,
+      sku: product.inventory.sku,
+      hasCollection: collectionsPayload?.length > 0,
+      collections: collectionsPayload,
+      categories: [
+        product.category.level_1?.index,
+        product.category.level_2?.index,
+      ].filter(Boolean),
+      dimensions: {
+        weight: product?.packages_weight,
+        length: product?.packages_size.length,
+        width: product?.packages_size.width,
+        height: product?.packages_size.height,
+      },
+      specification: product?.specification,
+      hasVariants: product?.haveVariants,
+      options: optionsPayload,
+      variants: variantsPayload,
+    };
+  }, [product, variants, primary_variant, variants_table, variantImages]);
+
+  const uploadImages = useCallback(
+    async (productId: any) => {
+      const tempImages = product.primaryImage
+        ? [
+            product.primaryImage,
+            ...product.images.filter((item) => item !== product.primaryImage),
+          ]
+        : product.images;
+
+      const productImages = new FormData();
+      tempImages.forEach((image: any) => {
+        productImages.append("file", image.file);
+        URL.revokeObjectURL(image.url);
+      });
+
+      return await uploadImageProduct(productId, productImages);
+    },
+    [product.primaryImage, product.images]
+  );
+
+  const handleAddNewProduct = useCallback(async () => {
+    try {
+      const payload = prepareProductPayload();
+      const response_data = await createProduct(payload);
+
+      if (response_data.id) {
+        toast.success("New product added successfully");
+        const s3_response_data = await uploadImages(response_data.id);
+
+        if (s3_response_data.id) {
+          toast.success("Image of new product saved successfully");
+          setTimeout(() => navigate("/products"), 1000);
+        }
+      }
+    } catch (error: unknown) {
+      console.error(
+        "Failed to create product:",
+        error instanceof Error ? error.message : String(error)
+      );
+      toast.error("Failed to create product. Please try again.");
     }
-  }
+  }, [prepareProductPayload, uploadImages, navigate]);
+
+  const handleDiscardAddProduct = useCallback(() => {
+    dispatch(resetProductData());
+  }, [dispatch]);
 
   return (
-    <div className="w-full items-center justify-between flex px-4 mt-5">
-      {/* <Button
-        size="large"
-        className="rounded-md capitalize"
-        variant="outlined"
-        onClick={() => resetFormData()}
+    <div className="w-full items-center justify-end gap-3 flex px-4 my-[30px] mb-[10px]">
+      <CustomDialog
+        onCancel={() => {}}
+        onAccept={handleDiscardAddProduct}
+        title="Confirm Action"
+        content="Are you sure you want to discard this product?"
       >
-        Discard
-      </Button> */}
-      <PopupDiscardButton />
-      <div className="flex items-center justify-center gap-5">
-        {/* <Button
-          size="large"
-          variant="outlined"
-          className="rounded-md capitalize"
-        >
-          Clone
-        </Button> */}
-        <Button
-          size="large"
-          disabled={loading}
-          className="rounded-md capitalize"
-          variant="contained"
-          onClick={() => handleAddNewProduct()}
-        >
-          {loading ? "Processing" : "Add Product"}
+        <Button className="rounded-md capitalize" variant="outlined">
+          Discard
         </Button>
-      </div>
+      </CustomDialog>
+      <Button
+        className="rounded-md capitalize"
+        variant="contained"
+        onClick={handleAddNewProduct}
+      >
+        Add Product
+      </Button>
     </div>
   );
 };
 
 const AddProduct = () => {
-  const {
-    formData,
-    updateField,
-    submitForm,
-    validateForm,
-    resetFormData,
-    checkUnSaveData,
-    errors,
-    loading,
-  } = useProductForm();
-  const [isValid, setIsValid] = useState<boolean>(false);
-  const [startValidate, setStartValidate] = useState<boolean>(false);
-  const unSave = checkUnSaveData();
-
-  useEffect(() => {
-    setIsValid(validateForm());
-  }, [formData]);
-
   return (
-    <div className="flex flex-col items-center justify-start w-full max-w-[1430px] h-full p-3 mx-auto">
-      <div className="w-full h-full my-2 scrollBar overflow-y-scroll">
-        <SubHeader unSave={unSave} />
-        <div className="w-full flex items-start justify-center p-2 gap-3 h-full">
+    <div className="flex flex-col items-center justify-start w-full max-w-[1600px] h-full p-3 mx-auto">
+      <div className="w-full h-full my-2 scrollBar">
+        <SubHeader />
+        <div className="w-full flex items-start justify-center p-2 gap-3">
           <div className="w-1/2 flex flex-col items-center justify-start">
+            <ProdCategory />
             <MantineProvider>
-              <ProdDescription
-                formData={formData}
-                updateField={updateField}
-                errors={errors}
-                startValidate={startValidate}
-              />
+              <ProdDescription />
             </MantineProvider>
-            <ProdCategory
-              formData={formData}
-              updateField={updateField}
-              errors={errors}
-              startValidate={startValidate}
-            />
-            <ProdInventory
-              formData={formData}
-              updateField={updateField}
-              errors={errors}
-              startValidate={startValidate}
-            />
-            <ProdSellingType
-              formData={formData}
-              updateField={updateField}
-              errors={errors}
-              startValidate={startValidate}
-            />
+            <ProdPackages />
+            <ProdPricing />
           </div>
           <div className="w-1/2 flex flex-col items-center justify-start">
-            <NewProdimages
-              formData={formData}
-              updateField={updateField}
-              errors={errors}
-              startValidate={startValidate}
-            />
-            <ProdPackages
-              formData={formData}
-              updateField={updateField}
-              errors={errors}
-              startValidate={startValidate}
-            />
-            <ProdPricing
-              formData={formData}
-              updateField={updateField}
-              errors={errors}
-              startValidate={startValidate}
-            />
-            <ActionButtons
-              submitForm={submitForm}
-              validateForm={validateForm}
-              errors={errors}
-              isValid={isValid}
-              setStartValidate={setStartValidate}
-              resetFormData={resetFormData}
-              loading={loading}
-            />
+            <ProdBranchFeature />
+            <ProdInventory />
+            <ProdSellingType />
+            <ProdImages />
+            <ProdSpecification />
           </div>
         </div>
+        <ProdVariants />
+        <ProdVariantTable />
+        <ActionButtons />
       </div>
     </div>
   );

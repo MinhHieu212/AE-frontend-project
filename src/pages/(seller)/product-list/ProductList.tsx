@@ -1,92 +1,161 @@
 import React, { useEffect, useState } from "react";
-import { Button, Pagination, Stack, Tooltip, Typography } from "@mui/material";
+import { Button, Pagination, Skeleton, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { getProductList } from "../../../api/ProductApi";
+import { getProductById, getProductList } from "../../../api/ProductApi";
 import { toast } from "../../../utils/Toastify";
+import { ProductProps } from "../../../types/product_types";
+import Grid from "@mui/material/Grid2";
+import { fakeProductList } from "../../../constants/constant_product_list";
+import { initialProductDetail } from "../../../store/slices/productDetailSlice";
+import { useAppDispatch } from "../../../store/store";
+import { initialCurrentSelected } from "../../../store/slices/currentSelectedSlice";
 
-interface CategoryProps {
-  id: number;
-  name: string;
-  parentID: number | null;
-  createdAt: string | null;
-  updatedAt: string | null;
-  subCategory: CategoryProps[];
-  noOfViews: number;
-  ListSold: number;
-}
-interface Dimensions {
-  weight?: number;
-  length?: number;
-  width?: number;
-  height?: number;
-}
-export interface ProductProps {
-  id: number;
-  name: string;
-  imageURL: string[];
-  primaryImageURL: string;
-  description: string;
-  msrp: number;
-  salePrice: number;
-  price: number;
-  rating: number;
-  viewCount: number;
-  quantity: number;
-  quantitySold: number;
-  remainingQuantity: number;
-  brandName: string | null;
-  sellingTypes: string;
-  createdAt: string;
-  updatedAt: string | null;
-  categories: CategoryProps[];
-  dimensions: Dimensions | null;
-  sku: string;
+const MAX_ITEM_PER_PAGE = 12;
+
+interface ProductItemProps {
+  item?: ProductProps;
+  loading?: boolean;
 }
 
-const ProductItem: React.FC<ProductProps> = ({ ...props }) => {
+const ProductItem: React.FC<ProductItemProps> = ({ item, loading }) => {
+  const navigate = useNavigate();
   const fallbackImageURL =
-    "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=";
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC8p9y72JP4pkbhibsAZkGeQU4ZL5Gp6L8VjYTvXgRvzm4t3xY2wbR5KFLOOQT5apKwv4&usqp=CAU";
+  const useDispatch = useAppDispatch();
+
+  const getProductDetails = async () => {
+    try {
+      const response_data = await getProductById(item?.id);
+      const productsData = response_data;
+      const optionsArray = Object.entries(productsData.options).map(
+        ([item, value]) => ({
+          name: item,
+          values: value,
+        })
+      );
+
+      const prod_details = {
+        name: productsData?.name,
+        description: productsData?.description,
+        brandName: productsData?.brandName,
+        sellingTypes: productsData?.sellingTypes,
+        imageURLs: productsData?.variants[1]?.imageURLs || [],
+        packages_size: {
+          length: productsData?.dimensions?.length,
+          width: productsData?.dimensions?.width,
+          height: productsData?.dimensions?.height,
+        },
+        categories: productsData?.categories,
+        haveVariants: productsData?.hasVariants,
+        variants: productsData?.variants,
+        options: optionsArray,
+      };
+
+      const initialSeleted = {
+        selected_price: 123,
+        selected_sale_price: 111,
+        selected_quantity: 11,
+        selected_images: [],
+        selected_variants: {},
+      };
+
+      useDispatch(initialProductDetail({ value: prod_details }));
+      useDispatch(initialCurrentSelected({ values: initialSeleted }));
+
+      navigate(`/products/${item?.id}`);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
 
   return (
-    <div className="w-full mx-auto mb-2 p-3 rounded-xl flex items-center justify-start gap-3 border-2 border-solid border-gray-200 bg-[#f9fcff] ">
-      <div className="w-[180px] h-[150px] rounded-lg overflow-hidden">
-        <img
-          src={props.primaryImageURL ? props.primaryImageURL : fallbackImageURL}
-          alt={`Product: ${props.name}`}
-          className="h-full w-full object-cover cursor-pointer"
-          onClick={() => console.log(JSON.stringify(props, null, 2))}
-        />
+    <div className="w-full mx-auto mb-2 p-3 rounded-xl flex items-start justify-start gap-3 border-2 border-solid border-gray-100 bg-[#fbfdff] shadow-lg">
+      <div className="w-[280px] h-[180px] rounded-md overflow-hidden">
+        {loading ? (
+          <Skeleton animation="wave" className="w-[280px] h-full" />
+        ) : (
+          <img
+            src={
+              item?.primaryImageURL ? item?.primaryImageURL : fallbackImageURL
+            }
+            alt={`Product: ${item?.name}`}
+            className="h-full w-full object-cover cursor-pointer"
+            onClick={() => {
+              getProductDetails();
+            }}
+          />
+        )}
       </div>
+
       <div className="flex h-full items-start w-full justify-start flex-col p-2">
-        <p className="text-lg my-1 font-medium">{props.name}</p>
-        <p className="text-lg text-blue-400 my-0 font-medium">
-          Sale Price: $ {props.salePrice.toFixed(2)}
-        </p>
-        <p className="text-sm my-1 font-medium text-[gray]">
-          Price: ${props.price.toFixed(2)}
-        </p>
-        <p className="text-sm my-1">
-          {props.categories.map(
-            (item, index) =>
-              `${item.name} ${
-                index !== props.categories.length - 1 ? " & " : ""
-              }`
-          )}
-        </p>
-        <p className="text-sm my-1 font-medium text-[gray]">
-          Sell on: {props.sellingTypes}
-        </p>
+        {loading ? (
+          <Skeleton
+            animation="wave"
+            className="text-md my-1 font-medium w-[100px] h-full"
+          />
+        ) : (
+          <p className="text-lg my-1 font-medium">{item?.name}</p>
+        )}
+        {loading ? (
+          <Skeleton
+            animation="wave"
+            className="text-md text-blue-400 my-0 font-medium w-[100px]"
+          />
+        ) : (
+          <p className="text-md text-blue-400 my-0 font-medium">
+            Sale Price: $ {item?.salePrice?.toFixed(2) || 0}
+          </p>
+        )}
+        {loading ? (
+          <Skeleton
+            animation="wave"
+            className="text-[14px] my-1 font-medium w-[100px]"
+          />
+        ) : (
+          <p className="text-sm my-1 font-medium text-[gray]">
+            Price: ${item?.price?.toFixed(2) || 0}
+          </p>
+        )}
+
+        {loading ? (
+          <Skeleton
+            animation="wave"
+            className="text-lg my-1 font-medium w-[150px]"
+          />
+        ) : (
+          <p className="text-sm my-1">
+            {item?.categories.map(
+              (sub_item, index) =>
+                `${sub_item.name} ${
+                  index !== item?.categories.length - 1 ? " & " : ""
+                }`
+            )}
+          </p>
+        )}
+
+        {loading ? (
+          <Skeleton
+            animation="wave"
+            className="text-lg my-1 font-medium w-[100px]"
+          />
+        ) : (
+          <p className="text-sm my-1 font-medium text-[gray]">
+            Sell on: {item?.sellingTypes}
+          </p>
+        )}
       </div>
     </div>
   );
 };
 
-const MAX_ITEM_PER_PAGE = 8;
-
 const ProductList: React.FC = () => {
   const navigate = useNavigate();
-  const [productList, setProductList] = useState<ProductProps[]>([]);
+  const [productList, setProductList] = useState<ProductProps[]>([
+    ...fakeProductList,
+    ...fakeProductList,
+  ]);
   const [page, setPage] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleChangePage = (
     event: React.ChangeEvent<unknown>,
@@ -98,45 +167,59 @@ const ProductList: React.FC = () => {
   useEffect(() => {
     const callApi = async () => {
       try {
-        const response_data = await getProductList();
-        console.log(response_data);
-        setProductList(response_data);
+        setLoading(true);
+        const params = {
+          limit: 10,
+          page: 0,
+          size: 100,
+        };
+        const response_data = await getProductList(params);
+        const productsData = response_data.content;
+        console.log("Product List:", productsData);
+        setProductList(productsData);
       } catch (error: any) {
-        toast.error(error.message);
+        // toast.error(error.message);
+      } finally {
+        setLoading(false);
       }
     };
     callApi();
   }, []);
 
   return (
-    <div className="w-full max-w-[1430px] p-3 mx-auto h-full">
-      <div className="flex h-12 items-center justify-between px-5 mt-5">
-        <h2 className="font-bold">Product List</h2>
+    <div className="w-full max-w-[1300px] p-3 mx-auto h-full">
+      <div className="flex h-12 items-center justify-between px-5">
+        <h2 className="font-bold text-[lighgray] text-[22px]">All Products</h2>
         <Button
-          size="large"
           variant="contained"
-          className="capitalize"
-          onClick={() => navigate("/product-list/add-product")}
+          className="capitalize bg-darkGreen text-myGray"
+          onClick={() => navigate("/products/add-product")}
         >
           Add new Product
         </Button>
       </div>
-      <Stack
+      <Grid
+        container
         spacing={2}
-        className="h-[calc(100dvh-160px)] overflow-y-scroll scrollBar px-5 mt-5"
+        columns={12}
+        className="max-h-[calc(100dvh-155px)] items-start overflow-y-scroll scrollBar px-5 mt-5"
       >
         {productList.length > 0 ? (
           productList
             .slice((page - 1) * MAX_ITEM_PER_PAGE, page * MAX_ITEM_PER_PAGE)
-            .map((item) => <ProductItem key={item.id} {...item} />)
+            .map((item) => (
+              <Grid size={6}>
+                <ProductItem key={item.id} item={item} loading={loading} />
+              </Grid>
+            ))
         ) : (
           <div className="w-full h-full flex items-center justify-center">
-            <p className="font-bold text-lg">Loading...</p>
+            <p className="font-bold text-lg">No Products</p>
           </div>
         )}
         <Stack
           spacing={2}
-          className="flex items-center justify-center w-full mt-auto mb-2"
+          className="flex items-center justify-center pt-2 w-full mt-auto mb-2"
         >
           <Pagination
             count={Math.ceil(productList.length / MAX_ITEM_PER_PAGE)}
@@ -145,7 +228,7 @@ const ProductList: React.FC = () => {
             onChange={handleChangePage}
           />
         </Stack>
-      </Stack>
+      </Grid>
     </div>
   );
 };

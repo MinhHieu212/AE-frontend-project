@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { toast } from "../../../../utils/Toastify";
 import { createProduct, uploadImageProduct } from "../../../../api/ProductApi";
-import { ImageFile } from "../types/ProductFormProps";
+import { ImageFile } from "../../../../types/product_types";
 import { useNavigate } from "react-router-dom";
 
 export const useProductForm = () => {
@@ -174,6 +174,7 @@ export const useProductForm = () => {
         sku: formData.inventory.sku,
       };
       console.log("Form submitted:", JSON.stringify(convertedData, null, 2));
+      
       try {
         setLoading(true);
         const response_data = await createProduct(convertedData);
@@ -210,7 +211,7 @@ export const useProductForm = () => {
           }
         }
       } catch (error: any) {
-        toast.error(error.message);
+        // toast.error(error.message);
       } finally {
         setLoading(false);
       }

@@ -11,3 +11,29 @@
   align-items: "center";
   justify-items: "center";
 }
+
+.image-section {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out, opacity 0.2s ease-out,
+    padding 0.3s ease-out;
+  opacity: 0;
+  padding: 0 20px;
+}
+
+.image-section.show {
+  max-height: 1000px;
+  opacity: 1;
+  padding: 12px 20px 40px;
+}
+
+.carousel-button-prev,
+.carousel-button-next {
+  display: block !important; /* Luôn hiển thị */
+  opacity: 1 !important; /* Đảm bảo độ mờ là 1 */
+}
+
+.carousel-button-prev:hover,
+.carousel-button-next:hover {
+  cursor: pointer; /* Thêm hiệu ứng con trỏ khi hover */
+}

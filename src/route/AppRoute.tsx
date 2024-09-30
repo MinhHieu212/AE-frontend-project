@@ -1,22 +1,26 @@
 import React from "react";
-import Products from "../pages/(seller)/product-list/ProductList";
-import AddProduct from "../pages/(seller)/add-product/AddProduct";
-import Homepage from "../pages/(buyer)/home-page/Homepage";
-import MainLayout from "../layout/MainLayout";
 import { Route, Routes } from "react-router-dom";
 import { useAppSelector } from "../store/store";
+import MainLayout from "../layout/MainLayout";
+import Homepage from "../pages/(buyer)/home-page/Homepage";
+import AddProduct from "../pages/(seller)/add-product/AddProduct";
 import ProductDetails from "../pages/(buyer)/product-details/ProductDetails";
+import ProductList from "../pages/(seller)/product-list/ProductList";
+import SignIn from "../pages/(auth)/sign-in/SignIn";
+import SignUp from "../pages/(auth)/sign-up/SignUp";
+import SellerSignIn from "../pages/(auth)/sign-in/SellerSignIn";
+import SellerSignUp from "../pages/(auth)/sign-up/SellerSignUp";
 
 const AppRoute = () => {
-  const userRole = useAppSelector((state) => state.role.user_role);
+  const user_role = useAppSelector((state) => state.user.role);
 
   return (
     <Routes>
-      {userRole === "buyer" &&
+      {(user_role === "anonymous" || user_role === "buyer") &&
         buyer_route.map((item, index) => (
           <Route path={item.path} element={item.element} key={index} />
         ))}
-      {userRole === "seller" &&
+      {user_role === "seller" &&
         seller_route.map((item, index) => (
           <Route path={item.path} element={item.element} key={index} />
         ))}
@@ -27,6 +31,14 @@ const AppRoute = () => {
 export default AppRoute;
 
 const buyer_route = [
+  {
+    path: "/accessed-ecommerce",
+    element: (
+      <MainLayout>
+        <Homepage />
+      </MainLayout>
+    ),
+  },
   {
     path: "/",
     element: (
@@ -60,30 +72,72 @@ const buyer_route = [
     ),
   },
   {
+    path: "/sign-in",
+    element: <SignIn />,
+  },
+  {
+    path: "/seller/sign-in",
+    element: <SellerSignIn />,
+  },
+  {
+    path: "/seller/sign-up",
+    element: <SellerSignUp />,
+  },
+  {
+    path: "/sign-up",
+    element: <SignUp />,
+  },
+  {
     path: "*",
     element: (
-      <div className="w-full h-full flex flex-col items-center justify-center">
-        <img
-          src="https://admiral.digital/wp-content/uploads/2023/08/404_page-not-found-1024x576.png"
-          alt=""
-          height={400}
-        />
-      </div>
+      <MainLayout>
+        <div className="w-full min-h-[80dvh] h-full flex flex-col items-center justify-center">
+          <img
+            src="https://www.vizion.com/wp-content/smush-webp/2018/09/shutterstock_479042983.jpg.webp"
+            alt=""
+            height={400}
+          />
+        </div>
+      </MainLayout>
     ),
   },
 ];
 
 const seller_route = [
   {
-    path: "/products",
+    path: "/",
     element: (
       <MainLayout>
-        <Products />
+        <ProductList />
       </MainLayout>
     ),
   },
   {
-    path: "/product-list/add-product",
+    path: "/accessed-ecommerce",
+    element: (
+      <MainLayout>
+        <ProductList />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/products",
+    element: (
+      <MainLayout>
+        <ProductList />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/products/:slug",
+    element: (
+      <MainLayout>
+        <ProductDetails />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/products/add-product",
     element: (
       <MainLayout>
         <AddProduct />
@@ -93,13 +147,15 @@ const seller_route = [
   {
     path: "*",
     element: (
-      <div className="w-full h-full flex flex-col items-center justify-center">
-        <img
-          src="https://admiral.digital/wp-content/uploads/2023/08/404_page-not-found-1024x576.png"
-          alt=""
-          height={400}
-        />
-      </div>
+      <MainLayout>
+        <div className="w-full min-h-[80dvh] h-full flex flex-col items-center justify-center">
+          <img
+            src="https://www.vizion.com/wp-content/smush-webp/2018/09/shutterstock_479042983.jpg.webp"
+            alt=""
+            height={400}
+          />
+        </div>
+      </MainLayout>
     ),
   },
 ];

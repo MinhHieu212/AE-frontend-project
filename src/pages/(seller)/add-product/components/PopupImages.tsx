@@ -7,22 +7,23 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import { ImageFile, PopupProductFormProps } from "../types/ProductFormProps";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { IconStarFilled } from "@tabler/icons-react";
+import { useAppDispatch, useAppSelector } from "../../../../store/store";
+import { updateProductField } from "../../../../store/slices/productSlice";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
-    width: "900px",
+    width: "1300px",
   },
   "& .MuiDialogActions-root": {
     padding: theme.spacing(1),
   },
   "& .MuiPaper-root": {
     maxWidth: "none",
-    width: "900px",
-    height: "500px",
+    width: "1300px",
+    height: "600px",
   },
 }));
 
@@ -38,19 +39,32 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-const NewPopupImages: React.FC<PopupProductFormProps> = ({
-  formData,
-  updateField,
-  errors,
-  startValidate,
-  setImageList,
+export interface ImageFile {
+  file: File;
+  url: string;
+}
+
+export interface Popupproduct_types {
+  openModal: boolean;
+  setOpenModal: (value: boolean) => void;
+}
+
+const PopupImages: React.FC<Popupproduct_types> = ({
   openModal,
   setOpenModal,
-  imageInputRef,
 }) => {
+  const useDispatch = useAppDispatch();
+  const images = useAppSelector((state) => state.product.images);
+  const primaryImage = useAppSelector((state) => state.product.primaryImage);
+
+  function updateField(field: string, value: any) {
+    useDispatch(updateProductField({ field, value }));
+  }
+
   const handleClickOpen = () => {
     setOpenModal(true);
   };
+
   const handleClose = () => {
     setOpenModal(false);
   };
@@ -63,12 +77,12 @@ const NewPopupImages: React.FC<PopupProductFormProps> = ({
       url: URL.createObjectURL(file),
     }));
 
-    const prev_images = formData.images || [];
+    const prev_images = images || [];
     updateField("images", [...prev_images, ...newFiles]);
   };
 
   const handleRemoveImage = (url: string) => {
-    const newImageList = formData.images.filter((item) => item.url !== url);
+    const newImageList = images.filter((item) => item.url !== url);
     updateField("images", newImageList);
   };
 
@@ -78,7 +92,11 @@ const NewPopupImages: React.FC<PopupProductFormProps> = ({
 
   return (
     <React.Fragment>
-      <Button onClick={handleClickOpen}>View all</Button>
+      {images?.length > 0 && (
+        <Button onClick={handleClickOpen} className="capitalize">
+          View Images
+        </Button>
+      )}
       <BootstrapDialog onClose={handleClose} open={openModal}>
         <DialogTitle sx={{ m: 0, p: 2 }}>All Images</DialogTitle>
         <IconButton
@@ -95,27 +113,34 @@ const NewPopupImages: React.FC<PopupProductFormProps> = ({
         </IconButton>
         <DialogContent dividers>
           <div className="flex items-start justify-between w-full">
-            <div className="w-2/5 p-4">
-              {formData.images.length > 0 && (
+            <div className="w-2/5 p-3">
+              {images.length > 0 && (
                 <img
-                  src={formData.primaryImage?.url || formData.images[0].url}
+                  src={primaryImage?.url || images[0].url}
                   alt={`Image file`}
                   className="w-full h-full object-cover rounded-lg"
                 />
               )}
             </div>
-            <div className="w-3/5  p-4 flex items-start justify-start flex-wrap">
-              {formData.images.map((item, index) => {
+
+            <div className="w-3/5 p-3 flex items-start justify-start flex-wrap gap-2">
+              {images.map((item, index) => {
                 return (
-                  <div className="w-1/4 max-h-[120px] p-2 relative" key={index}>
+                  <div
+                    className={`w-1/4 h-[120px] p-2 relative ${
+                      primaryImage?.url === item.url
+                        ? "border-[#8f8ff6]  border-[2px] border-solid"
+                        : "border-[#aaaaaa]  border-[1px]  border-dashed"
+                    } overflow-hidden rounded-md`}
+                    key={index}
+                  >
                     <img
                       src={item.url}
                       alt={`Image file ${item.file.name}`}
                       className="w-full h-full object-cover rounded-lg"
                       onClick={() => handleSetPrimaryImage(item)}
                     />
-                    {formData?.primaryImage &&
-                    formData?.primaryImage.url === item.url ? (
+                    {primaryImage && primaryImage?.url === item.url ? (
                       <div className="absolute top-0 right-0 w-[25px] h-[25px] cursor-pointer">
                         <IconStarFilled color="blue" />
                       </div>
@@ -134,7 +159,7 @@ const NewPopupImages: React.FC<PopupProductFormProps> = ({
           </div>
         </DialogContent>
         <DialogActions>
-          {formData.images.length < 10 && (
+          {images.length < 10 && (
             <Button
               component="label"
               role={undefined}
@@ -146,6 +171,7 @@ const NewPopupImages: React.FC<PopupProductFormProps> = ({
                 type="file"
                 onChange={(event) => handleAddMore(event.target.files)}
                 multiple
+                accept="image/*"
               />
             </Button>
           )}
@@ -158,4 +184,4 @@ const NewPopupImages: React.FC<PopupProductFormProps> = ({
   );
 };
 
-export default NewPopupImages;
+export default PopupImages;
