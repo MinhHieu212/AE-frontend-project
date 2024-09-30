@@ -11,6 +11,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../../store/store";
 import { updateUserField } from "../../../store/slices/userSlice";
+import accessed from "../../../assests/images/accessed_logo.png";
 
 const SignIn = () => {
   const [needHelp, setNeedHelp] = useState<boolean>(false);
@@ -22,8 +23,8 @@ const SignIn = () => {
       <Box className="flex flex-col items-center max-w-[370px] p-3">
         <Box className="flex items-center justify-center gap-1 my-2 cursor-pointer w-[150px] mb-2 mr-4">
           <img
-            src={`${process.env.PUBLIC_URL}/images/accessed_logo.png`}
-            alt="Company avatar"
+            // src={`${process.env.PUBLIC_URL}/images/accessed_logo.png`}
+            src={accessed}
             className="w-[55px] h-[55px] object-cover rounded-md"
           />
           <h2 className="text-[black] text-[25px]">Accessed</h2>

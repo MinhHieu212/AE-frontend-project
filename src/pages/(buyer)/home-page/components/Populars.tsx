@@ -91,7 +91,11 @@ const Populars = () => {
           productList
             .slice(index * itemsPerPage, (index + 1) * itemsPerPage)
             .map((item, index) => (
-              <Grid2 size={{ xs: 6, sm: 4, md: 4, lg: 3 }} key={index}>
+              <Grid2
+                size={{ xs: 6, sm: 4, md: 4, lg: 3 }}
+                key={index}
+                className="transition-all"
+              >
                 <ProductItem key={item.id} item={item} loading={loading} />
               </Grid2>
             ))

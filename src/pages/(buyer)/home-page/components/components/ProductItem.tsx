@@ -73,7 +73,7 @@ const ProductItem = ({ item, loading }: ProductItemProps) => {
   };
 
   return (
-    <Box className="rounded-lg mx-auto my-auto shadow-xl w-full flex flex-col items-center pt-3">
+    <Box className="rounded-lg mx-auto my-auto shadow-md w-full flex flex-col items-center mt-5 hover:shadow-lg transition-all">
       <div className="relative overflow-hidden rounded-lg w-full px-3">
         {loading ? (
           <Skeleton
@@ -85,7 +85,7 @@ const ProductItem = ({ item, loading }: ProductItemProps) => {
           <img
             src={item?.primaryImageURL || fallbackImageURL}
             alt={`Product: ${item?.name}`}
-            className="w-full aspect-square object-cover cursor-pointer mt-2 max-h-[270px]"
+            className="w-full aspect-square object-contain cursor-pointer mt-2 max-h-[270px] transition-all hover:scale-105 rounded-md"
             onClick={() => {
               getProductDetails();
             }}
@@ -106,7 +106,7 @@ const ProductItem = ({ item, loading }: ProductItemProps) => {
             className="text-lg sm:text-xl my-1 font-bold h-6"
           />
         ) : (
-          <p className="text-lg sm:text-xl my-1 font-bold truncate">
+          <p className="text-lg sm:text-xl my-1 font-medium line-clamp-2 truncate">
             {item?.name || "Product name here"}
           </p>
         )}
@@ -122,7 +122,7 @@ const ProductItem = ({ item, loading }: ProductItemProps) => {
         )}
 
         <div className="flex items-start sm:items-center justify-between w-full flex-col sm:flex-row mt-2">
-          <div className="w-full sm:w-auto">
+          <div className="w-full sm:w-[80%] ">
             <div className="flex items-center justify-start gap-3 text-base sm:text-lg my-1 font-medium text-[gray]">
               {loading ? (
                 <Skeleton
@@ -130,7 +130,7 @@ const ProductItem = ({ item, loading }: ProductItemProps) => {
                   className="text-gray-300 my-0 line-through w-[50px]"
                 />
               ) : (
-                <p className="text-gray-300 my-0 line-through truncate">
+                <p className="text-gray-300 my-0 line-through font-normal truncate max-w-[45%]">
                   $ {item?.price?.toFixed(2) || 0}
                 </p>
               )}
@@ -146,7 +146,7 @@ const ProductItem = ({ item, loading }: ProductItemProps) => {
                   className="text-black my-0 w-[50px]"
                 />
               ) : (
-                <p className="text-black my-0 truncate">
+                <p className="text-black my-0 truncate font-normal max-w-[45%]">
                   $ {item?.salePrice?.toFixed(2) || 0}
                 </p>
               )}
@@ -175,13 +175,13 @@ const ProductItem = ({ item, loading }: ProductItemProps) => {
                   className="text-black my-0 w-[50px]"
                 />
               ) : (
-                <span className="text-xs sm:text-sm my-0 font-medium text-gray-600">
+                <span className="text-xs sm:text-sm my-0 font-normal text-gray-600">
                   {item?.quantitySold || 30} Sold
                 </span>
               )}
             </div>
           </div>
-          <Box className="w-[35px] h-[35px] text-white bg-black pb-1 flex items-center justify-center rounded-full text-[20px] font-bold cursor-pointer mt-2 sm:mt-0">
+          <Box className="min-w-[35px] h-[35px] text-white bg-black pb-1 flex items-center justify-center rounded-full text-[20px] font-bold cursor-pointer mt-2 sm:mt-0">
             +
           </Box>
         </div>

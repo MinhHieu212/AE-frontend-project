@@ -22,6 +22,7 @@ import {
 } from "@tabler/icons-react";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { updateUserField } from "../store/slices/userSlice";
+import accessed from "../assests/images/accessed_logo.png";
 
 const BuyerHeader = () => {
   const [category, setCategory] = useState<string>("");
@@ -54,7 +55,8 @@ const BuyerHeader = () => {
         onClick={() => navigate("/homepage")}
       >
         <img
-          src={`${process.env.PUBLIC_URL}/images/accessed_logo.png`}
+          // src={`${process.env.PUBLIC_URL}/images/accessed_logo.png`}
+          src={accessed}
           alt="Company avatar"
           className="w-[45px] h-[45px] object-cover rounded-md"
         />

@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../../store/store";
 import { updateUserField } from "../../../store/slices/userSlice";
+import accessed from "../../../assests/images/accessed_logo.png";
 
 const SellerSignIn = () => {
   const [needHelp, setNeedHelp] = useState<boolean>(false);
@@ -21,7 +22,8 @@ const SellerSignIn = () => {
       <Box className="flex flex-col items-center max-w-[370px] p-3">
         <Box className="flex items-center justify-center gap-1 my-2 cursor-pointer w-full mb-2 pr-4">
           <img
-            src={`${process.env.PUBLIC_URL}/images/accessed_logo.png`}
+            // src={`${process.env.PUBLIC_URL}/images/accessed_logo.png`}
+            src={accessed}
             alt="Company avatar"
             className="w-[55px] h-[55px] object-cover rounded-md"
           />

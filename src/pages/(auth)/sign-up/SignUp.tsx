@@ -21,10 +21,7 @@ const SignUp = () => {
       <Box className="flex flex-col items-center max-w-[370px] p-3">
         <Box className="flex items-center justify-center gap-1 my-2 cursor-pointer w-[150px] mb-2 mr-4">
           <img
-            src={
-              `${process.env.PUBLIC_URL}/images/accessed_logo.png` ||
-              accessed_logo
-            }
+            src={accessed_logo}
             alt="Company avatar"
             className="w-[55px] h-[55px] object-cover rounded-md"
           />

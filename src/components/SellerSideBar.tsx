@@ -12,7 +12,8 @@ import {
   IconDoorExit,
 } from "@tabler/icons-react";
 import { Divider, InputAdornment, Stack, TextField } from "@mui/material";
-import nasa_logo from "../assests/images/nasa_gray.png";
+import accessed from "../assests/images/accessed_logo.png";
+
 interface SubSellerSideBarProps {
   name: string;
   path: string;
@@ -121,7 +122,8 @@ const SellerSideBar = () => {
         }}
       >
         <img
-          src={`${process.env.PUBLIC_URL}/images/accessed_logo.png`}
+          // src={`${process.env.PUBLIC_URL}/images/accessed_logo.png`}
+          src={accessed}
           alt="Company avatar"
           className="w-[45px] h-[45px] object-cover rounded-md"
         />

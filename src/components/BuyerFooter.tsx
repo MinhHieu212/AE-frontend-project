@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { IconCheck } from "@tabler/icons-react";
+import accessed from "../assests/images/accessed_logo.png";
 
 const BuyerFooter = () => {
   const [currency, setCurrency] = React.useState("EUR");
@@ -29,7 +30,8 @@ const BuyerFooter = () => {
           <Link href="/" underline="none" className="w-full my-2 block">
             <div className="w-full flex items-center gap-1">
               <img
-                src={`${process.env.PUBLIC_URL}/images/accessed_logo.png`}
+                // src={`${process.env.PUBLIC_URL}/images/accessed_logo.png`}
+                src={accessed}
                 alt="Company avatar"
                 className="w-[45px] h-[45px] object-cover rounded-md"
               />

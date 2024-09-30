@@ -75,8 +75,8 @@ const Showcase = () => {
           </Box>
         </Grid2>
         <Grid2 size={{ xs: 12, md: 4 }} className="h-full mt-4 md:mt-0">
-          <Box className="flex w-full flex-col sm:flex-row lg:flex-col  items-center justify-center h-full gap-4">
-            <Box className="h-[200px] shadow-lg px-3 pb-3 w-full overflow-hidden relative">
+          <Box className="flex w-full flex-col sm:flex-row lg:flex-col items-center justify-center h-full gap-4">
+            <Box className="h-[200px] shadow-md px-3 pb-3 w-full overflow-hidden relative">
               <Typography
                 variant="h5"
                 className="font-bold text-base md:text-lg"
@@ -98,7 +98,7 @@ const Showcase = () => {
                 />
               </div>
             </Box>
-            <Box className="h-[200px] shadow-lg px-3 pt-3 w-full overflow-hidden relative z-0">
+            <Box className="h-[200px] shadow-md px-3 pt-3 w-full overflow-hidden relative z-0">
               <Typography
                 variant="h5"
                 className="font-bold text-base md:text-lg"

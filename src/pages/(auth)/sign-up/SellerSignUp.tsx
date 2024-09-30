@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import nasa_logo from "../../../assests/images/nasa_gray.png";
+import accessed from "../../../assests/images/accessed_logo.png";
 
 const SellerSignUp = () => {
   return (
@@ -16,8 +16,8 @@ const SellerSignUp = () => {
       <Box className="flex flex-col items-center max-w-[370px] p-3">
         <Box className="flex items-center justify-center gap-1 my-2 cursor-pointer w-full mb-2 pr-4">
           <img
-            src={`${process.env.PUBLIC_URL}/images/accessed_logo.png`}
-            alt="Company avatar"
+            // src={`${process.env.PUBLIC_URL}/images/accessed_logo.png`}
+            src={accessed}
             className="w-[55px] h-[55px] object-cover rounded-md"
           />
           <h2 className="text-[#4e6e9c] text-[25px] ">Accessed Business</h2>
